@@ -37,4 +37,4 @@ docker build -t mbtci${JAVA_VERSION}${NODE_VERSION}:${MBT_VERSION} .
 
 # cleanup
 rm -f Dockerfile
-rm -f test/goss/goss.yaml
+# rm -f test/goss/goss.yaml
