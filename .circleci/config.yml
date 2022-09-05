@@ -263,48 +263,85 @@ workflows:
   on_tag_build_test_deploy:
     jobs:
       - build:
-          filters:  # required since `release` has tag filters AND requires `build`
-            tags:
-              only: /release/
+          filters:
             branches:
-              ignore: /.*/
-      - test:
-          requires:
-            - build
-          filters:  # required since `release` has tag filters AND requires `test`
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
+              only: master
+      # - test:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         only: master
       - release:
           requires:
-            - test
-          filters:  # job runs on tag 'release' for no branches
-            tags:
-              only: /release/
+            - build
+          filters:
             branches:
-              ignore: /.*/
+              only: master
       - ghpages:
           requires:
-            - test
-          filters:  # job runs on tag 'release' for no branches
-            tags:
-              only: /release/
+            - build
+          filters:
             branches:
-              ignore: /.*/
+              only: master
       - image:
           requires:
             - release
-          filters:  # job runs on tag 'release' for no branches
-            tags:
-              only: /release/
+          filters:
             branches:
-              ignore: /.*/
+              only: master
       - publish:
           requires:
             - image
-          filters:  # job runs on tag 'release' for no branches
-            tags:
-              only: /release/
+          filters:
             branches:
-              ignore: /.*/
+              only: master
+
+# on_tag_build_test_deploy:
+#     jobs:
+#       - build:
+#           filters:  # required since `release` has tag filters AND requires `build`
+#             tags:
+#               only: /release/
+#             branches:
+#               ignore: /.*/
+#       - test:
+#           requires:
+#             - build
+#           filters:  # required since `release` has tag filters AND requires `test`
+#             tags:
+#               only: /release/
+#             branches:
+#               ignore: /.*/
+#       - release:
+#           requires:
+#             - test
+#           filters:  # job runs on tag 'release' for no branches
+#             tags:
+#               only: /release/
+#             branches:
+#               ignore: /.*/
+#       - ghpages:
+#           requires:
+#             - test
+#           filters:  # job runs on tag 'release' for no branches
+#             tags:
+#               only: /release/
+#             branches:
+#               ignore: /.*/
+#       - image:
+#           requires:
+#             - release
+#           filters:  # job runs on tag 'release' for no branches
+#             tags:
+#               only: /release/
+#             branches:
+#               ignore: /.*/
+#       - publish:
+#           requires:
+#             - image
+#           filters:  # job runs on tag 'release' for no branches
+#             tags:
+#               only: /release/
+#             branches:
+#               ignore: /.*/
