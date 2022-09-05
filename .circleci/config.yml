@@ -42,10 +42,8 @@ jobs:
       - run: go test -v ./... -coverprofile=mta.coverprofile
       - run: gover
       - run: 
-        name: cover run
-        command: |
-          COVERALLS_TOKEN = "zmrLvgUpaV4z22Jlz6z3us7HjOUrkjzDR"
-          goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken $COVERALLS_TOKEN
+          goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken "zmrLvgUpaV4z22Jlz6z3us7HjOUrkjzDR"
+          #goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken $COVERALLS_TOKEN
 
 #  test:
 #     docker:
