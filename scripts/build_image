@@ -27,12 +27,13 @@ fi
 # build image
 echo "Build mbtci${JAVA_VERSION}${NODE_VERSION}:${MBT_VERSION}"
 docker build -t mbtci${JAVA_VERSION}${NODE_VERSION}:${MBT_VERSION} .
+
 # test image
-if [ "$JAVA_VERSION_TEMPLATE" = "11" ] || [ "$JAVA_VERSION_TEMPLATE" = "8" ]; then
-	cp test/goss/goss_template.yaml test/goss/goss.yaml
-	sed  -i "s/NODE_VERSION_TEMPLATE/v${NODE_VERSION_TEMPLATE}/" test/goss/goss.yaml
-	docker-compose -f ./docker-compose.test.yml up --build
-fi
+# if [ "$JAVA_VERSION_TEMPLATE" = "11" ] || [ "$JAVA_VERSION_TEMPLATE" = "8" ]; then
+# 	cp test/goss/goss_template.yaml test/goss/goss.yaml
+# 	sed  -i "s/NODE_VERSION_TEMPLATE/v${NODE_VERSION_TEMPLATE}/" test/goss/goss.yaml
+# 	docker-compose -f ./docker-compose.test.yml up --build
+# fi
 
 # cleanup
 rm -f Dockerfile
