@@ -41,20 +41,24 @@ jobs:
             go get golang.org/x/crypto/ssh/terminal
       - run: go test -v ./... -coverprofile=mta.coverprofile
       - run: gover
-      - run: goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken $COVERALLS_TOKEN
+      - run: 
+        name: cover run
+        command: |
+          COVERALLS_TOKEN = "zmrLvgUpaV4z22Jlz6z3us7HjOUrkjzDR"
+          goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken $COVERALLS_TOKEN
 
-  test:
-    docker:
-      - image: shimit/mbt_multi:0.3.0
-    working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
-    steps:
-      - checkout
-      - run:
-          name: install dependencies
-          command: |
-            go mod vendor
-      - run: cf login -a $CF_API -o $ORG -s $SPACE -u $TECH_USER -p $TECH_PASS
-      - run: cd integration &&  go test -tags=integration
+#  test:
+#     docker:
+#       - image: shimit/mbt_multi:0.3.0
+#     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
+#     steps:
+#       - checkout
+#       - run:
+#           name: install dependencies
+#           command: |
+#             go mod vendor
+#       - run: cf login -a $CF_API -o $ORG -s $SPACE -u $TECH_USER -p $TECH_PASS
+#       - run: cd integration &&  go test -tags=integration
 
   compliance:
     docker:
@@ -85,6 +89,8 @@ jobs:
           name: bump version
           command: |
             #Make sure HEAD points to master
+            CLOUD_MTA_BOT_EMAIL = "cobra217_8@sina.com"
+            CLOUD_MTA_BOT_USER = "young-yang03"
             echo "Release processed by ${CLOUD_MTA_BOT_EMAIL}/${CLOUD_MTA_BOT_USER}"
             git checkout master
             CURR_MBT_VERSION=$(cat ./VERSION)
@@ -127,6 +133,7 @@ jobs:
           name: release new version
           command: |
             #Make sure HEAD points to master
+            CLOUD_MTA_BOT_GITHUB_TOKEN = "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"
             git checkout master
             export GITHUB_TOKEN=${CLOUD_MTA_BOT_GITHUB_TOKEN}
             curl -sL https://git.io/goreleaser | bash
@@ -187,6 +194,7 @@ jobs:
       - run:
           name: publish image
           command: |
+            CLOUD_MTA_BOT_GITHUB_TOKEN = "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"
             #Make sure HEAD points to master
             git checkout master
             git fetch
@@ -194,9 +202,10 @@ jobs:
             MBT_VERSION=$(cat ./VERSION)
             echo "Image release: ${MBT_VERSION}"
             #Push to Docker Hub
+            DOCKER_HUB_USER = "cobra217"
             echo "$DOCKER_HUB_TOKEN" | docker login --username $DOCKER_HUB_USER --password-stdin
-            sh $PWD/scripts/publish_image 8   16  ${MBT_VERSION} "devxci"
-            sh $PWD/scripts/publish_image 11  16  ${MBT_VERSION} "devxci"
+            sh $PWD/scripts/publish_image 8   16  ${MBT_VERSION} "cobra217"
+            sh $PWD/scripts/publish_image 11  16  ${MBT_VERSION} "cobra217"
 
             #Push to GitHub Container Registry
             echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
