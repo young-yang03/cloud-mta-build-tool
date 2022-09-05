@@ -201,8 +201,10 @@ jobs:
 
             #Push to GitHub Container Registry
             echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
+            sh $PWD/scripts/publish_image 8   16  ${MBT_VERSION} "ghcr.io/young-yang03"
+            sh $PWD/scripts/publish_image 11  16  ${MBT_VERSION} "ghcr.io/young-yang03"
             # sh $PWD/scripts/publish_image 8   16  ${MBT_VERSION} "ghcr.io/sap"
-            sh $PWD/scripts/publish_image 11  16  ${MBT_VERSION} "ghcr.io/sap"
+            # sh $PWD/scripts/publish_image 11  16  ${MBT_VERSION} "ghcr.io/sap"
 
   ghpages:
     docker:
