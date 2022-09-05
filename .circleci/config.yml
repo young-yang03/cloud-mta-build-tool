@@ -54,8 +54,8 @@ jobs:
           name: install dependencies
           command: |
             go mod vendor
-#      - run: cf login -a $CF_API -o $ORG -s $SPACE -u $TECH_USER -p $TECH_PASS
-#      - run: cd integration &&  go test -tags=integration
+      - run: cf login -a $CF_API -o $ORG -s $SPACE -u $TECH_USER -p $TECH_PASS
+      - run: cd integration &&  go test -tags=integration
 
   compliance:
     docker:
@@ -86,8 +86,6 @@ jobs:
           name: bump version
           command: |
             #Make sure HEAD points to master
-            CLOUD_MTA_BOT_EMAIL = "cobra217_8@sina.com"
-            CLOUD_MTA_BOT_USER = "young-yang03"
             echo "Release processed by ${CLOUD_MTA_BOT_EMAIL}/${CLOUD_MTA_BOT_USER}"
             git checkout master
             CURR_MBT_VERSION=$(cat ./VERSION)
@@ -197,10 +195,9 @@ jobs:
             MBT_VERSION=$(cat ./VERSION)
             echo "Image release: ${MBT_VERSION}"
             #Push to Docker Hub
-            DOCKER_HUB_USER = "cobra217"
             echo "$DOCKER_HUB_TOKEN" | docker login --username $DOCKER_HUB_USER --password-stdin
-            sh $PWD/scripts/publish_image 8   16  ${MBT_VERSION} "cobra217"
-            sh $PWD/scripts/publish_image 11  16  ${MBT_VERSION} "cobra217"
+            sh $PWD/scripts/publish_image 8   16  ${MBT_VERSION} ${DOCKER_HUB_USER}
+            sh $PWD/scripts/publish_image 11  16  ${MBT_VERSION} ${DOCKER_HUB_USER}
 
             #Push to GitHub Container Registry
             echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
@@ -235,12 +232,12 @@ workflows:
           filters:
             branches:
               ignore: master
-      - test:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore: master
+      # - test:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         ignore: master
 
   on_merge_build_test:
     jobs:
@@ -256,12 +253,12 @@ workflows:
           filters:
             branches:
               only: master
-      - test:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+      # - test:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         only: master
 
   on_tag_build_test_deploy:
     jobs:
