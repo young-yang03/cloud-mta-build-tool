@@ -52,7 +52,7 @@ RUN apt-get update && \
 
 # install java
 	mkdir -p /opt && \
-    wget --no-check-certificate --header "Cookie: eula_3_1_agreed=tools.hana.ondemand.com/developer-license-3_1.txt; path=/;" -S https://tools.hana.ondemand.com/additional/sapjvm-${JAVA_VERSION}-linux-x64.zip && \
+    wget --no-check-certificate --header "Cookie: eula_3_1_agreed=tools.hana.ondemand.com/developer-license-3_1.txt; path=/;" -S /sapjvm-${JAVA_VERSION}-linux-x64.zip && \
     unzip sapjvm-${JAVA_VERSION}-linux-x64.zip -d /usr/local/ && \
     ln -s /usr/local/sapjvm_8 /opt/jdk && \
     rm sapjvm-${JAVA_VERSION}-linux-x64.zip && \
@@ -84,7 +84,7 @@ RUN apt-get update && \
     chmod --recursive a+w "${M2_HOME}"/conf/* && \
 
 # Download MBT
-	curl -L "https://github.com/SAP/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin && \
+	curl -L "https://github.com/young-yang03/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin && \
     chown root:root /usr/local/bin/mbt && \ 
 
 # handle users permission

@@ -61,7 +61,7 @@ RUN apt-get update && \
     chmod --recursive a+w "${M2_HOME}"/conf/* && \
 
 # Download MBT
-	curl -L "https://github.com/SAP/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin && \
+	curl -L "https://github.com/young-yang03/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin && \
     chown root:root /usr/local/bin/mbt && \ 
 
 # handle users permission
