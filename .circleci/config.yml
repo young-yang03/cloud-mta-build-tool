@@ -42,7 +42,7 @@ jobs:
       - run: go test -v ./... -coverprofile=mta.coverprofile
       - run: gover
       - run: 
-          goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken "zmrLvgUpaV4z22Jlz6z3us7HjOUrkjzDR"
+          goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken 
           #goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken $COVERALLS_TOKEN
 
   test:
@@ -131,7 +131,6 @@ jobs:
           name: release new version
           command: |
             #Make sure HEAD points to master
-            CLOUD_MTA_BOT_GITHUB_TOKEN = "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"
             git checkout master
             export GITHUB_TOKEN=${CLOUD_MTA_BOT_GITHUB_TOKEN}
             curl -sL https://git.io/goreleaser | bash
@@ -192,7 +191,6 @@ jobs:
       - run:
           name: publish image
           command: |
-            CLOUD_MTA_BOT_GITHUB_TOKEN = "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"
             #Make sure HEAD points to master
             git checkout master
             git fetch
@@ -209,6 +207,7 @@ jobs:
             echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
             sh $PWD/scripts/publish_image 8   16  ${MBT_VERSION} "ghcr.io/sap"
             sh $PWD/scripts/publish_image 11  16  ${MBT_VERSION} "ghcr.io/sap"
+
   ghpages:
     docker:
       - image: squidfunk/mkdocs-material:4.3.1
