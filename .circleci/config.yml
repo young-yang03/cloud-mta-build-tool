@@ -1,7 +1,6 @@
 # Golang CircleCI 2.0 configuration
 version: 2.1
 jobs:
-
   build-node:
     docker:
       - image: cimg/node:lts
@@ -160,6 +159,7 @@ jobs:
       #     name: remove dummy release tag
       #     command: |
       #       git push https://github.com/young-yang03/cloud-mta-build-tool.git --delete release
+  
   image:
     docker:
       - image: cimg/go:1.16
