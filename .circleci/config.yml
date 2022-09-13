@@ -196,12 +196,12 @@ jobs:
             echo "Image release: ${MBT_VERSION}"
             #Push to Docker Hub
             echo "$DOCKER_HUB_TOKEN" | docker login --username $DOCKER_HUB_USER --password-stdin
-            # sh $PWD/scripts/publish_image 8   16  ${MBT_VERSION} ${DOCKER_HUB_USER}
+            sh $PWD/scripts/publish_image 8   16  ${MBT_VERSION} ${DOCKER_HUB_USER}
             sh $PWD/scripts/publish_image 11  16  ${MBT_VERSION} ${DOCKER_HUB_USER}
 
             #Push to GitHub Container Registry
             echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
-            # sh $PWD/scripts/publish_image 8   16  ${MBT_VERSION} "ghcr.io/young-yang03"
+            sh $PWD/scripts/publish_image 8   16  ${MBT_VERSION} "ghcr.io/young-yang03"
             sh $PWD/scripts/publish_image 11  16  ${MBT_VERSION} "ghcr.io/young-yang03"
             # sh $PWD/scripts/publish_image 8   16  ${MBT_VERSION} "ghcr.io/sap"
             # sh $PWD/scripts/publish_image 11  16  ${MBT_VERSION} "ghcr.io/sap"
@@ -220,47 +220,47 @@ jobs:
 
 workflows:
   version: 2
-  on_pr_build:
-    jobs:
-      - build:
-          filters:
-            branches:
-              ignore: master
-      - build-node:
-          filters:
-            branches:
-              ignore: master
-      - compliance:
-          filters:
-            branches:
-              ignore: master
-      # - test:
-      #     requires:
-      #       - build
-      #     filters:
-      #       branches:
-      #         ignore: master
+  # on_pr_build:
+  #   jobs:
+  #     - build:
+  #         filters:
+  #           branches:
+  #             ignore: master
+  #     - build-node:
+  #         filters:
+  #           branches:
+  #             ignore: master
+  #     - compliance:
+  #         filters:
+  #           branches:
+  #             ignore: master
+  #     - test:
+  #         requires:
+  #           - build
+  #         filters:
+  #           branches:
+  #             ignore: master
 
-  on_merge_build_test:
-    jobs:
-      - build:
-          filters:
-            branches:
-              only: master
-      - build-node:
-          filters:
-            branches:
-              ignore: master
-      - compliance:
-          filters:
-            branches:
-              only: master
-      # - test:
-      #     requires:
-      #       - build
-      #     filters:
-      #       branches:
-      #         only: master
+  # on_merge_build_test:
+  #   jobs:
+  #     - build:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - build-node:
+  #         filters:
+  #           branches:
+  #             ignore: master
+  #     - compliance:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - test:
+  #         requires:
+  #           - build
+  #         filters:
+  #           branches:
+  #             only: master
 
   on_tag_build_test_deploy:
     jobs:
