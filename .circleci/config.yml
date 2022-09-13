@@ -175,11 +175,11 @@ jobs:
             git checkout master
             git fetch
             git rebase
-      # - run:
-      #     name: "build Java 8 & Node 16 image"
-      #     command: |
-      #           MBT_VERSION=$(cat ./VERSION)
-      #           sh $PWD/scripts/build_image 8   16.15.0 ${MBT_VERSION}
+      - run:
+          name: "build Java 8 & Node 16 image"
+          command: |
+                MBT_VERSION=$(cat ./VERSION)
+                sh $PWD/scripts/build_image 8   16.15.0 ${MBT_VERSION}
       - run:
           name: "build Java 11 & Node 16 image"
           command: |
