@@ -15,6 +15,10 @@ elif [ "$JAVA_VERSION_TEMPLATE" = "8" ]
 then
 	export JAVA_VERSION="-java8"
 	export NODE_VERSION="-node$NODE_VERSION_TEMPLATE"
+elif [ "$JAVA_VERSION_TEMPLATE" = "17" ]
+then
+	export JAVA_VERSION="-java17"
+	export NODE_VERSION="-node$NODE_VERSION_TEMPLATE"
 else
 	export JAVA_VERSION=""
 	export NODE_VERSION="-alpine"
