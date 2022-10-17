@@ -29,6 +29,8 @@ ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 ENV CGO_ENABLED=0
 ENV GOOS=linux
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 ADD http://aia.pki.co.sap.com/aia/SAP%20Global%20Root%20CA.crt \
     /etc/ssl/certs/SAP_Global_Root_CA.crt
 
