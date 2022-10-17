@@ -9,7 +9,7 @@ ARG NODE_VERSION=NODE_VERSION_TEMPLATE
 ARG MAVEN_VERSION=3.6.3
 
 # Environment variables
-ENV PYTHON /usr/bin/python2.7
+ENV PYTHON /usr/bin/python3.10
 ENV M2_HOME=/opt/maven/apache-maven-${MAVEN_VERSION}
 ENV GOPATH /go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
@@ -78,7 +78,7 @@ RUN apt-get update && \
 # Install essential build tools and python, required for building db modules
 	apt-get install --yes --no-install-recommends \
 		build-essential \
-		python2.7 && \
+		python3.10 && \
 		
 # remove build env tools
     apt-get remove --purge --autoremove --yes \

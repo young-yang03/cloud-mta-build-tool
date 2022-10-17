@@ -22,7 +22,7 @@ ARG JAVA_VERSION=8.1.090
 ENV JAVA_HOME /opt/jdk
 ENV MAVEN_HOME /usr/apache-maven-$MAVEN_VERSION
 ENV PATH $PATH:$MAVEN_HOME/bin:${JAVA_HOME}/bin
-ENV PYTHON /usr/bin/python2.7
+ENV PYTHON /usr/bin/python3.10
 ENV M2_HOME=/opt/maven/apache-maven-${MAVEN_VERSION}
 ENV GOPATH /go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
@@ -101,7 +101,7 @@ RUN apt-get update && \
 # Install essential build tools and python, required for building db modules
 	apt-get install --yes --no-install-recommends \
 		build-essential \
-		python2.7 && \
+		python3.10 && \
 
 # remove build env tools
     apt-get remove --purge --autoremove --yes \
