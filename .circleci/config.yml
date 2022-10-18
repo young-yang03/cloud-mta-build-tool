@@ -309,12 +309,14 @@ workflows:
   #           branches:
   #             only: master
 
-  on_tag_build_test_deploy:
+on_tag_build_test_deploy:
     jobs:
       - build:
           filters:
+            tags:
+              only: /release/
             branches:
-              only: master
+              ignore: /.*/
       # - test:
       #     requires:
       #       - build
@@ -325,26 +327,71 @@ workflows:
           requires:
             - build
           filters:
+            tags:
+              only: /release/
             branches:
-              only: master
+              ignore: /.*/
       - ghpages:
           requires:
             - build
           filters:
+            tags:
+              only: /release/
             branches:
-              only: master
+              ignore: /.*/
       - image:
           requires:
             - release
           filters:
+            tags:
+              only: /release/
             branches:
-              only: master
+              ignore: /.*/
       - publish:
           requires:
             - image
           filters:
+            tags:
+              only: /release/
             branches:
-              only: master
+              ignore: /.*/
+
+  # on_tag_build_test_deploy:
+  #   jobs:
+  #     - build:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     # - test:
+  #     #     requires:
+  #     #       - build
+  #     #     filters:
+  #     #       branches:
+  #     #         only: master
+  #     - release:
+  #         requires:
+  #           - build
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - ghpages:
+  #         requires:
+  #           - build
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - image:
+  #         requires:
+  #           - release
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - publish:
+  #         requires:
+  #           - image
+  #         filters:
+  #           branches:
+  #             only: master
 
 # on_tag_build_test_deploy:
 #     jobs:
