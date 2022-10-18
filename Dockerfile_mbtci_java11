@@ -82,7 +82,7 @@ RUN apt-get update && \
 		build-essential && \
 
     apt update && \
-    #apt upgrade && \
+    apt upgrade && \
     #apt install software-properties-common && \
     #apt-add-repository ppa:deadsnakes/ppa && \
     #apt update && \
