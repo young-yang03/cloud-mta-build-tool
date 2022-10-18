@@ -84,7 +84,7 @@ RUN apt-get update && \
     apt update && \
     #apt upgrade && \
     apt install software-properties-common && \
-    add-apt-repository ppa:deadsnakes/ppa && \
+    apt-add-repository ppa:deadsnakes/ppa && \
     apt update && \
     apt install python3.10 && \
 
