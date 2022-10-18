@@ -79,9 +79,19 @@ RUN apt-get update && \
 
 # Install essential build tools and python, required for building db modules
 	apt-get install --yes --no-install-recommends \
-		build-essential \
-		python3.10 && \
-		
+		build-essential && \
+
+    apt update && \
+    apt upgrade && \
+    apt install software-properties-common && \
+    add-apt-repository ppa:deadsnakes/ppa && \
+    apt update && \
+    apt install python3.10 && \
+
+# apt-get install --yes --no-install-recommends \
+# 		build-essential \
+# 		python3.10 && \
+
 # remove build env tools
     apt-get remove --purge --autoremove --yes \
 		curl && \
