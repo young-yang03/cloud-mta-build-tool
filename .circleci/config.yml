@@ -70,7 +70,7 @@ jobs:
             
   release:
     docker:
-      - image: cimg/go:1.16
+      - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - add_ssh_keys:
@@ -162,7 +162,7 @@ jobs:
   
   image:
     docker:
-      - image: cimg/go:1.16
+      - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - checkout
