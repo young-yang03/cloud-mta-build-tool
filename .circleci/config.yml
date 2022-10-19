@@ -13,7 +13,6 @@ jobs:
   build:
     docker:
       - image: cimg/go:1.17
-
     environment:
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
@@ -67,8 +66,20 @@ jobs:
           command: |
             pip3 install --user reuse
             ~/.local/bin/reuse lint
-            
-  release:
+  
+  ghpages:
+    docker:
+      - image: squidfunk/mkdocs-material:4.3.1
+    working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
+    steps:
+      - checkout
+      - run:
+          name: release to GitHub Pages
+          command: |
+            cd docs
+            mkdocs gh-deploy --config-file ../docs/mkdocs.yml --remote-branch gh-pages
+
+  release-to-github:
     docker:
       - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
@@ -130,37 +141,8 @@ jobs:
             git checkout master
             export GITHUB_TOKEN=${CLOUD_MTA_BOT_GITHUB_TOKEN}
             curl -sL https://git.io/goreleaser | bash
-            
-  publish:
-    docker:
-      - image: cimg/node:lts
-    working_directory: ~/repo
-    steps:
-      - checkout
-      - run:
-          #Make sure HEAD points to master
-          # TODO: this is horrible as it makes the build non-reproducible
-          #       but the `release` job performs a bump commit as part of the release flow
-          #       so the fetch/rebase is actually needed (unless release process refactored...)
-          name: rebase to master
-          command: |
-            git checkout master
-            git fetch
-            git rebase
-      - run:
-          name: publish to npm
-          command: |
-            echo "//registry.npmjs.org/:_authToken=$CLOUD_MTA_BOT_NPM_TOKEN" > .npmrc
-            npm install
-            npm run ci
-            npm publish --access public
-      # - run:
-      #     # This won't run if previous commands have failed so the tag should be removed **manually**
-      #     name: remove dummy release tag
-      #     command: |
-      #       git push https://github.com/young-yang03/cloud-mta-build-tool.git --delete release
-  
-  image:
+
+  publish-to-dockerhub:
     docker:
       - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
@@ -252,21 +234,87 @@ jobs:
             # sh $PWD/scripts/publish_image 8   18  ${MBT_VERSION} "ghcr.io/young-yang03"
             # sh $PWD/scripts/publish_image 11  18  ${MBT_VERSION} "ghcr.io/young-yang03"
             # sh $PWD/scripts/publish_image 17  18  ${MBT_VERSION} "ghcr.io/young-yang03"
-
-  ghpages:
+  
+  publish-to-npm:
     docker:
-      - image: squidfunk/mkdocs-material:4.3.1
-    working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
+      - image: cimg/node:lts
+    working_directory: ~/repo
     steps:
       - checkout
       - run:
-          name: release to GitHub Pages
+          #Make sure HEAD points to master
+          # TODO: this is horrible as it makes the build non-reproducible
+          #       but the `release` job performs a bump commit as part of the release flow
+          #       so the fetch/rebase is actually needed (unless release process refactored...)
+          name: rebase to master
           command: |
-            cd docs
-            mkdocs gh-deploy --config-file ../docs/mkdocs.yml --remote-branch gh-pages
+            git checkout master
+            git fetch
+            git rebase
+      - run:
+          name: publish to npm
+          command: |
+            echo "//registry.npmjs.org/:_authToken=$CLOUD_MTA_BOT_NPM_TOKEN" > .npmrc
+            npm install
+            npm run ci
+            npm publish --access public
+      # - run:
+      #     # This won't run if previous commands have failed so the tag should be removed **manually**
+      #     name: remove dummy release tag
+      #     command: |
+      #       git push https://github.com/young-yang03/cloud-mta-build-tool.git --delete release
 
 workflows:
   version: 2
+  on_tag_build_release_publish:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
+      # - test:
+      #     requires:
+      #       - build
+      #     filters:
+      #       tags:
+      #         only: /release/
+      #       branches:
+      #         ignore: /.*/
+      - ghpages:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
+      - release-to-github:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
+      - publish-to-dockerhub:
+          requires:
+            - release-to-github
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
+      - publish-to-npm:
+          requires:
+            - publish-to-dockerhub
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
+  
   # on_pr_build:
   #   jobs:
   #     - build:
@@ -308,53 +356,6 @@ workflows:
   #         filters:
   #           branches:
   #             only: master
-
-on_tag_build_test_deploy:
-    jobs:
-      - build:
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
-      # - test:
-      #     requires:
-      #       - build
-      #     filters:
-      #       branches:
-      #         only: master
-      - release:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
-      - ghpages:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
-      - image:
-          requires:
-            - release
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
-      - publish:
-          requires:
-            - image
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
 
   # on_tag_build_test_deploy:
   #   jobs:

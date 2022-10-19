@@ -78,6 +78,9 @@ RUN apt-get update && \
     chmod a+w "${MTA_USER_HOME}" && \
 
 # Install essential build tools and python, required for building db modules
+    apt-get install --yes --no-install-recommends \
+		build-essential \
+		python3 && \
 
     # apt-get install --yes --no-install-recommends \
 	# 	build-essential && \
@@ -85,10 +88,6 @@ RUN apt-get update && \
     #apt-get update && \
     #add-apt-repository ppa:deadsnakes/ppa && \
     #apt-get install python3.10 && \
-
-apt-get install --yes --no-install-recommends \
-		build-essential \
-		python3 && \
 
 # remove build env tools
     apt-get remove --purge --autoremove --yes \
