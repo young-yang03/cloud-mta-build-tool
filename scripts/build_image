@@ -25,9 +25,8 @@ then
 	cp Dockerfile_mbtci_java17 Dockerfile
 	sed  -i "s/NODE_VERSION_TEMPLATE/v${NODE_VERSION_TEMPLATE}/" Dockerfile
 else
-	export JAVA_VERSION=""
-	export NODE_VERSION="-alpine"
-	cp Dockerfile_mbtci_alpine Dockerfile
+	echo "Java:${JAVA_VERSION_TEMPLATE}, Node:${NODE_VERSION_TEMPLATE} is not supported!"
+	exit -1
 fi
 
 # build image

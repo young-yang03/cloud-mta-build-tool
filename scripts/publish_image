@@ -20,16 +20,12 @@ then
 	export JAVA_VERSION="-java17"
 	export NODE_VERSION="-node$NODE_VERSION_TEMPLATE"
 else
-	export JAVA_VERSION=""
-	export NODE_VERSION="-alpine"
+	echo "Java:${JAVA_VERSION_TEMPLATE}, Node:${NODE_VERSION_TEMPLATE} is not supported!"
+	exit -1
 fi
 
 # publish image
 echo "Publish mbtci${JAVA_VERSION}${NODE_VERSION}:${MBT_VERSION} to $DOCKER_REGISTRY"
-# docker tag mbtci${JAVA_VERSION}${NODE_VERSION}:${MBT_VERSION} mbtci${JAVA_VERSION}${NODE_VERSION}:${MBT_VERSION}
-# docker push mbtci${JAVA_VERSION}${NODE_VERSION}:${MBT_VERSION}
-# docker tag mbtci${JAVA_VERSION}${NODE_VERSION}:${MBT_VERSION} mbtci${JAVA_VERSION}${NODE_VERSION}:latest
-# docker push ${IMAGE_PREFIX}/mbtci${JAVA_VERSION}${NODE_VERSION}:latest
 
 docker tag mbtci${JAVA_VERSION}${NODE_VERSION}:${MBT_VERSION} ${IMAGE_PREFIX}/mbtci${JAVA_VERSION}${NODE_VERSION}:${MBT_VERSION}
 docker push ${IMAGE_PREFIX}/mbtci${JAVA_VERSION}${NODE_VERSION}:${MBT_VERSION}

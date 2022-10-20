@@ -77,7 +77,7 @@ jobs:
           name: release to GitHub Pages
           command: |
             cd docs
-            mkdocs gh-deploy --config-file ../docs/mkdocs.yml --remote-branch gh-pages
+            mkdocs gh-deploy --config-file ../docs/mkdocs.yml ---branch gh-pages
 
   release-to-github:
     docker:
