@@ -9,7 +9,7 @@ ARG NODE_VERSION=NODE_VERSION_TEMPLATE
 ARG MAVEN_VERSION=3.6.3
 
 # Environment variables
-ENV PYTHON /usr/bin/python3.10
+ENV PYTHON /usr/bin/python3
 ENV M2_HOME=/opt/maven/apache-maven-${MAVEN_VERSION}
 ENV GOPATH /go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH

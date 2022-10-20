@@ -80,8 +80,8 @@ RUN apt-get update && \
 # Install essential build tools and python, required for building db modules
     apt-get install --yes --no-install-recommends \
 		build-essential \
-		python2.7 && \
-#       python3 && \
+		python2.7 \
+        python3 && \
 
 # Install python 3.10
     #apt-get install software-properties-common && \
