@@ -39,8 +39,7 @@ jobs:
             go get golang.org/x/crypto/ssh/terminal
       - run: go test -v ./... -coverprofile=mta.coverprofile
       - run: gover
-      - run: 
-          goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken $COVERALLS_TOKEN
+      - run: goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken $COVERALLS_TOKEN
 
   test:
     docker:
@@ -66,7 +65,7 @@ jobs:
           command: |
             pip3 install --user reuse
             ~/.local/bin/reuse lint
-  
+
   ghpages:
     docker:
       - image: squidfunk/mkdocs-material:4.3.1
@@ -121,11 +120,12 @@ jobs:
             sed  -i "/ARG MBT_VERSION=/ s/${CURR_MBT_VERSION}/${MBT_VERSION}/" ./Dockerfile_mbtci_java8
             sed  -i "/ARG MBT_VERSION=/ s/${CURR_MBT_VERSION}/${MBT_VERSION}/" ./Dockerfile_mbtci_java11
             sed  -i "/ARG MBT_VERSION=/ s/${CURR_MBT_VERSION}/${MBT_VERSION}/" ./Dockerfile_mbtci_java17
+            sed  -i "s/- ${CURR_MBT_VERSION}/- ${MBT_VERSION}/" ./test/goss/goss_template.yaml
             sed  -i "/- Cloud MTA Build Tool -/s/${CURR_MBT_VERSION}/${MBT_VERSION}/" ./README.md
             #Generate version file
             go generate -run "go run ./internal/buildtools/embed.go ./internal/buildtools/buildtools_msg.go -source=./configs/version.yaml -target=./internal/version/version_cfg.go -name=VersionConfig -package=version"
             #Add all updated files to commit
-            git add ./package.json ./configs/version.yaml ./VERSION ./internal/version/version_cfg.go ./Dockerfile_mbtci_java8 ./Dockerfile_mbtci_java11 ./Dockerfile_mbtci_java17 ./README.md 
+            git add ./package.json ./configs/version.yaml ./VERSION ./internal/version/version_cfg.go ./Dockerfile_mbtci_java8 ./Dockerfile_mbtci_java11 ./Dockerfile_mbtci_java17 ./test/goss/goss_template.yaml ./README.md 
             git config user.email "${CLOUD_MTA_BOT_EMAIL}"
             git config user.name "${CLOUD_MTA_BOT_USER}"
             git commit --allow-empty -m "[skip ci] Bump version ${MBT_VERSION}"
@@ -234,7 +234,7 @@ jobs:
             # sh $PWD/scripts/publish_image 8   18  ${MBT_VERSION} "ghcr.io/young-yang03"
             # sh $PWD/scripts/publish_image 11  18  ${MBT_VERSION} "ghcr.io/young-yang03"
             # sh $PWD/scripts/publish_image 17  18  ${MBT_VERSION} "ghcr.io/young-yang03"
-  
+
   publish-to-npm:
     docker:
       - image: cimg/node:lts
@@ -252,17 +252,18 @@ jobs:
             git fetch
             git rebase
       - run:
+          # @young-yang217/mbt is a scoped package, add "--access public" option in npm publish cmd
           name: publish to npm
           command: |
             echo "//registry.npmjs.org/:_authToken=$CLOUD_MTA_BOT_NPM_TOKEN" > .npmrc
             npm install
             npm run ci
             npm publish --access public
-      # - run:
-      #     # This won't run if previous commands have failed so the tag should be removed **manually**
-      #     name: remove dummy release tag
-      #     command: |
-      #       git push https://github.com/young-yang03/cloud-mta-build-tool.git --delete release
+      - run:
+          # This won't run if previous commands have failed so the tag should be removed **manually**
+          name: remove dummy release tag
+          command: |
+            git push https://github.com/young-yang03/cloud-mta-build-tool.git --delete release
 
 workflows:
   version: 2
@@ -314,7 +315,7 @@ workflows:
               only: /release/
             branches:
               ignore: /.*/
-  
+
   # on_pr_build:
   #   jobs:
   #     - build:
@@ -353,43 +354,6 @@ workflows:
   #     - test:
   #         requires:
   #           - build
-  #         filters:
-  #           branches:
-  #             only: master
-
-  # on_tag_build_test_deploy:
-  #   jobs:
-  #     - build:
-  #         filters:
-  #           branches:
-  #             only: master
-  #     # - test:
-  #     #     requires:
-  #     #       - build
-  #     #     filters:
-  #     #       branches:
-  #     #         only: master
-  #     - release:
-  #         requires:
-  #           - build
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - ghpages:
-  #         requires:
-  #           - build
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - image:
-  #         requires:
-  #           - release
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - publish:
-  #         requires:
-  #           - image
   #         filters:
   #           branches:
   #             only: master
