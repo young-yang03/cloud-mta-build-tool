@@ -275,14 +275,14 @@ workflows:
               only: /release/
             branches:
               ignore: /.*/
-      # - test:
-      #     requires:
-      #       - build
-      #     filters:
-      #       tags:
-      #         only: /release/
-      #       branches:
-      #         ignore: /.*/
+      - test:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
       - ghpages:
           requires:
             - build
