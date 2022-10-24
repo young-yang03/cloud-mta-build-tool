@@ -9,6 +9,10 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run ci
+      - run: 
+          name: Print project envs
+          command: |
+              node -e "console.log(JSON.stringify(process.env, null , '  '))"
 
   build:
     docker:
@@ -22,8 +26,6 @@ jobs:
           command: |
             LOCAL_CLOUD_MTA_BOT_EMAIL="$CLOUD_MTA_BOT_EMAIL"
             echo "CLOUD_MTA_BOT_EMAIL: $LOCAL_CLOUD_MTA_BOT_EMAIL"
-
-            node -e "console.log(JSON.stringify(process.env, null , '  '))"
 
             # echo "CLOUD_MTA_BOT_EMAIL: ${CLOUD_MTA_BOT_EMAIL}"
             # echo "CLOUD_MTA_BOT_GITHUB_TOKEN: ${CLOUD_MTA_BOT_GITHUB_TOKEN}"
@@ -292,12 +294,18 @@ workflows:
   version: 2
   on_tag_build_release_publish:
     jobs:
-      - build:
+      - build-node:
           filters:
             tags:
               only: /release/
             branches:
               ignore: /.*/
+      # - build:
+      #     filters:
+      #       tags:
+      #         only: /release/
+      #       branches:
+      #         ignore: /.*/
       # - test:
       #     requires:
       #       - build
