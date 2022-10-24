@@ -9,7 +9,7 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
-	"log"
+	// "log"
 
 	"os"
 	"os/exec"
