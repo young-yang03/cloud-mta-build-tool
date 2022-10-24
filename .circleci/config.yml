@@ -20,7 +20,7 @@ jobs:
       - run: 
           name: print project envs
           command: |
-            LOCAL_CLOUD_MTA_BOT_EMAIL=${CLOUD_MTA_BOT_EMAIL}
+            LOCAL_CLOUD_MTA_BOT_EMAIL=$(echo $CLOUD_MTA_BOT_EMAIL)
             echo "CLOUD_MTA_BOT_EMAIL: ${LOCAL_CLOUD_MTA_BOT_EMAIL}"
 
             # echo "CLOUD_MTA_BOT_EMAIL: ${CLOUD_MTA_BOT_EMAIL}"
