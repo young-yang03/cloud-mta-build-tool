@@ -1,4 +1,4 @@
-module github.com/young-yang03/cloud-mta-build-tool
+module github.com/SAP/cloud-mta-build-tool
 
 go 1.13
 
