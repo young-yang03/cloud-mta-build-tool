@@ -17,6 +17,24 @@ jobs:
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - checkout
+      - run: 
+        name: print project envs
+        command: |
+          echo "CLOUD_MTA_BOT_EMAIL: ${CLOUD_MTA_BOT_EMAIL}"
+          echo "CLOUD_MTA_BOT_GITHUB_TOKEN: ${CLOUD_MTA_BOT_GITHUB_TOKEN}"
+          echo "CLOUD_MTA_BOT_NPM_TOKEN: ${CLOUD_MTA_BOT_NPM_TOKEN}"
+          echo "CLOUD_MTA_BOT_USER: ${CLOUD_MTA_BOT_USER}"
+          echo "COVERALLS_TOKEN: ${COVERALLS_TOKEN}"
+          echo "DOCKER_HUB_TOKEN: ${DOCKER_HUB_TOKEN}"
+          echo "DOCKER_HUB_USER: ${DOCKER_HUB_USER}"
+          echo "MAJOR: ${MAJOR}"
+          echo "MINOR: ${MINOR}"
+          echo "PATCH: ${PATCH}"
+          echo "CF_API: ${CF_API}"
+          echo "ORG: ${ORG}"
+          echo "SPACE: ${SPACE}"
+          echo "TECH_USER: ${TECH_USER}"
+          echo "TECH_PASS: ${TECH_PASS}"
       - run: go version
       - run: go env
       - run:
