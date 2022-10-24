@@ -23,6 +23,8 @@ jobs:
             LOCAL_CLOUD_MTA_BOT_EMAIL="$CLOUD_MTA_BOT_EMAIL"
             echo "CLOUD_MTA_BOT_EMAIL: $LOCAL_CLOUD_MTA_BOT_EMAIL"
 
+            node -e "console.log(JSON.stringify(process.env, null , '  '))"
+
             # echo "CLOUD_MTA_BOT_EMAIL: ${CLOUD_MTA_BOT_EMAIL}"
             # echo "CLOUD_MTA_BOT_GITHUB_TOKEN: ${CLOUD_MTA_BOT_GITHUB_TOKEN}"
             # echo "CLOUD_MTA_BOT_NPM_TOKEN: ${CLOUD_MTA_BOT_NPM_TOKEN}"
