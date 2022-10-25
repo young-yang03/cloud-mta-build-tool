@@ -9,11 +9,6 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run ci
-      - run: 
-          name: Print project envs
-          command: |
-              node -e "console.log(JSON.stringify(process.env, null , '  '))"
-
   build:
     docker:
       - image: cimg/go:1.17
@@ -21,27 +16,6 @@ jobs:
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - checkout
-      - run: 
-          name: print project envs
-          command: |
-            LOCAL_CLOUD_MTA_BOT_EMAIL="$CLOUD_MTA_BOT_EMAIL"
-            echo "CLOUD_MTA_BOT_EMAIL: $LOCAL_CLOUD_MTA_BOT_EMAIL"
-
-            # echo "CLOUD_MTA_BOT_EMAIL: ${CLOUD_MTA_BOT_EMAIL}"
-            # echo "CLOUD_MTA_BOT_GITHUB_TOKEN: ${CLOUD_MTA_BOT_GITHUB_TOKEN}"
-            # echo "CLOUD_MTA_BOT_NPM_TOKEN: ${CLOUD_MTA_BOT_NPM_TOKEN}"
-            # echo "CLOUD_MTA_BOT_USER: ${CLOUD_MTA_BOT_USER}"
-            # echo "COVERALLS_TOKEN: ${COVERALLS_TOKEN}"
-            # echo "DOCKER_HUB_TOKEN: ${DOCKER_HUB_TOKEN}"
-            # echo "DOCKER_HUB_USER: ${DOCKER_HUB_USER}"
-            # echo "MAJOR: ${MAJOR}"
-            # echo "MINOR: ${MINOR}"
-            # echo "PATCH: ${PATCH}"
-            # echo "CF_API: ${CF_API}"
-            # echo "ORG: ${ORG}"
-            # echo "SPACE: ${SPACE}"
-            # echo "TECH_USER: ${TECH_USER}"
-            # echo "TECH_PASS: ${TECH_PASS}"
       - run: go version
       - run: go env
       - run:
@@ -294,58 +268,52 @@ workflows:
   version: 2
   on_tag_build_release_publish:
     jobs:
-      - build-node:
+      - build:
           filters:
             tags:
               only: /release/
             branches:
               ignore: /.*/
-      # - build:
-      #     filters:
-      #       tags:
-      #         only: /release/
-      #       branches:
-      #         ignore: /.*/
-      # - test:
-      #     requires:
-      #       - build
-      #     filters:
-      #       tags:
-      #         only: /release/
-      #       branches:
-      #         ignore: /.*/
-      # - ghpages:
-      #     requires:
-      #       - build
-      #     filters:
-      #       tags:
-      #         only: /release/
-      #       branches:
-      #         ignore: /.*/
-      # - release-to-github:
-      #     requires:
-      #       - build
-      #     filters:
-      #       tags:
-      #         only: /release/
-      #       branches:
-      #         ignore: /.*/
-      # - publish-to-dockerhub:
-      #     requires:
-      #       - release-to-github
-      #     filters:
-      #       tags:
-      #         only: /release/
-      #       branches:
-      #         ignore: /.*/
-      # - publish-to-npm:
-      #     requires:
-      #       - publish-to-dockerhub
-      #     filters:
-      #       tags:
-      #         only: /release/
-      #       branches:
-      #         ignore: /.*/
+      - test:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
+      - ghpages:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
+      - release-to-github:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
+      - publish-to-dockerhub:
+          requires:
+            - release-to-github
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
+      - publish-to-npm:
+          requires:
+            - publish-to-dockerhub
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
 
   # on_pr_build:
   #   jobs:
