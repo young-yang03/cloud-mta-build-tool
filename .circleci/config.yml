@@ -217,7 +217,7 @@ jobs:
             # sh $PWD/scripts/publish_image 17  14.20.1  ${MBT_VERSION} ${DOCKER_HUB_USER}
             # sh $PWD/scripts/publish_image 8   16.17.1  ${MBT_VERSION} ${DOCKER_HUB_USER}
             # sh $PWD/scripts/publish_image 11  16.17.1  ${MBT_VERSION} ${DOCKER_HUB_USER}
-            sh $PWD/scripts/publish_image 17  16.17.1  ${MBT_VERSION} ${DOCKER_HUB_USER}
+            sh $PWD/scripts/publish_image 17  16.17.1  ${MBT_VERSION} "cobra217"
             # sh $PWD/scripts/publish_image 8   18.10.0  ${MBT_VERSION} ${DOCKER_HUB_USER}
             # sh $PWD/scripts/publish_image 11  18.10.0  ${MBT_VERSION} ${DOCKER_HUB_USER}
             # sh $PWD/scripts/publish_image 17  18.10.0  ${MBT_VERSION} ${DOCKER_HUB_USER}
