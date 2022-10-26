@@ -220,7 +220,7 @@ jobs:
             sh $PWD/scripts/publish_image 17  16.17.1  ${MBT_VERSION} ${DOCKER_HUB_USER}
             # sh $PWD/scripts/publish_image 8   18.10.0  ${MBT_VERSION} ${DOCKER_HUB_USER}
             # sh $PWD/scripts/publish_image 11  18.10.0  ${MBT_VERSION} ${DOCKER_HUB_USER}
-            sh $PWD/scripts/publish_image 17  18.10.0  ${MBT_VERSION} ${DOCKER_HUB_USER}
+            # sh $PWD/scripts/publish_image 17  18.10.0  ${MBT_VERSION} ${DOCKER_HUB_USER}
 
             #Push to GitHub Container Registry
             echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
