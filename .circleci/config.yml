@@ -50,7 +50,6 @@ jobs:
           name: install dependencies
           command: |
             go mod vendor
-            echo "Just a test for check status!!!"
       - run: cf login -a $CF_API -o $ORG -s $SPACE -u $TECH_USER -p $TECH_PASS
       - run: cd integration &&  go test -tags=integration
 
@@ -289,8 +288,7 @@ workflows:
             branches:
               ignore: master
 
-  # when master's code is commited or merged from sub-branch, build, compliance and test will be execed
-  # when sub-branch's code is commited, build-node will be execed
+  # when master's code is commited or merged from sub-branch, this workflow will be execed
   on_merge_build_test:
     jobs:
       - build:
