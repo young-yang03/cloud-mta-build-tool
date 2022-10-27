@@ -300,7 +300,7 @@ workflows:
       - build-node:
           filters:
             branches:
-              ignore: master
+              only: master
       - compliance:
           filters:
             branches:
