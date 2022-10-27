@@ -26,29 +26,6 @@ export JAVA_VERSION="-java${JAVA_MAJOR_VERSION}"
 export NODE_VERSION="-node${NODE_MAJOR_VERSION}"
 echo "Java version: ${JAVA_VERSION}, Node version: ${NODE_VERSION}"
 
-# if [ "$JAVA_VERSION_TEMPLATE" = "11" ]
-# then
-# 	export JAVA_VERSION="-java11"
-# 	export NODE_VERSION="-node$(echo $NODE_VERSION_TEMPLATE |awk -F. '{printf "%d", $1}')"
-# 	cp Dockerfile_mbtci_java11 Dockerfile
-# 	sed  -i "s/NODE_VERSION_TEMPLATE/v${NODE_VERSION_TEMPLATE}/" Dockerfile
-# elif [ "$JAVA_VERSION_TEMPLATE" = "8" ]
-# then
-# 	export JAVA_VERSION="-java8"
-# 	export NODE_VERSION="-node$(echo $NODE_VERSION_TEMPLATE |awk -F. '{printf "%d", $1}')"
-# 	cp Dockerfile_mbtci_java8 Dockerfile
-# 	sed  -i "s/NODE_VERSION_TEMPLATE/v${NODE_VERSION_TEMPLATE}/" Dockerfile
-# elif [ "$JAVA_VERSION_TEMPLATE" = "17" ]
-# then
-# 	export JAVA_VERSION="-java17"
-# 	export NODE_VERSION="-node$(echo $NODE_VERSION_TEMPLATE |awk -F. '{printf "%d", $1}')"
-# 	cp Dockerfile_mbtci_java17 Dockerfile
-# 	sed  -i "s/NODE_VERSION_TEMPLATE/v${NODE_VERSION_TEMPLATE}/" Dockerfile
-# else
-# 	echo "Java:${JAVA_VERSION_TEMPLATE}, Node:${NODE_VERSION_TEMPLATE} is not supported!"
-# 	exit -1
-# fi
-
 # build docker image
 cp Dockerfile_mbtci_java${JAVA_MAJOR_VERSION} Dockerfile
 sed  -i "s/NODE_VERSION_TEMPLATE/v${NODE_VERSION_TEMPLATE}/" Dockerfile
