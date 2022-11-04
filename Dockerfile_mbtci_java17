@@ -33,7 +33,7 @@ RUN apt-get update && \
     # This causes SSL connections using OpenSSL from a Buster based installation to fail
     # Should be remove once SAP npm repo will patch the security level
     # see - https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=912759
-    sed -i -E 's/(CipherString\s*=\s*DEFAULT@SECLEVEL=)2/\11/' /etc/ssl/openssl.cnf && \
+    sed -i -E 's/(CipherString\s*=\s*DEFAULT@SECLEVEL=)2/\11/' /etc/ssl/openssl.cnf
 
 # install node
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
@@ -106,7 +106,7 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
 	curl -O https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz && tar -xvf go${GO_VERSION}.linux-amd64.tar.gz && \
     mv go /usr/local && \
     mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH" && \
-    mkdir -p ${GOPATH}/src ${GOPATH}/bin && \
+    mkdir -p ${GOPATH}/src ${GOPATH}/bin
 
 
 # install maven
