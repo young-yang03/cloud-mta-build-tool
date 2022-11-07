@@ -289,26 +289,26 @@ workflows:
   #             ignore: master
 
   # when master's code is commited or merged from sub-branch, this workflow will be execed
-  on_merge_build_test:
-    jobs:
-      - build:
-          filters:
-            branches:
-              only: master
-      - build-node:
-          filters:
-            branches:
-              only: master
-      - compliance:
-          filters:
-            branches:
-              only: master
-      - test:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+  # on_merge_build_test:
+  #   jobs:
+  #     - build:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - build-node:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - compliance:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - test:
+  #         requires:
+  #           - build
+  #         filters:
+  #           branches:
+  #             only: master
 
   # when a branch is taged by "release", this workflow will be execed
   on_tag_build_release_publish:
