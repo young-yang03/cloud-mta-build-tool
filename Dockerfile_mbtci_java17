@@ -192,7 +192,7 @@ RUN set -ex \
 
 # Install MBT
 RUN set -ex \
-  && npm install -g --unsafe-perm mbt@${MBT_VERSION} \
+  && npm install -g --unsafe-perm @young-yang217/mbt@${MBT_VERSION} \
   && npm cache clean -g --force \
   # smoke tests
   && echo "mbt ${MBT_VERSION} install smoke tests!" \
