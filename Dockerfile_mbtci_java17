@@ -183,8 +183,8 @@ RUN M2_BASE="$(dirname ${M2_HOME})" && \
     curl --fail --silent --output - "https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz" \
     | tar -xzvf - -C "${M2_BASE}" && \
     ln -s "${M2_HOME}/bin/mvn" /usr/local/bin/mvn && \
-    chmod --recursive a+w "${M2_HOME}"/conf/* && \
-    echo "JAVA_HOME: ${JAVA_HOME}, JAVA_VERSION: ${JAVA_VERSION}" && \
+    chmod --recursive a+w "${M2_HOME}"/conf/* \
+    # echo "JAVA_HOME: ${JAVA_HOME}, JAVA_VERSION: ${JAVA_VERSION}" \
     # mvn --version
 
 # Install MBT
@@ -199,7 +199,7 @@ RUN	set -ex \
 
 # Download MBT (commnet by young-yang03)
 	# curl -L "https://github.com/young-yang03/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin && \
-    # chown root:root /usr/local/bin/mbt && \
+  # chown root:root /usr/local/bin/mbt && \
 
 # Install essential build tools and python
 RUN set -ex \
@@ -213,7 +213,7 @@ RUN set -ex \
 # # Install essential build tools and python, required for building db modules (commnet by young-yang03)
 # 	apt-get install --yes --no-install-recommends \
 # 		build-essential \
-#       python2.7 \
+#     python2.7 \
 # 		python3 && \
 
 # remove build env tools (commented by young-yang03) 
