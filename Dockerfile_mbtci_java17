@@ -108,6 +108,7 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
     # smoke tests
+    && echo "node ${NODE_VERSION} install smoke tests!" \
     && node --version \
     && npm --version
 
@@ -125,6 +126,7 @@ RUN	set -ex \
     && npm install --prefix /usr/local/ -g @ui5/cli \
     && npm cache clean -g --force \
     # smoke tests
+    && echo "ui5 install smoke tests!" \
     && ui5 --version
 
 # install ui5-cli temporay solution (commented by young-yang03) 
@@ -143,6 +145,7 @@ RUN	set -ex \
     && chmod -R 777 "$GOPATH" \
     && mkdir -p ${GOPATH}/src ${GOPATH}/bin \
     # smoke tests
+    && echo "go ${GO_VERSION} install smoke tests!" \
     && go version
 
 # installing Golang (commented by young-yang03) 
@@ -171,30 +174,30 @@ RUN	set -ex \
 #   && chmod --recursive a+w ${MAVEN_HOME}/conf/* \
 #   && ln -s ${MAVEN_HOME}/bin/mvn /usr/bin/mvn \
 #   && apt-get remove --purge --autoremove -y ca-certificates curl gnupg dirmngr \
-#   # smoke test
-#   && echo "JAVA_HOME: ${JAVA_HOME}, JAVA_VERSION: ${JAVA_VERSION}" \
+#   # smoke tests
+#   && echo "mvn ${MAVEN_VERSION} smoke tests!" \
 #   && mvn --version
 
 # install maven (commnet by young-yang03)
 ENV M2_HOME=/opt/maven/apache-maven-${MAVEN_VERSION}
 
-RUN M2_BASE="$(dirname ${M2_HOME})" && \
-    mkdir -p "${M2_BASE}" && \
-    curl --fail --silent --output - "https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz" \
-    | tar -xzvf - -C "${M2_BASE}" && \
-    ln -s "${M2_HOME}/bin/mvn" /usr/local/bin/mvn && \
-    chmod --recursive a+w "${M2_HOME}"/conf/*
-    # echo "JAVA_HOME: ${JAVA_HOME}, JAVA_VERSION: ${JAVA_VERSION}" \
-    # mvn --version
+RUN M2_BASE="$(dirname ${M2_HOME})"  \
+  && mkdir -p "${M2_BASE}" \
+  && curl --fail --silent --output - "https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz" \ | tar -xzvf - -C "${M2_BASE}" \
+  && ln -s "${M2_HOME}/bin/mvn" /usr/local/bin/mvn \
+  && chmod --recursive a+w "${M2_HOME}"/conf/* \
+  && echo "mvn ${MAVEN_VERSION} smoke tests!"
+  # mvn --version
 
 # Install MBT
 RUN	set -ex \
   && apt-get update \
   && apt-get install -y ca-certificates curl --no-install-recommends \
   && rm -rf /var/lib/apt/lists/* \
-  && curl -L "https://github.com/young-yang03/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin && \
+  && curl -L "https://github.com/young-yang03/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin \
   && chown root:root /usr/local/bin/mbt \
-  # smoke test
+  # smoke tests
+  && echo "mbt ${MBT_VERSION} install smoke tests!" \
   && mbt --version
 
 # Download MBT (commnet by young-yang03)
@@ -206,7 +209,8 @@ RUN set -ex \
   && apt-get update \
   && apt-get install -y ca-certificates build-essential python2.7 python3 --no-install-recommends \
   && rm -rf /var/lib/apt/lists/* \
-  # smoke test
+  # smoke tests
+  && echo "python install smoke tests!" \
   && python2.7 --version \
   && python3 --version
 
