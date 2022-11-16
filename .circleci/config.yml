@@ -233,7 +233,12 @@ jobs:
             # sh $PWD/scripts/publish_image 8   18.10.0  ${MBT_VERSION} "ghcr.io/young-yang03"
             # sh $PWD/scripts/publish_image 11  18.10.0  ${MBT_VERSION} "ghcr.io/young-yang03"
             # sh $PWD/scripts/publish_image 17  18.10.0  ${MBT_VERSION} "ghcr.io/young-yang03"
-
+      - run:
+          # This won't run if previous commands have failed so the tag should be removed **manually**
+          name: remove dummy release tag
+          command: |
+            git push https://github.com/young-yang03/cloud-mta-build-tool.git --delete release
+  
   publish-to-npm:
     docker:
       - image: cimg/node:lts
@@ -258,11 +263,6 @@ jobs:
             npm install
             npm run ci
             npm publish --access public
-      - run:
-          # This won't run if previous commands have failed so the tag should be removed **manually**
-          name: remove dummy release tag
-          command: |
-            git push https://github.com/young-yang03/cloud-mta-build-tool.git --delete release
 
 workflows:
   version: 2
