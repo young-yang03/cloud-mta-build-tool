@@ -344,7 +344,7 @@ workflows:
               only: /release/
             branches:
               ignore: /.*/
-      - publish-to-dockerhub:
+      - publish-to-npm:
           requires:
             - release-to-github
           filters:
@@ -352,9 +352,9 @@ workflows:
               only: /release/
             branches:
               ignore: /.*/
-      - publish-to-npm:
+      - publish-to-dockerhub:
           requires:
-            - publish-to-dockerhub
+            - publish-to-npm
           filters:
             tags:
               only: /release/

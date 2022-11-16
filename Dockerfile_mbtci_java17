@@ -191,15 +191,23 @@ RUN set -ex \
 #   # mvn --version
 
 # Install MBT
-RUN	set -ex \
-  && apt-get update \
-  && apt-get install -y ca-certificates curl --no-install-recommends \
-  && rm -rf /var/lib/apt/lists/* \
-  && curl -L "https://github.com/young-yang03/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin \
-  && chown root:root /usr/local/bin/mbt \
+RUN set -ex \
+  && npm install -g --unsafe-perm mbt@${MBT_VERSION} \
+  && npm cache clean -g --force \
   # smoke tests
   && echo "mbt ${MBT_VERSION} install smoke tests!" \
   && mbt --version
+
+# Install MBT (commnet by young-yang03)
+# RUN	set -ex \
+#   && apt-get update \
+#   && apt-get install -y ca-certificates curl --no-install-recommends \
+#   && rm -rf /var/lib/apt/lists/* \
+#   && curl -L "https://github.com/young-yang03/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin \
+#   && chown root:root /usr/local/bin/mbt \
+#   # smoke tests
+#   && echo "mbt ${MBT_VERSION} install smoke tests!" \
+#   && mbt --version
 
 # Install essential build tools and python
 RUN set -ex \
