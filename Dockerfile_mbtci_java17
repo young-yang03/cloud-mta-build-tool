@@ -1,19 +1,19 @@
-FROM sapmachine:17
+FROM debian:bullseye-slim
+#FROM sapmachine:17
 
 # Build time arguments
 ARG MTA_USER="mta"
 ARG MTA_USER_HOME=/home/mta
 ARG MBT_VERSION=1.2.83
-ARG GO_VERSION=1.15.6
+ARG GO_VERSION=1.19.3
 ARG NODE_VERSION=NODE_VERSION_TEMPLATE
 ARG MAVEN_VERSION=3.8.6
 ARG MAVEN_BASE_URL=https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries
+ARG SAPMACHINE_VERSION=17.0.5
 
 # Environment variables
 ENV PYTHON /usr/bin/python3
 ENV MAVEN_HOME /usr/share/maven
-# ENV M2_HOME ${MAVEN_HOME}
-# ENV M2_HOME=/opt/maven/apache-maven-${MAVEN_VERSION}
 ENV GOPATH /go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 ENV CGO_ENABLED=0
@@ -36,21 +36,6 @@ RUN set -ex \
             --password "$(echo weUseMta | openssl passwd -1 -stdin)" ${MTA_USER} \
   # allow anybody to write into the image user home directory
   && chmod a+w ${MTA_USER_HOME}
-
-# # Download required env tools (commented by young-yang03)
-# RUN apt-get update && \
-#     apt-get install --yes --no-install-recommends \
-# 		ca-certificates \
-# 		git \
-# 		curl && \
-
-#     # Change security level as the SAP npm repo doesnt support buster new security upgrade
-#     # the default configuration for OpenSSL in Buster explicitly requires using more secure ciphers and protocols,
-#     # and the server running at http://npm.sap.com/ is running software configured to only provide insecure, older ciphers.
-#     # This causes SSL connections using OpenSSL from a Buster based installation to fail
-#     # Should be remove once SAP npm repo will patch the security level
-#     # see - https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=912759
-#     sed -i -E 's/(CipherString\s*=\s*DEFAULT@SECLEVEL=)2/\11/' /etc/ssl/openssl.cnf
 
 # download SAP_Global_Root_CA.crt to target 
 ADD http://aia.pki.co.sap.com/aia/SAP%20Global%20Root%20CA.crt \
@@ -129,15 +114,13 @@ RUN	set -ex \
     && echo "ui5 install smoke tests!" \
     && ui5 --version
 
-# install ui5-cli temporay solution (commented by young-yang03) 
-	# npm install --prefix /usr/local/ -g @ui5/cli && \
-
 # install Golang
 RUN	set -ex \
     && apt-get update \
     && apt-get install -y ca-certificates curl --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
-    && curl -O https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz \
+    && curl -O https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz \
+    # && curl -O https://https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz \
     && tar -xvf go${GO_VERSION}.linux-amd64.tar.gz \
     && rm -rf /usr/local/go \
     && mv go /usr/local \
@@ -148,46 +131,66 @@ RUN	set -ex \
     && echo "go ${GO_VERSION} install smoke tests!" \
     && go version
 
-# installing Golang (commented by young-yang03) 
-    # curl -O https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz && tar -xvf go${GO_VERSION}.linux-amd64.tar.gz && \
-    # mv go /usr/local && \
-    # mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH" && \
-    # mkdir -p ${GOPATH}/src ${GOPATH}/bin && \
+RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
+    && case "${dpkgArch##*-}" in \
+      amd64) ARCH='amd64';; \
+      *) echo "unsupported architecture"; exit 1 ;; \
+    esac \
+  && set -ex \
+  && apt-get update \
+  && apt-get install -y ca-certificates gnupg dirmngr --no-install-recommends \
+  && rm -rf /var/lib/apt/lists/* \
+  && for key in \
+    CACB9FE09150307D1D22D82962754C3B3ABCFE23 \
+  ; do \
+    gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/sapmachine.gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$key" || \
+    gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/sapmachine.gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$key" ; \
+  done \
+  && chmod 644 /etc/apt/trusted.gpg.d/sapmachine.gpg \
+  && echo "deb http://dist.sapmachine.io/debian/${ARCH}/ ./" | tee /etc/apt/sources.list.d/sapmachine.list \
+  && apt-get update \
+  && apt-get install -y sapmachine-$(echo ${SAPMACHINE_VERSION} | cut -d. -f1)-jdk=${SAPMACHINE_VERSION} --no-install-recommends \
+  && rm -rf /var/lib/apt/lists/* \
+  && apt-get remove --purge --autoremove -y ca-certificates gnupg dirmngr \
+  # smoke test
+  && echo "sapmachine ${SAPMACHINE_VERSION} install smoke tests!" \
+  && java --version
+
 
 # install maven
-# RUN set -ex \
-#   && apt-get update \
-#   && apt-get install -y ca-certificates curl gnupg dirmngr --no-install-recommends \
-#   && rm -rf /var/lib/apt/lists/* \
-#   && curl -fsSLO --compressed ${MAVEN_BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz \
-#   && curl -fsSLO --compressed ${MAVEN_BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc \
-#   && for key in \
-#     6A814B1F869C2BBEAB7CB7271A2A1C94BDE89688 \
-#   ; do \
-#     gpg --batch --keyserver hkps://pgp.surf.nl --recv-keys "$key" || \
-#     gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$key" ; \
-#   done \
-#   && gpg --batch --verify apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc apache-maven-${MAVEN_VERSION}-bin.tar.gz \
-#   && mkdir -p ${MAVEN_HOME} ${MAVEN_HOME}/ref \
-#   && tar -xzf apache-maven-${MAVEN_VERSION}-bin.tar.gz -C ${MAVEN_HOME} --strip-components=1 \
-#   && rm -f apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc apache-maven-${MAVEN_VERSION}-bin.tar.gz \
-#   && chmod --recursive a+w ${MAVEN_HOME}/conf/* \
-#   && ln -s ${MAVEN_HOME}/bin/mvn /usr/bin/mvn \
-#   && apt-get remove --purge --autoremove -y ca-certificates curl gnupg dirmngr \
-#   # smoke tests
-#   && echo "mvn ${MAVEN_VERSION} smoke tests!" \
-#   && mvn --version
+RUN set -ex \
+  && apt-get update \
+  && apt-get install -y ca-certificates curl gnupg dirmngr --no-install-recommends \
+  && rm -rf /var/lib/apt/lists/* \
+  && curl -fsSLO --compressed ${MAVEN_BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz \
+  && curl -fsSLO --compressed ${MAVEN_BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc \
+  && for key in \
+    6A814B1F869C2BBEAB7CB7271A2A1C94BDE89688 \
+  ; do \
+    gpg --batch --keyserver hkps://pgp.surf.nl --recv-keys "$key" || \
+    gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$key" ; \
+  done \
+  && gpg --batch --verify apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc apache-maven-${MAVEN_VERSION}-bin.tar.gz \
+  && mkdir -p ${MAVEN_HOME} ${MAVEN_HOME}/ref \
+  && tar -xzf apache-maven-${MAVEN_VERSION}-bin.tar.gz -C ${MAVEN_HOME} --strip-components=1 \
+  && rm -f apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc apache-maven-${MAVEN_VERSION}-bin.tar.gz \
+  && chmod --recursive a+w ${MAVEN_HOME}/conf/* \
+  && ln -s ${MAVEN_HOME}/bin/mvn /usr/bin/mvn \
+  && apt-get remove --purge --autoremove -y ca-certificates curl gnupg dirmngr \
+  # smoke tests
+  && echo "mvn ${MAVEN_VERSION} smoke tests!" \
+  && mvn --version
 
 # install maven (commnet by young-yang03)
-ENV M2_HOME=/opt/maven/apache-maven-${MAVEN_VERSION}
+# ENV M2_HOME=/opt/maven/apache-maven-${MAVEN_VERSION}
 
-RUN M2_BASE="$(dirname ${M2_HOME})"  \
-  && mkdir -p "${M2_BASE}" \
-  && curl --fail --silent --output - "https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz" \ | tar -xzvf - -C "${M2_BASE}" \
-  && ln -s "${M2_HOME}/bin/mvn" /usr/local/bin/mvn \
-  && chmod --recursive a+w "${M2_HOME}"/conf/* \
-  && echo "mvn ${MAVEN_VERSION} smoke tests!"
-  # mvn --version
+# RUN M2_BASE="$(dirname ${M2_HOME})"  \
+#   && mkdir -p "${M2_BASE}" \
+#   && curl --fail --silent --output - "https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz" \ | tar -xzvf - -C "${M2_BASE}" \
+#   && ln -s "${M2_HOME}/bin/mvn" /usr/local/bin/mvn \
+#   && chmod --recursive a+w "${M2_HOME}"/conf/* \
+#   && echo "mvn ${MAVEN_VERSION} smoke tests!"
+#   # mvn --version
 
 # Install MBT
 RUN	set -ex \
@@ -200,10 +203,6 @@ RUN	set -ex \
   && echo "mbt ${MBT_VERSION} install smoke tests!" \
   && mbt --version
 
-# Download MBT (commnet by young-yang03)
-	# curl -L "https://github.com/young-yang03/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin && \
-  # chown root:root /usr/local/bin/mbt && \
-
 # Install essential build tools and python
 RUN set -ex \
   && apt-get update \
@@ -213,18 +212,6 @@ RUN set -ex \
   && echo "python install smoke tests!" \
   && python2.7 --version \
   && python3 --version
-
-# # Install essential build tools and python, required for building db modules (commnet by young-yang03)
-# 	apt-get install --yes --no-install-recommends \
-# 		build-essential \
-#     python2.7 \
-# 		python3 && \
-
-# remove build env tools (commented by young-yang03) 
-    # apt-get remove --purge --autoremove --yes \
-	# 	curl && \
-
-    # rm -rf /var/lib/apt/lists/*
 
 ENV PATH=$PATH:./node_modules/.bin HOME=${MTA_USER_HOME}
 WORKDIR /project
