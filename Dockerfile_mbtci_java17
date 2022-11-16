@@ -152,36 +152,40 @@ RUN	set -ex \
     # mkdir -p ${GOPATH}/src ${GOPATH}/bin && \
 
 # install maven
-RUN set -ex \
-  && apt-get update \
-  && apt-get install -y ca-certificates curl gnupg dirmngr --no-install-recommends \
-  && rm -rf /var/lib/apt/lists/* \
-  && curl -fsSLO --compressed ${MAVEN_BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz \
-  && curl -fsSLO --compressed ${MAVEN_BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc \
-  && for key in \
-    6A814B1F869C2BBEAB7CB7271A2A1C94BDE89688 \
-  ; do \
-    gpg --batch --keyserver hkps://pgp.surf.nl --recv-keys "$key" || \
-    gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$key" ; \
-  done \
-  && gpg --batch --verify apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc apache-maven-${MAVEN_VERSION}-bin.tar.gz \
-  && mkdir -p ${MAVEN_HOME} ${MAVEN_HOME}/ref \
-  && tar -xzf apache-maven-${MAVEN_VERSION}-bin.tar.gz -C ${MAVEN_HOME} --strip-components=1 \
-  && rm -f apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc apache-maven-${MAVEN_VERSION}-bin.tar.gz \
-  && chmod --recursive a+w ${MAVEN_HOME}/conf/* \
-  && ln -s ${MAVEN_HOME}/bin/mvn /usr/bin/mvn \
-  && apt-get remove --purge --autoremove -y ca-certificates curl gnupg dirmngr \
-  # smoke test
-  && echo "JAVA_HOME: ${JAVA_HOME}, JAVA_VERSION: ${JAVA_VERSION}" \
-  && mvn --version
+# RUN set -ex \
+#   && apt-get update \
+#   && apt-get install -y ca-certificates curl gnupg dirmngr --no-install-recommends \
+#   && rm -rf /var/lib/apt/lists/* \
+#   && curl -fsSLO --compressed ${MAVEN_BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz \
+#   && curl -fsSLO --compressed ${MAVEN_BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc \
+#   && for key in \
+#     6A814B1F869C2BBEAB7CB7271A2A1C94BDE89688 \
+#   ; do \
+#     gpg --batch --keyserver hkps://pgp.surf.nl --recv-keys "$key" || \
+#     gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$key" ; \
+#   done \
+#   && gpg --batch --verify apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc apache-maven-${MAVEN_VERSION}-bin.tar.gz \
+#   && mkdir -p ${MAVEN_HOME} ${MAVEN_HOME}/ref \
+#   && tar -xzf apache-maven-${MAVEN_VERSION}-bin.tar.gz -C ${MAVEN_HOME} --strip-components=1 \
+#   && rm -f apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc apache-maven-${MAVEN_VERSION}-bin.tar.gz \
+#   && chmod --recursive a+w ${MAVEN_HOME}/conf/* \
+#   && ln -s ${MAVEN_HOME}/bin/mvn /usr/bin/mvn \
+#   && apt-get remove --purge --autoremove -y ca-certificates curl gnupg dirmngr \
+#   # smoke test
+#   && echo "JAVA_HOME: ${JAVA_HOME}, JAVA_VERSION: ${JAVA_VERSION}" \
+#   && mvn --version
 
-# update maven home (commnet by young-yang)
-	# M2_BASE="$(dirname ${M2_HOME})" && \
-    # mkdir -p "${M2_BASE}" && \
-    # curl --fail --silent --output - "https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz" \
-    # | tar -xzvf - -C "${M2_BASE}" && \
-    # ln -s "${M2_HOME}/bin/mvn" /usr/local/bin/mvn && \
-    # chmod --recursive a+w "${M2_HOME}"/conf/* && \
+# install maven (commnet by young-yang03)
+ENV M2_HOME=/opt/maven/apache-maven-${MAVEN_VERSION}
+
+RUN M2_BASE="$(dirname ${M2_HOME})" && \
+    mkdir -p "${M2_BASE}" && \
+    curl --fail --silent --output - "https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz" \
+    | tar -xzvf - -C "${M2_BASE}" && \
+    ln -s "${M2_HOME}/bin/mvn" /usr/local/bin/mvn && \
+    chmod --recursive a+w "${M2_HOME}"/conf/* && \
+    echo "JAVA_HOME: ${JAVA_HOME}, JAVA_VERSION: ${JAVA_VERSION}" && \
+    mvn --version
 
 # Install MBT
 RUN	set -ex \
@@ -191,9 +195,9 @@ RUN	set -ex \
   && curl -L "https://github.com/young-yang03/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin && \
   && chown root:root /usr/local/bin/mbt \
   # smoke test
-  && mbt --version \
+  && mbt --version
 
-# Download MBT (commnet by young-yang)
+# Download MBT (commnet by young-yang03)
 	# curl -L "https://github.com/young-yang03/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin && \
     # chown root:root /usr/local/bin/mbt && \
 
@@ -206,7 +210,7 @@ RUN set -ex \
   && python2.7 --version \
   && python3 --version
 
-# # Install essential build tools and python, required for building db modules (commnet by young-yang)
+# # Install essential build tools and python, required for building db modules (commnet by young-yang03)
 # 	apt-get install --yes --no-install-recommends \
 # 		build-essential \
 #       python2.7 \
