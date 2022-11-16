@@ -172,7 +172,7 @@ RUN set -ex \
   && ln -s ${MAVEN_HOME}/bin/mvn /usr/bin/mvn \
   && apt-get remove --purge --autoremove -y ca-certificates curl gnupg dirmngr \
   # smoke test
-  # && echo ${JAVA_HOME} ${JAVA_VERSION} \
+  && echo "JAVA_HOME: ${JAVA_HOME}, JAVA_VERSION: ${JAVA_VERSION} \
   && mvn --version
 
 # update maven home (commnet by young-yang)
