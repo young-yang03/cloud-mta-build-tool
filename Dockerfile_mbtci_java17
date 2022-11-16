@@ -119,10 +119,8 @@ RUN	set -ex \
     && apt-get update \
     && apt-get install -y ca-certificates curl --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
-    && curl -O https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz \
-    && tar -xzf go${GO_VERSION}.linux-amd64.tar.gz \
-    # && curl -O https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz \
-    # && tar -xvf go${GO_VERSION}.linux-amd64.tar.gz \
+    && curl -O https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz \
+    && tar -xvf go${GO_VERSION}.linux-amd64.tar.gz \
     && rm -rf /usr/local/go \
     && mv go /usr/local \
     && mkdir -p "$GOPATH/src" "$GOPATH/bin" \
@@ -156,7 +154,6 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   # smoke test
   && echo "sapmachine ${SAPMACHINE_VERSION} install smoke tests!" \
   && java --version
-
 
 # install maven
 RUN set -ex \
