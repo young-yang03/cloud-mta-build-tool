@@ -185,7 +185,7 @@ RUN M2_BASE="$(dirname ${M2_HOME})" && \
     ln -s "${M2_HOME}/bin/mvn" /usr/local/bin/mvn && \
     chmod --recursive a+w "${M2_HOME}"/conf/* && \
     echo "JAVA_HOME: ${JAVA_HOME}, JAVA_VERSION: ${JAVA_VERSION}" && \
-    mvn --version
+    # mvn --version
 
 # Install MBT
 RUN	set -ex \
