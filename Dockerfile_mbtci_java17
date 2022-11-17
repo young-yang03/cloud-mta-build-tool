@@ -1,5 +1,4 @@
 FROM debian:bullseye-slim
-#FROM sapmachine:17
 
 # Build time arguments
 ARG MTA_USER="mta"
@@ -54,34 +53,31 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     esac \
     && set -ex \
     && apt-get update \
-    # libatomic1 for arm
     && apt-get install -y ca-certificates curl gnupg dirmngr xz-utils libatomic1 --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && for key in \
       4ED778F539E3634C779C87C6D7062848A1AB005C \
       141F07595B7B3FFE74309A937405533BE57C7D57 \
-      94AE36675C464D64BAFA68DD7434390BDBE9B9C5 \
       74F12602B6F1C4E913FAA37AD3A89613643B6201 \
-      71DCFD284A79C3B38668286BC97EC7A07EDE3FC1 \
       61FC681DFB92A079F1685E77973F295594EC4689 \
       8FCCA13FEF1D0C2E91008E09770F7A9A5AE15600 \
       C4F0DFFF4E8C1A8236409D08E73BC641CC11F4C8 \
       890C08DB8579162FEE0DF9DB8BEAB4DFCF555EF4 \
       C82FA3AE1CBEDC6BE46B9360C43CEC45C17AB93C \
-      DD8F2338BAE7501E3DD5AC78C273792F7D83545D \
-      A48C2BEE680E841632CD4E44F07496B3EB3C1762 \
       108F52B48DB57BB0CC439B2997B01419BD92F80A \
-      B9E2F5981AA6E0CD28160D9FF13993A75599653C \
     ; do \
       gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$key" || \
       gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$key" ; \
     done \
-    && curl -fsSLO --compressed "https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-$ARCH.tar.xz" \
-    && curl -fsSLO --compressed "https://nodejs.org/dist/$NODE_VERSION/SHASUMS256.txt.asc" \
-    && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc \
-    && grep " node-$NODE_VERSION-linux-$ARCH.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
-    && tar -xJf "node-$NODE_VERSION-linux-$ARCH.tar.xz" -C /usr/local --strip-components=1 --no-same-owner \
-    && rm "node-$NODE_VERSION-linux-$ARCH.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
+    # check downloaded archive matches the checksum
+    && curl -fsSLO --compressed "https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-$ARCH.tar.gz" \
+    && curl -fsSLO --compressed "https://nodejs.org/dist/$NODE_VERSION/SHASUMS256.txt" \
+    && grep " node-$NODE_VERSION-linux-$ARCH.tar.gz\$" SHASUMS256.txt | sha256sum -c - \
+    # check downloaded checksum file signature
+    && curl -fsSLO --compressed "https://nodejs.org/dist/$NODE_VERSION/SHASUMS256.txt.sig" \
+    && gpg --verify SHASUMS256.txt.sig SHASUMS256.txt \
+    && tar -zxv -f "node-$NODE_VERSION-linux-$ARCH.tar.xz" -C /usr/local --strip-components=1 --no-same-owner \
+    && rm "node-$NODE_VERSION-linux-$ARCH.tar.gz" SHASUMS256.txt.sig SHASUMS256.txt \
     && apt-mark auto '.*' > /dev/null \
     && find /usr/local -type f -executable -exec ldd '{}' ';' \
       | awk '/=>/ { print $(NF-1) }' \
@@ -98,13 +94,54 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && npm --version
 
 # install node (commented by young-yang03) 
-	# NODE_HOME=/opt/nodejs; mkdir -p ${NODE_HOME} && \
-    # curl --fail --silent --output - "https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.gz" \
-    #  | tar -xzv -f - -C "${NODE_HOME}" && \
-    # ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/node" /usr/local/bin/node && \
-    # ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npm" /usr/local/bin/npm && \
-    # ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npx" /usr/local/bin/ && \
-    # npm install --prefix /usr/local/ -g grunt-cli && \
+# RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
+#     && case "${dpkgArch##*-}" in \
+#       amd64) ARCH='x64';; \
+#       ppc64el) ARCH='ppc64le';; \
+#       s390x) ARCH='s390x';; \
+#       arm64) ARCH='arm64';; \
+#       armhf) ARCH='armv7l';; \
+#       i386) ARCH='x86';; \
+#       *) echo "unsupported architecture"; exit 1 ;; \
+#     esac \
+#     && set -ex \
+#     && apt-get update \
+#     && apt-get install -y ca-certificates curl gnupg dirmngr xz-utils libatomic1 --no-install-recommends \
+#     && rm -rf /var/lib/apt/lists/* \
+#     && for key in \
+#       4ED778F539E3634C779C87C6D7062848A1AB005C \
+#       141F07595B7B3FFE74309A937405533BE57C7D57 \
+#       74F12602B6F1C4E913FAA37AD3A89613643B6201 \
+#       61FC681DFB92A079F1685E77973F295594EC4689 \
+#       8FCCA13FEF1D0C2E91008E09770F7A9A5AE15600 \
+#       C4F0DFFF4E8C1A8236409D08E73BC641CC11F4C8 \
+#       890C08DB8579162FEE0DF9DB8BEAB4DFCF555EF4 \
+#       C82FA3AE1CBEDC6BE46B9360C43CEC45C17AB93C \
+#       108F52B48DB57BB0CC439B2997B01419BD92F80A \
+#     ; do \
+#       gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$key" || \
+#       gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$key" ; \
+#     done \
+#     && curl -fsSLO --compressed "https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-$ARCH.tar.xz" \
+#     && curl -fsSLO --compressed "https://nodejs.org/dist/$NODE_VERSION/SHASUMS256.txt.asc" \
+#     && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc \
+#     && grep " node-$NODE_VERSION-linux-$ARCH.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
+#     && tar -xJf "node-$NODE_VERSION-linux-$ARCH.tar.xz" -C /usr/local --strip-components=1 --no-same-owner \
+#     && rm "node-$NODE_VERSION-linux-$ARCH.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
+#     && apt-mark auto '.*' > /dev/null \
+#     && find /usr/local -type f -executable -exec ldd '{}' ';' \
+#       | awk '/=>/ { print $(NF-1) }' \
+#       | sort -u \
+#       | xargs -r dpkg-query --search \
+#       | cut -d: -f1 \
+#       | sort -u \
+#       | xargs -r apt-mark manual \
+#     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+#     && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
+#     # smoke tests
+#     && echo "node ${NODE_VERSION} install smoke tests!" \
+#     && node --version \
+#     && npm --version
 
 # install ui5-cli temporay solution
 RUN	set -ex \
@@ -130,6 +167,7 @@ RUN	set -ex \
     && echo "go ${GO_VERSION} install smoke tests!" \
     && go version
 
+# install sapmachine
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && case "${dpkgArch##*-}" in \
       amd64) ARCH='amd64';; \
@@ -137,23 +175,48 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     esac \
   && set -ex \
   && apt-get update \
-  && apt-get install -y ca-certificates gnupg dirmngr --no-install-recommends \
-  && rm -rf /var/lib/apt/lists/* \
-  && for key in \
-    CACB9FE09150307D1D22D82962754C3B3ABCFE23 \
-  ; do \
-    gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/sapmachine.gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$key" || \
-    gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/sapmachine.gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$key" ; \
-  done \
-  && chmod 644 /etc/apt/trusted.gpg.d/sapmachine.gpg \
-  && echo "deb http://dist.sapmachine.io/debian/${ARCH}/ ./" | tee /etc/apt/sources.list.d/sapmachine.list \
+  && apt-get install -y --no-install-recommends wget ca-certificates gnupg \
+  && export GNUPGHOME="$(mktemp -d)" \
+  && wget -q -O - https://dist.sapmachine.io/debian/sapmachine.old.key | gpg --batch --import \
+  && gpg --batch --export --armor 'DA4C 00C1 BDB1 3763 8608 4E20 C7EB 4578 740A EEA2' > /etc/apt/trusted.gpg.d/sapmachine.old.gpg.asc \
+  && wget -q -O - https://dist.sapmachine.io/debian/sapmachine.key | gpg --batch --import \
+  && gpg --batch --export --armor 'CACB 9FE0 9150 307D 1D22 D829 6275 4C3B 3ABC FE23' > /etc/apt/trusted.gpg.d/sapmachine.gpg.asc \
+  && gpgconf --kill all \
+  && rm -rf "$GNUPGHOME" \
+  && echo "deb http://dist.sapmachine.io/debian/amd64/ ./" > /etc/apt/sources.list.d/sapmachine.list \
   && apt-get update \
   && apt-get install -y sapmachine-$(echo ${SAPMACHINE_VERSION} | cut -d. -f1)-jdk=${SAPMACHINE_VERSION} --no-install-recommends \
   && rm -rf /var/lib/apt/lists/* \
-  && apt-get remove --purge --autoremove -y ca-certificates gnupg dirmngr \
+  && apt-get remove --purge --autoremove -y ca-certificates gnupg wget \
   # smoke test
   && echo "sapmachine ${SAPMACHINE_VERSION} install smoke tests!" \
   && java --version
+
+# install sapmachine (commnet by young-yang03)
+# RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
+#     && case "${dpkgArch##*-}" in \
+#       amd64) ARCH='amd64';; \
+#       *) echo "unsupported architecture"; exit 1 ;; \
+#     esac \
+#   && set -ex \
+#   && apt-get update \
+#   && apt-get install -y ca-certificates gnupg dirmngr --no-install-recommends \
+#   && rm -rf /var/lib/apt/lists/* \
+#   && for key in \
+#     CACB9FE09150307D1D22D82962754C3B3ABCFE23 \
+#   ; do \
+#     gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/sapmachine.gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$key" || \
+#     gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/sapmachine.gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$key" ; \
+#   done \
+#   && chmod 644 /etc/apt/trusted.gpg.d/sapmachine.gpg \
+#   && echo "deb http://dist.sapmachine.io/debian/${ARCH}/ ./" | tee /etc/apt/sources.list.d/sapmachine.list \
+#   && apt-get update \
+#   && apt-get install -y sapmachine-$(echo ${SAPMACHINE_VERSION} | cut -d. -f1)-jdk=${SAPMACHINE_VERSION} --no-install-recommends \
+#   && rm -rf /var/lib/apt/lists/* \
+#   && apt-get remove --purge --autoremove -y ca-certificates gnupg dirmngr \
+#   # smoke test
+#   && echo "sapmachine ${SAPMACHINE_VERSION} install smoke tests!" \
+#   && java --version
 
 # install maven
 RUN set -ex \
