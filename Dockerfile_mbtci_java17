@@ -242,17 +242,6 @@ RUN set -ex \
   && echo "mvn ${MAVEN_VERSION} smoke tests!" \
   && mvn --version
 
-# install maven (commnet by young-yang03)
-# ENV M2_HOME=/opt/maven/apache-maven-${MAVEN_VERSION}
-
-# RUN M2_BASE="$(dirname ${M2_HOME})"  \
-#   && mkdir -p "${M2_BASE}" \
-#   && curl --fail --silent --output - "https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz" \ | tar -xzvf - -C "${M2_BASE}" \
-#   && ln -s "${M2_HOME}/bin/mvn" /usr/local/bin/mvn \
-#   && chmod --recursive a+w "${M2_HOME}"/conf/* \
-#   && echo "mvn ${MAVEN_VERSION} smoke tests!"
-#   # mvn --version
-
 # Install MBT
 RUN set -ex \
   && npm install -g --unsafe-perm @young-yang217/mbt@${MBT_VERSION} \
@@ -260,17 +249,6 @@ RUN set -ex \
   # smoke tests
   && echo "mbt ${MBT_VERSION} install smoke tests!" \
   && mbt --version
-
-# Install MBT (commnet by young-yang03)
-# RUN	set -ex \
-#   && apt-get update \
-#   && apt-get install -y ca-certificates curl --no-install-recommends \
-#   && rm -rf /var/lib/apt/lists/* \
-#   && curl -L "https://github.com/young-yang03/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin \
-#   && chown root:root /usr/local/bin/mbt \
-#   # smoke tests
-#   && echo "mbt ${MBT_VERSION} install smoke tests!" \
-#   && mbt --version
 
 # Install essential build tools and python
 RUN set -ex \
