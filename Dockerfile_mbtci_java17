@@ -76,7 +76,7 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     # check downloaded checksum file signature
     && curl -fsSLO --compressed "https://nodejs.org/dist/$NODE_VERSION/SHASUMS256.txt.sig" \
     && gpg --verify SHASUMS256.txt.sig SHASUMS256.txt \
-    && tar -zxv -f "node-$NODE_VERSION-linux-$ARCH.tar.xz" -C /usr/local --strip-components=1 --no-same-owner \
+    && tar -zxv -f "node-$NODE_VERSION-linux-$ARCH.tar.gz" -C /usr/local --strip-components=1 --no-same-owner \
     && rm "node-$NODE_VERSION-linux-$ARCH.tar.gz" SHASUMS256.txt.sig SHASUMS256.txt \
     && apt-mark auto '.*' > /dev/null \
     && find /usr/local -type f -executable -exec ldd '{}' ';' \
