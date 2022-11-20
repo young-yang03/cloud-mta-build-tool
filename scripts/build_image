@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # common_image includes some exported vars and check methods
-sudo bash ./common_image
+sudo bash $PWD/scripts/common_image
 
 # build docker image
 cp Dockerfile_mbtci_java${JAVA_MAJOR_VERSION} Dockerfile
@@ -13,7 +13,7 @@ docker build -t mbtci${JAVA_VERSION}${NODE_VERSION}:${MBT_VERSION} .
 if [ "$JAVA_MAJOR_VERSION" = "11" ] || [ "$JAVA_MAJOR_VERSION" = "8" ] || [ "$JAVA_MAJOR_VERSION" = "17" ]; then
 	cp test/goss/goss_template.yaml test/goss/goss.yaml
 	sed  -i "s/NODE_VERSION_ARG/v${NODE_VERSION_ARG}/" test/goss/goss.yaml
-	docker-compose -f ./docker-compose.test.yml up --build
+	docker-compose -f ./docker-compose.test.yml up --buildgit push -u origin release
 fi
 
 # cleanup
