@@ -1,11 +1,5 @@
 #!/bin/sh
 
-# set readable variables
-export JAVA_VERSION_ARG="$1"
-export NODE_VERSION_ARG="$2"
-export MBT_VERSION="$3"
-export DOCKER_REGISTRY="$4"
-
 # print java and node version parameter
 echo "Java version template: ${JAVA_VERSION_ARG}, Node version template: ${NODE_VERSION_ARG}"
 
