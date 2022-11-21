@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # validate java and node major version
 export JAVA_MAJOR_VERSION="${JAVA_VERSION_ARG}"
