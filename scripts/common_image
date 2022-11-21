@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# print java and node version parameter
-echo "Java version template: ${JAVA_VERSION_ARG}, Node version template: ${NODE_VERSION_ARG}"
-
 # validate java and node major version
 export JAVA_MAJOR_VERSION="${JAVA_VERSION_ARG}"
 export NODE_MAJOR_VERSION="$(echo ${NODE_VERSION_ARG} |awk -F. '{printf "%d", $1}')"
