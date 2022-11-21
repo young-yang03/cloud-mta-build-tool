@@ -20,7 +20,7 @@ ENV CGO_ENABLED=0
 ENV GOOS=linux
 ENV DEBIAN_FRONTEND=noninteractive
 
-# create user account and using openssl to create password
+# Create user account and using openssl to create password
 RUN set -ex \
   && apt-get update \
   && apt-get install -y openssl --no-install-recommends \
@@ -38,11 +38,11 @@ RUN set -ex \
   && chmod a+w ${MTA_USER_HOME} \
   && apt-get remove --purge --autoremove -y openssl
 
-# download SAP_Global_Root_CA.crt to target 
+# Download SAP_Global_Root_CA.crt to target 
 ADD http://aia.pki.co.sap.com/aia/SAP%20Global%20Root%20CA.crt \
     /etc/ssl/certs/SAP_Global_Root_CA.crt
 
-# install node
+# Install Node
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && case "${dpkgArch##*-}" in \
       amd64) ARCH='x64';; \
@@ -55,6 +55,7 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     esac \
     && set -ex \
     && apt-get update \
+    # libatomic1 for arm
     && apt-get install -y ca-certificates curl gnupg dirmngr xz-utils libatomic1 --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && for key in \
@@ -95,7 +96,7 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && node --version \
     && npm --version
 
-# install ui5-cli temporay solution
+# Install UI5-CLI
 RUN set -ex \
     && npm install --prefix /usr/local/ -g @ui5/cli \
     && npm cache clean -g --force \
@@ -103,23 +104,32 @@ RUN set -ex \
     && echo "ui5 install smoke test!" \
     && ui5 --version
 
-# install Golang
-RUN set -ex \
+# Install Golang
+RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
+    && case "${dpkgArch##*-}" in \
+      i386) ARCH='386';; \
+      amd64) ARCH='amd64';; \
+      ppc64el) ARCH='ppc64le';; \
+      s390x) ARCH='s390x';; \
+      arm64) ARCH='arm64';; \
+      armhf) ARCH='armv6l';; \
+      *) echo "unsupported architecture"; exit 1 ;; \
+    esac \
+    && set -ex \
     && apt-get update \
     && apt-get install -y ca-certificates curl --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
-    && curl -O https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz \
+    && curl -fsSLO --compressed "https://storage.googleapis.com/golang/go${GO_VERSION}.linux-${ARCH}.tar.gz" \
     && tar -xvf go${GO_VERSION}.linux-amd64.tar.gz \
-    && rm -rf /usr/local/go \
     && mv go /usr/local \
-    && mkdir -p "${GOPATH}/src" "${GOPATH}/bin" \
-    && chmod 777 -R "${GOPATH}" \
     && mkdir -p ${GOPATH}/src ${GOPATH}/bin \
+    && chmod 777 -R "${GOPATH}" \
+    && apt-get remove --purge --autoremove -y ca-certificates curl \
     # smoke test
     && echo "go ${GO_VERSION} install smoke test!" \
     && go version
 
-# install sapmachine
+# Install SAPMachine
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && case "${dpkgArch##*-}" in \
       amd64) ARCH='amd64';; \
@@ -144,13 +154,13 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && echo "sapmachine ${SAPMACHINE_VERSION} install smoke test!" \
   && java --version
 
-# install maven
+# Install Maven
 RUN set -ex \
   && apt-get update \
   && apt-get install -y ca-certificates curl gnupg dirmngr --no-install-recommends \
   && rm -rf /var/lib/apt/lists/* \
-  && curl -fsSLO --compressed ${MAVEN_BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz \
-  && curl -fsSLO --compressed ${MAVEN_BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc \
+  && curl -fsSLO --compressed "${MAVEN_BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz" \
+  && curl -fsSLO --compressed "${MAVEN_BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc" \
   && for key in \
     6A814B1F869C2BBEAB7CB7271A2A1C94BDE89688 \
   ; do \
@@ -170,13 +180,13 @@ RUN set -ex \
 
 # Install MBT
 RUN set -ex \
-  && npm install -g --unsafe-perm @young-yang217/mbt@${MBT_VERSION} \
+  && npm install -g --unsafe-perm mbt@${MBT_VERSION} \
   && npm cache clean -g --force \
   # smoke test
   && echo "mbt ${MBT_VERSION} install smoke test!" \
   && mbt --version
 
-# Install essential build tools and python
+# Install Essential build tools and Python
 RUN set -ex \
   && apt-get update \
   && apt-get install -y ca-certificates build-essential python2.7 python3 --no-install-recommends \
