@@ -11,7 +11,6 @@ MBT Version arg: ${MBT_VERSION}"
 
 # common_image includes some exported vars and check methods
 source $PWD/scripts/common_image
-# sudo bash $PWD/scripts/common_image
 
 # build docker image
 cp Dockerfile_mbtci_java${JAVA_MAJOR_VERSION} Dockerfile
