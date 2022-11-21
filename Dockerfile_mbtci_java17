@@ -159,7 +159,7 @@ RUN set -ex \
   && apt-get update \
   && apt-get install -y ca-certificates curl gnupg dirmngr --no-install-recommends \
   && rm -rf /var/lib/apt/lists/* \
-  && curl -fsSLO --compressed "${MAVEN_BASE_URL}/apache-maven-${  }-bin.tar.gz" \
+  && curl -fsSLO --compressed "${MAVEN_BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz" \
   && curl -fsSLO --compressed "${MAVEN_BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc" \
   && for key in \
     6A814B1F869C2BBEAB7CB7271A2A1C94BDE89688 \
