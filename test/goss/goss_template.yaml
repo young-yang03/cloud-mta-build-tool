@@ -30,8 +30,8 @@ command:
   mbt --version:
     exit-status: 0
     stdout:
-      - MBT_VERSION  
-  # verify installed MAVEN VERSION
+      - MBT_VERSION
+  # verify installed MAVEN version
   mvn --version:
     exit-status: 0
     stdout:

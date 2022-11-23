@@ -170,21 +170,21 @@ jobs:
       #     command: |
       #         MBT_VERSION=$(cat ./VERSION)
       #         bash $PWD/scripts/build_image 11.0.17 18.12.1 ${MBT_VERSION}
-      - run:
-          name: build Java 17.0.5 & Node 14.21.1 image
-          command: |
-                MBT_VERSION=$(cat ./VERSION)
-                bash $PWD/scripts/build_image 17.0.5 14.21.1 ${MBT_VERSION}
+      # - run:
+      #     name: build Java 17.0.5 & Node 14.21.1 image
+      #     command: |
+      #           MBT_VERSION=$(cat ./VERSION)
+      #           bash $PWD/scripts/build_image 17.0.5 14.21.1 ${MBT_VERSION}
       - run:
           name: build Java 17.0.5 & Node 16.18.1 image
           command: |
               MBT_VERSION=$(cat ./VERSION)
               bash $PWD/scripts/build_image 17.0.5 16.18.1 ${MBT_VERSION}
-      - run:
-          name: build Java 17.0.5 & Node 18.12.1 image
-          command: |
-                MBT_VERSION=$(cat ./VERSION)
-                bash $PWD/scripts/build_image 17.0.5 18.12.1 ${MBT_VERSION}
+      # - run:
+      #     name: build Java 17.0.5 & Node 18.12.1 image
+      #     command: |
+      #           MBT_VERSION=$(cat ./VERSION)
+      #           bash $PWD/scripts/build_image 17.0.5 18.12.1 ${MBT_VERSION}
       # - run:
       #     name: build Java 19.0.1 & Node 14.21.1 image
       #     command: |
@@ -245,21 +245,21 @@ jobs:
       #       #Push to GitHub Container Registry
       #       echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
       #       bash $PWD/scripts/publish_image 11.0.17 18.12.1 ${MBT_VERSION} "ghcr.io/young-yang03"
-      - run:
-          name: publish Java 17.0.5 & Node 14.21.1 image
-          command: |
-            #Make sure HEAD points to master
-            git checkout master
-            git fetch
-            git rebase
-            MBT_VERSION=$(cat ./VERSION)
-            echo "Images release: ${MBT_VERSION}"
-            #Push to Docker Hub
-            echo "$DOCKER_HUB_TOKEN" | docker login --username $DOCKER_HUB_USER --password-stdin
-            bash $PWD/scripts/publish_image 17.0.5 14.21.1 ${MBT_VERSION} "cobra217"
-            #Push to GitHub Container Registry
-            echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
-            bash $PWD/scripts/publish_image 17.0.5 14.21.1 ${MBT_VERSION} "ghcr.io/young-yang03"
+      # - run:
+      #     name: publish Java 17.0.5 & Node 14.21.1 image
+      #     command: |
+      #       #Make sure HEAD points to master
+      #       git checkout master
+      #       git fetch
+      #       git rebase
+      #       MBT_VERSION=$(cat ./VERSION)
+      #       echo "Images release: ${MBT_VERSION}"
+      #       #Push to Docker Hub
+      #       echo "$DOCKER_HUB_TOKEN" | docker login --username $DOCKER_HUB_USER --password-stdin
+      #       bash $PWD/scripts/publish_image 17.0.5 14.21.1 ${MBT_VERSION} "cobra217"
+      #       #Push to GitHub Container Registry
+      #       echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
+      #       bash $PWD/scripts/publish_image 17.0.5 14.21.1 ${MBT_VERSION} "ghcr.io/young-yang03"
       - run:
           name: publish Java 17.0.5 & Node 16.18.1 image
           command: |
@@ -275,21 +275,21 @@ jobs:
             #Push to GitHub Container Registry
             echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
             bash $PWD/scripts/publish_image 17.0.5 16.18.1 ${MBT_VERSION} "ghcr.io/young-yang03"
-      - run:
-          name: publish Java 17.0.5 & Node 18.12.1 image
-          command: |
-            #Make sure HEAD points to master
-            git checkout master
-            git fetch
-            git rebase
-            MBT_VERSION=$(cat ./VERSION)
-            echo "Images release: ${MBT_VERSION}"
-            #Push to Docker Hub
-            echo "$DOCKER_HUB_TOKEN" | docker login --username $DOCKER_HUB_USER --password-stdin
-            bash $PWD/scripts/publish_image 17.0.5 18.12.1 ${MBT_VERSION} "cobra217"
-            #Push to GitHub Container Registry
-            echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
-            bash $PWD/scripts/publish_image 17.0.5 18.12.1 ${MBT_VERSION} "ghcr.io/young-yang03"
+      # - run:
+      #     name: publish Java 17.0.5 & Node 18.12.1 image
+      #     command: |
+      #       #Make sure HEAD points to master
+      #       git checkout master
+      #       git fetch
+      #       git rebase
+      #       MBT_VERSION=$(cat ./VERSION)
+      #       echo "Images release: ${MBT_VERSION}"
+      #       #Push to Docker Hub
+      #       echo "$DOCKER_HUB_TOKEN" | docker login --username $DOCKER_HUB_USER --password-stdin
+      #       bash $PWD/scripts/publish_image 17.0.5 18.12.1 ${MBT_VERSION} "cobra217"
+      #       #Push to GitHub Container Registry
+      #       echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
+      #       bash $PWD/scripts/publish_image 17.0.5 18.12.1 ${MBT_VERSION} "ghcr.io/young-yang03"
       # - run:
       #     name: publish Java 19.0.1 & Node 14.21.1 image
       #     command: |
