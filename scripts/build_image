@@ -23,6 +23,7 @@ if [ "$JAVA_MAJOR_VERSION" = "11" ] || [ "$JAVA_MAJOR_VERSION" = "17" ] || [ "$J
 	cp test/goss/goss_template.yaml test/goss/goss.yaml
 	sed_i "s/NODE_VERSION_TEMPLATE/${NODE_VERSION_TEMPLATE}/" test/goss/goss.yaml
 	sed_i "s/JAVA_VERSION_TEMPLATE/${JAVA_VERSION_TEMPLATE}/" test/goss/goss.yaml
+	sed_i "s/MBT_VERSION/${MBT_VERSION}/" test/goss/goss.yaml
 	docker-compose -f ./docker-compose.test.yml up --build
 fi
 
