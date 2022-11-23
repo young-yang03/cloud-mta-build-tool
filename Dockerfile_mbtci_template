@@ -3,7 +3,7 @@ FROM debian:bullseye-slim
 # Build time arguments
 ARG MTA_USER="mta"
 ARG MTA_USER_HOME="/home/${MTA_USER}"
-ARG MBT_VERSION=1.2.19
+ARG MBT_VERSION=1.2.112
 ARG GO_VERSION=1.19.3
 ARG NODE_VERSION=NODE_VERSION_TEMPLATE
 ARG MAVEN_VERSION=3.8.6
@@ -191,7 +191,7 @@ RUN set -ex \
 
 # Install MBT
 RUN set -ex \
-  && npm install -g --unsafe-perm mbt@${MBT_VERSION} \
+  && npm install -g --unsafe-perm @young-yang217/mbt@${MBT_VERSION} \
   && npm cache clean -g --force \
   # smoke test
   && echo "mbt ${MBT_VERSION} install smoke test!" \
