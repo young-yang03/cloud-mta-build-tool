@@ -159,15 +159,15 @@ jobs:
           name: build images
           command: |
               MBT_VERSION=$(cat ./VERSION)
-              # bash $PWD/scripts/build_image 11.0.17 14.21.1 ${MBT_VERSION}
-              # bash $PWD/scripts/build_image 11.0.17 16.18.1 ${MBT_VERSION}
-              # bash $PWD/scripts/build_image 11.0.17 18.12.1 ${MBT_VERSION}
-              # bash $PWD/scripts/build_image 17.0.5 14.21.1 ${MBT_VERSION}
+              bash $PWD/scripts/build_image 11.0.17 14.21.1 ${MBT_VERSION}
+              bash $PWD/scripts/build_image 11.0.17 16.18.1 ${MBT_VERSION}
+              bash $PWD/scripts/build_image 11.0.17 18.12.1 ${MBT_VERSION}
+              bash $PWD/scripts/build_image 17.0.5 14.21.1 ${MBT_VERSION}
               bash $PWD/scripts/build_image 17.0.5 16.18.1 ${MBT_VERSION}
-              # bash $PWD/scripts/build_image 17.0.5 18.12.1 ${MBT_VERSION}
-              # bash $PWD/scripts/build_image 19.0.1 14.21.1 ${MBT_VERSION}
-              # bash $PWD/scripts/build_image 19.0.1 16.18.1 ${MBT_VERSION}
-              # bash $PWD/scripts/build_image 19.0.1 18.12.1 ${MBT_VERSION}
+              bash $PWD/scripts/build_image 17.0.5 18.12.1 ${MBT_VERSION}
+              bash $PWD/scripts/build_image 19.0.1 14.21.1 ${MBT_VERSION}
+              bash $PWD/scripts/build_image 19.0.1 16.18.1 ${MBT_VERSION}
+              bash $PWD/scripts/build_image 19.0.1 18.12.1 ${MBT_VERSION}
       - run:
           name: publish images
           command: |
@@ -179,27 +179,27 @@ jobs:
             echo "Images release: ${MBT_VERSION}"
             #Push to Docker Hub
             echo "$DOCKER_HUB_TOKEN" | docker login --username $DOCKER_HUB_USER --password-stdin
-            # bash $PWD/scripts/publish_image 11.0.17 14.21.1 ${MBT_VERSION} "cobra217"
-            # bash $PWD/scripts/publish_image 11.0.17 16.18.1 ${MBT_VERSION} "cobra217"
-            # bash $PWD/scripts/publish_image 11.0.17 18.12.1 ${MBT_VERSION} "cobra217"
-            # bash $PWD/scripts/publish_image 17.0.5 14.21.1 ${MBT_VERSION} "cobra217"
+            bash $PWD/scripts/publish_image 11.0.17 14.21.1 ${MBT_VERSION} "cobra217"
+            bash $PWD/scripts/publish_image 11.0.17 16.18.1 ${MBT_VERSION} "cobra217"
+            bash $PWD/scripts/publish_image 11.0.17 18.12.1 ${MBT_VERSION} "cobra217"
+            bash $PWD/scripts/publish_image 17.0.5 14.21.1 ${MBT_VERSION} "cobra217"
             bash $PWD/scripts/publish_image 17.0.5 16.18.1 ${MBT_VERSION} "cobra217"
-            # bash $PWD/scripts/publish_image 17.0.5 18.12.1 ${MBT_VERSION} "cobra217"
-            # bash $PWD/scripts/publish_image 19.0.1 14.21.1 ${MBT_VERSION} "cobra217"
-            # bash $PWD/scripts/publish_image 19.0.1 16.18.1 ${MBT_VERSION} "cobra217"
-            # bash $PWD/scripts/publish_image 19.0.1 18.12.1 ${MBT_VERSION} "cobra217"
+            bash $PWD/scripts/publish_image 17.0.5 18.12.1 ${MBT_VERSION} "cobra217"
+            bash $PWD/scripts/publish_image 19.0.1 14.21.1 ${MBT_VERSION} "cobra217"
+            bash $PWD/scripts/publish_image 19.0.1 16.18.1 ${MBT_VERSION} "cobra217"
+            bash $PWD/scripts/publish_image 19.0.1 18.12.1 ${MBT_VERSION} "cobra217"
 
             #Push to GitHub Container Registry
             echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
-            # bash $PWD/scripts/publish_image 11.0.17 14.21.1 ${MBT_VERSION} "ghcr.io/young-yang03"
-            # bash $PWD/scripts/publish_image 11.0.17 16.18.1 ${MBT_VERSION} "ghcr.io/young-yang03"
-            # bash $PWD/scripts/publish_image 11.0.17 18.12.1 ${MBT_VERSION} "ghcr.io/young-yang03"
-            # bash $PWD/scripts/publish_image 17.0.5 14.21.1 ${MBT_VERSION} "ghcr.io/young-yang03"
+            bash $PWD/scripts/publish_image 11.0.17 14.21.1 ${MBT_VERSION} "ghcr.io/young-yang03"
+            bash $PWD/scripts/publish_image 11.0.17 16.18.1 ${MBT_VERSION} "ghcr.io/young-yang03"
+            bash $PWD/scripts/publish_image 11.0.17 18.12.1 ${MBT_VERSION} "ghcr.io/young-yang03"
+            bash $PWD/scripts/publish_image 17.0.5 14.21.1 ${MBT_VERSION} "ghcr.io/young-yang03"
             bash $PWD/scripts/publish_image 17.0.5 16.18.1 ${MBT_VERSION} "ghcr.io/young-yang03"
-            # bash $PWD/scripts/publish_image 17.0.5 18.12.1 ${MBT_VERSION} "ghcr.io/young-yang03"
-            # bash $PWD/scripts/publish_image 19.0.1 14.21.1 ${MBT_VERSION} "ghcr.io/young-yang03"
-            # bash $PWD/scripts/publish_image 19.0.1 16.18.1 ${MBT_VERSION} "ghcr.io/young-yang03"
-            # bash $PWD/scripts/publish_image 19.0.1 18.12.1 ${MBT_VERSION} "ghcr.io/young-yang03"
+            bash $PWD/scripts/publish_image 17.0.5 18.12.1 ${MBT_VERSION} "ghcr.io/young-yang03"
+            bash $PWD/scripts/publish_image 19.0.1 14.21.1 ${MBT_VERSION} "ghcr.io/young-yang03"
+            bash $PWD/scripts/publish_image 19.0.1 16.18.1 ${MBT_VERSION} "ghcr.io/young-yang03"
+            bash $PWD/scripts/publish_image 19.0.1 18.12.1 ${MBT_VERSION} "ghcr.io/young-yang03"
       - run:
           # This won't run if previous commands have failed so the tag should be removed **manually**
           name: remove dummy release tag
@@ -234,48 +234,48 @@ jobs:
 workflows:
   version: 2
   # when sub-branch's code is commited, this workflow will be execed
-  # on_pr_build:
-  #   jobs:
-  #     - build:
-  #         filters:
-  #           branches:
-  #             ignore: master
-  #     - build-node:
-  #         filters:
-  #           branches:
-  #             ignore: master
-  #     - compliance:
-  #         filters:
-  #           branches:
-  #             ignore: master
-  #     - test:
-  #         requires:
-  #           - build
-  #         filters:
-  #           branches:
-  #             ignore: master
+  on_pr_build:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore: master
+      - build-node:
+          filters:
+            branches:
+              ignore: master
+      - compliance:
+          filters:
+            branches:
+              ignore: master
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: master
 
   # when master's code is commited or merged from sub-branch, this workflow will be execed
-  # on_merge_build_test:
-  #   jobs:
-  #     - build:
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - build-node:
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - compliance:
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - test:
-  #         requires:
-  #           - build
-  #         filters:
-  #           branches:
-  #             only: master
+  on_merge_build_test:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master
+      - build-node:
+          filters:
+            branches:
+              only: master
+      - compliance:
+          filters:
+            branches:
+              only: master
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
 
   # when a branch is taged by "release", this workflow will be execed
   on_tag_build_release_publish:
@@ -286,26 +286,25 @@ workflows:
               only: /release/
             branches:
               ignore: /.*/
-      # - test:
-      #     requires:
-      #       - build
-      #     filters:
-      #       tags:
-      #         only: /release/
-      #       branches:
-      #         ignore: /.*/
-      # - ghpages:
-      #     requires:
-      #       - test
-      #     filters:
-      #       tags:
-      #         only: /release/
-      #       branches:
-      #         ignore: /.*/
-      - release-to-github:
+      - test:
           requires:
             - build
-            # - test
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
+      - ghpages:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
+      - release-to-github:
+          requires:
+            - test
           filters:
             tags:
               only: /release/
