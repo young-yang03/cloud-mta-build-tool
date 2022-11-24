@@ -13,7 +13,7 @@ echo "Java version: ${JAVA_VERSION_TEMPLATE}, Node version: ${NODE_VERSION_TEMPL
 
 # build docker image
 cp Dockerfile_mbtci_template Dockerfile
-sed_i "s/NODE_VERSION_TEMPLATE/v${NODE_VERSION_TEMPLATE}/" Dockerfile
+sed_i "s/NODE_VERSION_TEMPLATE/${NODE_VERSION_TEMPLATE}/" Dockerfile
 sed_i "s/JAVA_VERSION_TEMPLATE/${JAVA_VERSION_TEMPLATE}/" Dockerfile
 echo "Build mbtci${JAVA_VERSION}${NODE_VERSION}:${MBT_VERSION}"
 docker build -t mbtci${JAVA_VERSION}${NODE_VERSION}:${MBT_VERSION} .

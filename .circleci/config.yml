@@ -479,7 +479,7 @@ jobs:
 
 workflows:
   version: 2
-  # when sub-branch's code is commited, this workflow will be execed
+  # when sub-branch's code is committed, this workflow will be exceeded
   on_pr_build:
     jobs:
       - build:
@@ -501,7 +501,7 @@ workflows:
             branches:
               ignore: master
 
-  # when master's code is commited or merged from sub-branch, this workflow will be execed
+  # when master's code is committed or merged from sub-branch, this workflow will be exceeded
   on_merge_build_test:
     jobs:
       - build:
@@ -523,7 +523,7 @@ workflows:
             branches:
               only: master
 
-  # when a branch is taged by "release", this workflow will be execed
+  # when a branch is tagged by "release", this workflow will be exceeded
   on_tag_build_release_publish:
     jobs:
       - build:
