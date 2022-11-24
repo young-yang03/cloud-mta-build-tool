@@ -12,7 +12,6 @@ MBT version: ${MBT_VERSION}, Docker Registry: ${DOCKER_REGISTRY}"
 
 # common_image includes some exported vars and check methods
 . $PWD/scripts/common_image
-# source $PWD/scripts/common_image
 
 # publish image
 echo "Publish mbtci${JAVA_VERSION}${NODE_VERSION}:${MBT_VERSION} to $DOCKER_REGISTRY"

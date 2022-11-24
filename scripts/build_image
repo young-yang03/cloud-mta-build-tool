@@ -10,7 +10,6 @@ echo "Java version: ${JAVA_VERSION_TEMPLATE}, Node version: ${NODE_VERSION_TEMPL
 
 # common_image includes some exported vars and check methods
 . $PWD/scripts/common_image
-#source $PWD/scripts/common_image
 
 # build docker image
 cp Dockerfile_mbtci_template Dockerfile
