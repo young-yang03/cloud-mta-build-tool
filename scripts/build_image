@@ -33,6 +33,9 @@ if [ "$JAVA_MAJOR_VERSION" = "11" ] || [ "$JAVA_MAJOR_VERSION" = "17" ] || [ "$J
 	echo "cat goss.yaml:"
 	cat test/goss/goss.yaml
 
+	echo "PWD:${PWD}"
+	echo "ls print : $(ls -l -a)"
+
 	docker-compose -f ./docker-compose.test.yml up --build
 	echo "End test image, Java version: ${JAVA_VERSION_TEMPLATE}, Node version: ${NODE_VERSION_TEMPLATE}, MBT version: ${MBT_VERSION}"
 fi
