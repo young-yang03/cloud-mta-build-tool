@@ -163,7 +163,6 @@ jobs:
       - run:
           name: publish Java 11.0.17 & Node 14.21.1 image
           command: |
-            #Make sure HEAD points to master
             MBT_VERSION=$(cat ./VERSION)
             echo "Images release: ${MBT_VERSION}"
             #Push to Docker Hub
@@ -228,10 +227,6 @@ jobs:
       - run:
           name: publish Java 11.0.17 & Node 18.12.1 image
           command: |
-            #Make sure HEAD points to master
-            git checkout master
-            git fetch
-            git rebase
             MBT_VERSION=$(cat ./VERSION)
             echo "Images release: ${MBT_VERSION}"
             #Push to Docker Hub
@@ -296,7 +291,6 @@ jobs:
       - run:
           name: publish Java 17.0.5 & Node 16.18.1 image
           command: |
-            #Make sure HEAD points to master
             MBT_VERSION=$(cat ./VERSION)
             echo "Images release: ${MBT_VERSION}"
             #Push to Docker Hub
@@ -361,10 +355,6 @@ jobs:
       - run:
           name: publish Java 19.0.1 & Node 14.21.1 image
           command: |
-            #Make sure HEAD points to master
-            git checkout master
-            git fetch
-            git rebase
             MBT_VERSION=$(cat ./VERSION)
             echo "Images release: ${MBT_VERSION}"
             #Push to Docker Hub
