@@ -5,10 +5,10 @@ FROM ubuntu:focal
 # Build time arguments
 ARG DEBIAN_FRONTEND=noninteractive
 ARG MTA_USER_HOME=/home/mta
-ARG MBT_VERSION=1.2.106
+ARG MBT_VERSION=1.2.19
 ARG GO_VERSION=1.15.6
 # node version as found in https://nodejs.org/dist/ e.g: "v16.15.0"
-ARG NODE_VERSION=NODE_VERSION_ARG
+ARG NODE_VERSION=NODE_VERSION_TEMPLATE
 ARG MAVEN_VERSION=3.6.3
 # This is used to build the download URL
 # e.g: https://tools.hana.ondemand.com/additional/sapjvm-8.1.086-linux-x64.zip
@@ -16,7 +16,7 @@ ARG MAVEN_VERSION=3.6.3
 # so this argument's value may need to be updated in the future
 # Also see JVM section here:
 # - https://tools.hana.ondemand.com/#cloud
-ARG JAVA_VERSION=8.1.090
+ARG JAVA_VERSION=8.1.086
 
 # Environment variables
 ENV JAVA_HOME /opt/jdk
@@ -66,7 +66,7 @@ RUN apt-get update && \
     ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npm" /usr/local/bin/npm && \
     ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npx" /usr/local/bin/ && \
     npm install --prefix /usr/local/ -g grunt-cli && \
-	
+
 # install ui5-cli temporary solution
 	npm install --prefix /usr/local/ -g @ui5/cli && \
 
@@ -85,7 +85,7 @@ RUN apt-get update && \
     chmod --recursive a+w "${M2_HOME}"/conf/* && \
 
 # Download MBT
-	curl -L "https://github.com/young-yang03/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin && \
+	curl -L "https://github.com/SAP/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin && \
     chown root:root /usr/local/bin/mbt && \ 
 
 # handle users permission

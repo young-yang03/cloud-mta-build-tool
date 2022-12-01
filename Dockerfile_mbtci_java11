@@ -2,10 +2,10 @@ FROM sapmachine:11
 
 # Build time arguments
 ARG MTA_USER_HOME=/home/mta
-ARG MBT_VERSION=1.2.106
+ARG MBT_VERSION=1.2.19
 ARG GO_VERSION=1.15.6
 # node version as found in https://nodejs.org/dist/ e.g: "v16.15.0"
-ARG NODE_VERSION=NODE_VERSION_ARG
+ARG NODE_VERSION=NODE_VERSION_TEMPLATE
 ARG MAVEN_VERSION=3.6.3
 
 # Environment variables
@@ -43,7 +43,7 @@ RUN apt-get update && \
     ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npm" /usr/local/bin/npm && \
     ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npx" /usr/local/bin/ && \
     npm install --prefix /usr/local/ -g grunt-cli && \
-	
+
 # install ui5-cli temporay solution
 	npm install --prefix /usr/local/ -g @ui5/cli && \
 
