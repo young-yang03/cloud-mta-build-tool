@@ -54,7 +54,9 @@ RUN apt-get update && \
 # install java
 	mkdir -p /opt && \
     wget --no-check-certificate --no-cookies --header "Cookie: eula_3_1_agreed=tools.hana.ondemand.com/developer-license-3_1.txt; path=/;" -S https://tools.hana.ondemand.com/additional/sapjvm-${JAVA_VERSION}-linux-x64.zip && \
-    unzip sapjvm-${JAVA_VERSION}-linux-x64.zip -d /usr/local/ && \
+    echo "583dedfeee0c119839a610ddc8c6768d0c044429  sapjvm-${JAVA_VERSION}-linux-x64.zip" | sha1sum -c -; && \
+    bsdtar -xvf sapjvm-${JAVA_VERSION}-linux-x64.zip -C /usr/local --strip-components=1; && \
+    # unzip sapjvm-${JAVA_VERSION}-linux-x64.zip -d /usr/local/ && \
     ln -s /usr/local/sapjvm_8 /opt/jdk && \
     rm sapjvm-${JAVA_VERSION}-linux-x64.zip && \
 
