@@ -43,7 +43,7 @@ RUN apt-get update && \
 		curl \
 		wget \
 		unzip \
-        libarchive && \
+        libarchive-tools && \
 
     # Change security level as the SAP npm repo doesnt support buster new security upgrade
     # the default configuration for OpenSSL in Buster explicitly requires using more secure ciphers and protocols,
