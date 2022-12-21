@@ -63,7 +63,7 @@ RUN apt-get update && \
     # unzip sapjvm-${JAVA_VERSION}-linux-x64.zip -d /usr/local/ && \
     bsdtar -xvf sapjvm-${JAVA_VERSION}-linux-x64.zip -C /usr/local --strip-components=1 && \
     # ln -s /usr/local/sapjvm_8 /opt/jdk && \
-    rm sapjvm-${JAVA_VERSION}-linux-x64.zip && \
+    # rm sapjvm-${JAVA_VERSION}-linux-x64.zip && \
 
 # install node
 	NODE_HOME=/opt/nodejs; mkdir -p ${NODE_HOME} && \
