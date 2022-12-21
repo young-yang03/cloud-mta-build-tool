@@ -62,16 +62,16 @@ RUN apt-get update && \
     echo "583dedfeee0c119839a610ddc8c6768d0c044429  sapjvm-${JAVA_VERSION}-linux-x64.zip" | sha1sum -c - && \
     # unzip sapjvm-${JAVA_VERSION}-linux-x64.zip -d /usr/local/ && \
     bsdtar -xvf sapjvm-${JAVA_VERSION}-linux-x64.zip -C /usr/local --strip-components=1 && \
-#     ln -s /usr/local/sapjvm_8 /opt/jdk && \
-#     rm sapjvm-${JAVA_VERSION}-linux-x64.zip && \
+    # ln -s /usr/local/sapjvm_8 /opt/jdk && \
+    rm sapjvm-${JAVA_VERSION}-linux-x64.zip && \
 
 # install node
-	# NODE_HOME=/opt/nodejs; mkdir -p ${NODE_HOME} && \
-    # curl --fail --silent --output - "https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.gz" \
-    #  | tar -xzv -f - -C "${NODE_HOME}" && \
-    # ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/node" /usr/local/bin/node && \
-    # ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npm" /usr/local/bin/npm && \
-    # ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npx" /usr/local/bin/ && \
+	NODE_HOME=/opt/nodejs; mkdir -p ${NODE_HOME} && \
+    curl --fail --silent --output - "https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.gz" \
+     | tar -xzv -f - -C "${NODE_HOME}" && \
+    ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/node" /usr/local/bin/node && \
+    ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npm" /usr/local/bin/npm && \
+    ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npx" /usr/local/bin/ && \
     # chmod --recursive a+w "${NODE_HOME}" && \
 
 # install grunt-cli
