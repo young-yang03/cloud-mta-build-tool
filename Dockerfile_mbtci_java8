@@ -66,13 +66,13 @@ RUN apt-get update && \
 #     rm sapjvm-${JAVA_VERSION}-linux-x64.zip && \
 
 # install node
-	NODE_HOME=/opt/nodejs; mkdir -p ${NODE_HOME} && \
-    curl --fail --silent --output - "https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.gz" \
-     | tar -xzv -f - -C "${NODE_HOME}" && \
-    ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/node" /usr/local/bin/node && \
-    ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npm" /usr/local/bin/npm && \
-    ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npx" /usr/local/bin/ && \
-    chmod --recursive a+w "${NODE_HOME}" && \
+	# NODE_HOME=/opt/nodejs; mkdir -p ${NODE_HOME} && \
+    # curl --fail --silent --output - "https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.gz" \
+    #  | tar -xzv -f - -C "${NODE_HOME}" && \
+    # ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/node" /usr/local/bin/node && \
+    # ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npm" /usr/local/bin/npm && \
+    # ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npx" /usr/local/bin/ && \
+    # chmod --recursive a+w "${NODE_HOME}" && \
 
 # install grunt-cli
     npm install --prefix /usr/local/ -g grunt-cli && \
