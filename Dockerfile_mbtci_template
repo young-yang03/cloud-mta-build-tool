@@ -35,6 +35,8 @@ RUN set -ex \
             --password "$(echo weUseMta | openssl passwd -1 -stdin)" ${MTA_USER} \
   # allow anybody to write into the image user home directory
   && chmod a+w ${MTA_USER_HOME} \
+  && mkdir -p /usr/local/lib \
+  && chmod -R a+w /usr/local/lib/* \
   && apt-get remove --purge --autoremove -y openssl
 
 # Download SAP_Global_Root_CA.crt to target 
