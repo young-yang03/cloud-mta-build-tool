@@ -65,38 +65,38 @@ RUN apt-get update && \
 #     ln -s /usr/local/sapjvm_8 /opt/jdk && \
 #     rm sapjvm-${JAVA_VERSION}-linux-x64.zip && \
 
-# # install node
-# 	NODE_HOME=/opt/nodejs; mkdir -p ${NODE_HOME} && \
-#     curl --fail --silent --output - "https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.gz" \
-#      | tar -xzv -f - -C "${NODE_HOME}" && \
-#     ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/node" /usr/local/bin/node && \
-#     ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npm" /usr/local/bin/npm && \
-#     ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npx" /usr/local/bin/ && \
-#     chmod --recursive a+w "${NODE_HOME}" && \
+# install node
+	NODE_HOME=/opt/nodejs; mkdir -p ${NODE_HOME} && \
+    curl --fail --silent --output - "https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.gz" \
+     | tar -xzv -f - -C "${NODE_HOME}" && \
+    ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/node" /usr/local/bin/node && \
+    ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npm" /usr/local/bin/npm && \
+    ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npx" /usr/local/bin/ && \
+    chmod --recursive a+w "${NODE_HOME}" && \
 
-# # install grunt-cli
-#     npm install --prefix /usr/local/ -g grunt-cli && \
+# install grunt-cli
+    npm install --prefix /usr/local/ -g grunt-cli && \
 
-# # install ui5-cli temporary solution
-# 	npm install --prefix /usr/local/ -g @ui5/cli && \
+# install ui5-cli temporary solution
+	npm install --prefix /usr/local/ -g @ui5/cli && \
 
-# # installing Golang
-# 	curl -O https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz && tar -xvf go${GO_VERSION}.linux-amd64.tar.gz && \
-#     mv go /usr/local && \
-#     mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH" && \
-#     mkdir -p ${GOPATH}/src ${GOPATH}/bin && \
+# installing Golang
+	curl -O https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz && tar -xvf go${GO_VERSION}.linux-amd64.tar.gz && \
+    mv go /usr/local && \
+    mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH" && \
+    mkdir -p ${GOPATH}/src ${GOPATH}/bin && \
 
-# # update maven home
-# 	M2_BASE="$(dirname ${M2_HOME})" && \
-#     mkdir -p "${M2_BASE}" && \
-#     curl --fail --silent --output - "https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz" \
-#     | tar -xzvf - -C "${M2_BASE}" && \
-#     ln -s "${M2_HOME}/bin/mvn" /usr/local/bin/mvn && \
-#     chmod --recursive a+w "${M2_HOME}"/conf/* && \
+# update maven home
+	M2_BASE="$(dirname ${M2_HOME})" && \
+    mkdir -p "${M2_BASE}" && \
+    curl --fail --silent --output - "https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz" \
+    | tar -xzvf - -C "${M2_BASE}" && \
+    ln -s "${M2_HOME}/bin/mvn" /usr/local/bin/mvn && \
+    chmod --recursive a+w "${M2_HOME}"/conf/* && \
 
-# # Download MBT
-# 	curl -L "https://github.com/SAP/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin && \
-#     chown root:root /usr/local/bin/mbt && \ 
+# Download MBT
+	curl -L "https://github.com/SAP/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin && \
+    chown root:root /usr/local/bin/mbt && \ 
 
 # handle users permission
 	useradd --home-dir "${MTA_USER_HOME}" \
@@ -109,17 +109,17 @@ RUN apt-get update && \
 # allow anybody to write into the images HOME
     chmod a+w "${MTA_USER_HOME}" && \
 
-# # Install essential build tools and python, required for building db modules
-# 	apt-get install --yes --no-install-recommends \
-# 		build-essential \
-# 		python2.7 \
-#         python3 && \
+# Install essential build tools and python, required for building db modules
+	apt-get install --yes --no-install-recommends \
+		build-essential \
+		python2.7 \
+        python3 && \
 
-# # remove build env tools
-#     apt-get remove --purge --autoremove --yes \
-# 		curl \
-# 		wget \
-# 		unzip && \
+# remove build env tools
+    apt-get remove --purge --autoremove --yes \
+		curl \
+		wget \
+		unzip && \
 
     rm -rf /var/lib/apt/lists/*
 
