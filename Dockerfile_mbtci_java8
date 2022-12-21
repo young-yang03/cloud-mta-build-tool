@@ -67,12 +67,14 @@ RUN apt-get update && \
 
 # install node
 	NODE_HOME=/opt/nodejs; mkdir -p ${NODE_HOME} && \
+    echo "Start download node: https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz" && \
     curl --fail --silent --output - "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz" \
      | tar -xzv -f - -C "${NODE_HOME}" && \
+    echo "End download node" && \
     ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/node" /usr/local/bin/node && \
     ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npm" /usr/local/bin/npm && \
     ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npx" /usr/local/bin/ && \
-    chmod --recursive a+w "${NODE_HOME}" && \
+    #chmod --recursive a+w "${NODE_HOME}" && \
 
 # install grunt-cli
     npm install --prefix /usr/local/ -g grunt-cli && \
