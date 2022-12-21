@@ -98,16 +98,16 @@ RUN apt-get update && \
 # 	curl -L "https://github.com/SAP/cloud-mta-build-tool/releases/download/v${MBT_VERSION}/cloud-mta-build-tool_${MBT_VERSION}_Linux_amd64.tar.gz" | tar -zx -C /usr/local/bin && \
 #     chown root:root /usr/local/bin/mbt && \ 
 
-# # handle users permission
-# 	useradd --home-dir "${MTA_USER_HOME}" \
-#             --create-home \
-#             --shell /bin/bash \
-#             --user-group \
-#             --uid 1000 \
-#             --comment 'Cloud MTA Build Tool' \
-#             --password "$(echo weUseMta |openssl passwd -1 -stdin)" mta && \
-# # allow anybody to write into the images HOME
-#     chmod a+w "${MTA_USER_HOME}" && \
+# handle users permission
+	useradd --home-dir "${MTA_USER_HOME}" \
+            --create-home \
+            --shell /bin/bash \
+            --user-group \
+            --uid 1000 \
+            --comment 'Cloud MTA Build Tool' \
+            --password "$(echo weUseMta |openssl passwd -1 -stdin)" mta && \
+# allow anybody to write into the images HOME
+    chmod a+w "${MTA_USER_HOME}" && \
 
 # # Install essential build tools and python, required for building db modules
 # 	apt-get install --yes --no-install-recommends \
@@ -121,7 +121,7 @@ RUN apt-get update && \
 # 		wget \
 # 		unzip && \
 
-     rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/*
 
 ENV PATH=$PATH:./node_modules/.bin HOME=${MTA_USER_HOME}
 WORKDIR /project
