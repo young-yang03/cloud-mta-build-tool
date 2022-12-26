@@ -191,8 +191,10 @@ RUN sapmachine_install() { \
   && set -ex \
   && echo "SAPMACHINE_VERSION: ${SAPMACHINE_VERSION}, SAPMACHINE_MAJOR_VERSION: ${SAPMACHINE_MAJOR_VERSION}" \
   && if [ ${SAPMACHINE_MAJOR_VERSION} -eq 8 ]; then \
+      echo "sapjvm_install is exec"; \
       sapjvm_install; \
     else \
+      echo "sapmachine_install is exec"; \
       sapmachine_install; \
     fi \
   # smoke test
