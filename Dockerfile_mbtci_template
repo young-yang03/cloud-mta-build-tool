@@ -9,7 +9,6 @@ ARG NODE_VERSION=NODE_VERSION_TEMPLATE
 ARG MAVEN_VERSION=3.8.6
 ARG MAVEN_BASE_URL=https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries
 ARG SAPMACHINE_VERSION=JAVA_VERSION_TEMPLATE
-ARG SAPMACHINE_MAJOR_VERSION=$(echo ${SAPMACHINE_VERSION} | cut -d. -f1)
 
 # Environment variables
 ENV PYTHON /usr/bin/python3
@@ -146,6 +145,7 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
 
 # Install SAPMachine
 RUN sapmachine_install() { \
+    SAPMACHINE_MAJOR_VERSION=$(echo ${SAPMACHINE_VERSION} | cut -d. -f1); \
     ARCH=; \
     dpkgArch="$(dpkg --print-architecture)"; \
     case "${dpkgArch##*-}" in \
@@ -190,7 +190,7 @@ RUN sapmachine_install() { \
   } \
   && set -ex \
   && echo "SAPMACHINE_VERSION: ${SAPMACHINE_VERSION}, SAPMACHINE_MAJOR_VERSION: ${SAPMACHINE_MAJOR_VERSION}" \
-  && if [ ${SAPMACHINE_MAJOR_VERSION} -eq 8 ]; then \
+  && if [ $(echo ${SAPMACHINE_VERSION} | cut -d. -f1) -le 8 ]; then \
       echo "sapjvm_install is exec"; \
       sapjvm_install; \
     else \
