@@ -215,7 +215,9 @@ RUN set -ex \
 # Set dir mod
 RUN set -ex \
   && mkdir -p /usr/local/lib/node_modules \
-  && chmod -R a+w /usr/local/lib/node_modules
+  && chmod -R a+w /usr/local/lib/node_modules \
+  && mkdir -p /usr/local/bin \
+  && chmod -R a+w /usr/local/bin
 
 ENV PATH=$PATH:./node_modules/.bin HOME=${MTA_USER_HOME}
 WORKDIR /project
