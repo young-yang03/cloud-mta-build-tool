@@ -189,7 +189,8 @@ RUN sapmachine_install() { \
     ln -s /usr/local ${JAVA_HOME}; \
   } \
   && set -ex \
-  && if [ ${SAPMACHINE_MAJOR_VERSION} = 8 ]; then \
+  && echo "SAPMACHINE_VERSION: ${SAPMACHINE_VERSION}, SAPMACHINE_MAJOR_VERSION: ${SAPMACHINE_MAJOR_VERSION}" \
+  && if [ ${SAPMACHINE_MAJOR_VERSION} -eq 8 ]; then \
       sapjvm_install; \
     else \
       sapmachine_install; \
