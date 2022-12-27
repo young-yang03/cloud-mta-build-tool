@@ -171,6 +171,7 @@ RUN sapmachine_install() { \
     ln -s /usr/lib/jvm/sapmachine-${SAPMACHINE_MAJOR_VERSION} ${JAVA_HOME}; \
   }; \
   sapjvm_install() { \
+  # update install sapjvm logic, download sapjvm to /opt/jdk directly and then ln
     ARCH=; \
     dpkgArch="$(dpkg --print-architecture)"; \
     case "${dpkgArch##*-}" in \
@@ -273,6 +274,8 @@ RUN set -ex \
 
 # Set dir mod
 RUN set -ex \
+  && mkdir -p /usr/local/lib/node_modules \
+  && chmod -R a+w /usr/local/lib/node_modules \
   && mkdir -p /usr/local/bin \
   && chmod -R a+w /usr/local/bin
 
