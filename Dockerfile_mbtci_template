@@ -24,7 +24,6 @@ ENV PATH $PATH:${NODE_HOME}/bin
 ENV GOPATH /go
 ENV GO_HOME /usr/local/go
 ENV PATH $GOPATH/bin:$GO_HOME/bin:$PATH
-# ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
 ENV CGO_ENABLED=0
 ENV GOOS=linux
@@ -89,11 +88,6 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && grep " node-v${NODE_VERSION}-${GOOS}-${ARCH}.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
     && mkdir -p ${NODE_HOME} \
     && tar -xJf "node-v${NODE_VERSION}-${GOOS}-${ARCH}.tar.xz" -C ${NODE_HOME} --strip-components=1 \
-    # Notice to test, because unzip node under /usr/local/node###, do we still need to link?
-    # && ln -s "${NODE_HOME}/bin/node" /usr/local/bin/node \
-    # && ln -s "${NODE_HOME}/bin/node" /usr/local/bin/nodejs \
-    # && ln -s "${NODE_HOME}/bin/npm" /usr/local/bin/npm \
-    # && ln -s "${NODE_HOME}/bin/npx" /usr/local/bin/npx \
     && chmod --recursive a+w "${NODE_HOME}" \
     && ln -s "${NODE_HOME}/bin/node" "${NODE_HOME}/bin/nodejs" \
     && rm -rf "$GNUPGHOME" "node-v${NODE_VERSION}-${GOOS}-${ARCH}.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
@@ -155,7 +149,6 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && gpg --batch --verify go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz.asc go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz \
     && mkdir -p ${GO_HOME} \
     && tar -xvf go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz -C ${GO_HOME} --strip-components=1 \
-    # Notice test, after chmod $GOPATH, is the /usr/local/go chmod 777?
     && mkdir -p ${GOPATH} \
     && ln -s ${GO_HOME} ${GOPATH} \
     && chmod -R 777 ${GOPATH} \
@@ -190,8 +183,6 @@ RUN sapmachine_install() { \
     apt-get install -y sapmachine-${SAPMACHINE_MAJOR_VERSION}-jdk=${SAPMACHINE_VERSION} --no-install-recommends; \
     rm -rf "$GNUPGHOME" /var/lib/apt/lists/*; \
     apt-get remove --purge --autoremove -y ca-certificates gnupg dirmngr; \
-    # rm -rf ${JAVA_HOME}; \
-    # mkdir -p ${JAVA_HOME}; \
     ln -s /usr/lib/jvm/sapmachine-${SAPMACHINE_MAJOR_VERSION} ${JAVA_HOME}; \
   }; \
   sapjvm_install() { \
@@ -206,24 +197,19 @@ RUN sapmachine_install() { \
     apt-get update; \
     apt-get install -y ca-certificates curl libarchive-tools --no-install-recommends; \
     rm -rf /var/lib/apt/lists/*; \
-    # rm -rf ${JAVA_HOME}; \
-    # mkdir -p ${JAVA_HOME}; \
     curl -fsSLO --compressed -b 'eula_3_1_agreed=tools.hana.ondemand.com/developer-license-3_1.txt' https://tools.hana.ondemand.com/additional/sapjvm-${SAPMACHINE_VERSION}-${GOOS}-${ARCH}.zip; \
     # Notice to modify, download the sha1 value auto
     echo "583dedfeee0c119839a610ddc8c6768d0c044429  sapjvm-${SAPMACHINE_VERSION}-${GOOS}-${ARCH}.zip" | sha1sum -c -; \
     bsdtar -xvf sapjvm-${SAPMACHINE_VERSION}-${GOOS}-${ARCH}.zip -C /usr/local; \
+    chown root:root /usr/local/sapjvm_${SAPMACHINE_MAJOR_VERSION}; \
     rm -f sapjvm-${SAPMACHINE_VERSION}-${GOOS}-${ARCH}.zip; \
     apt-get remove --purge --auto-remove -y ca-certificates curl libarchive-tools; \
-    # ln -s /usr/local/sapjvm_${SAPMACHINE_MAJOR_VERSION}/bin/java /usr/local/bin/java; \
     ln -s /usr/local/sapjvm_${SAPMACHINE_MAJOR_VERSION} ${JAVA_HOME}; \
   } \
   && set -ex \
-  && echo "SAPMACHINE_VERSION: ${SAPMACHINE_VERSION}" \
   && if [ $(echo ${SAPMACHINE_VERSION} | cut -d. -f1) -le 8 ]; then \
-      echo "sapjvm_install is exec"; \
       sapjvm_install; \
     else \
-      echo "sapmachine_install is exec"; \
       sapmachine_install; \
     fi \
   # smoke test
@@ -245,12 +231,10 @@ RUN set -ex \
     gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$key" ; \
   done \
   && gpg --batch --verify apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc apache-maven-${MAVEN_VERSION}-bin.tar.gz \
-  # && rm -rf ${MAVEN_HOME} \
   && mkdir -p ${MAVEN_HOME} ${MAVEN_HOME}/ref \
   && tar -xzf apache-maven-${MAVEN_VERSION}-bin.tar.gz -C ${MAVEN_HOME} --strip-components=1 \
   && rm -rf "$GNUPGHOME" apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc apache-maven-${MAVEN_VERSION}-bin.tar.gz \
   && chmod -R a+w ${MAVEN_HOME}/conf/* \
-  # && ln -s ${MAVEN_HOME}/bin/mvn /usr/bin/mvn \
   && apt-get remove --purge --autoremove -y ca-certificates curl gnupg dirmngr \
   # smoke test
   && echo "mvn ${MAVEN_VERSION} install smoke test!" \
