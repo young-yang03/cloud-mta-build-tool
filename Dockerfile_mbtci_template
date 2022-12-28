@@ -22,7 +22,8 @@ ENV NODE_HOME /usr/local/nodejs
 ENV PATH $PATH:${NODE_HOME}/bin
 
 ENV GOPATH /go
-ENV PATH $GOPATH/bin:$PATH
+ENV GO_HOME /usr/local/go
+ENV PATH $GOPATH/bin:$GO_HOME/bin:$PATH
 # ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
 ENV CGO_ENABLED=0
@@ -152,7 +153,6 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && curl -fsSLO --compressed https://storage.googleapis.com/golang/go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz \
     && curl -fsSLO --compressed https://storage.googleapis.com/golang/go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz.asc \
     && gpg --batch --verify go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz.asc go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz \
-    && GO_HOME=/usr/local/go \
     && mkdir -p ${GO_HOME} \
     && tar -xvf go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz -C ${GO_HOME} --strip-components=1 \
     # Notice test, after chmod $GOPATH, is the /usr/local/go chmod 777?
