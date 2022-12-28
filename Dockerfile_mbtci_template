@@ -179,8 +179,8 @@ RUN sapmachine_install() { \
     apt-get install -y sapmachine-${SAPMACHINE_MAJOR_VERSION}-jdk=${SAPMACHINE_VERSION} --no-install-recommends; \
     rm -rf "$GNUPGHOME" /var/lib/apt/lists/*; \
     apt-get remove --purge --autoremove -y ca-certificates gnupg dirmngr; \
-    rm -rf ${JAVA_HOME}; \
-    mkdir -p ${JAVA_HOME}; \
+    # rm -rf ${JAVA_HOME}; \
+    # mkdir -p ${JAVA_HOME}; \
     ln -s /usr/lib/jvm/sapmachine-${SAPMACHINE_MAJOR_VERSION} ${JAVA_HOME}; \
   }; \
   sapjvm_install() { \
@@ -195,8 +195,8 @@ RUN sapmachine_install() { \
     apt-get update; \
     apt-get install -y ca-certificates curl libarchive-tools --no-install-recommends; \
     rm -rf /var/lib/apt/lists/*; \
-    rm -rf ${JAVA_HOME}; \
-    mkdir -p ${JAVA_HOME}; \
+    # rm -rf ${JAVA_HOME}; \
+    # mkdir -p ${JAVA_HOME}; \
     curl -fsSLO --compressed -b 'eula_3_1_agreed=tools.hana.ondemand.com/developer-license-3_1.txt' https://tools.hana.ondemand.com/additional/sapjvm-${SAPMACHINE_VERSION}-${GOOS}-${ARCH}.zip; \
     # Notice to modify, download the sha1 value auto
     echo "583dedfeee0c119839a610ddc8c6768d0c044429  sapjvm-${SAPMACHINE_VERSION}-${GOOS}-${ARCH}.zip" | sha1sum -c -; \
@@ -234,7 +234,7 @@ RUN set -ex \
     gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$key" ; \
   done \
   && gpg --batch --verify apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc apache-maven-${MAVEN_VERSION}-bin.tar.gz \
-  && rm -rf ${MAVEN_HOME} \
+  # && rm -rf ${MAVEN_HOME} \
   && mkdir -p ${MAVEN_HOME} ${MAVEN_HOME}/ref \
   && tar -xzf apache-maven-${MAVEN_VERSION}-bin.tar.gz -C ${MAVEN_HOME} --strip-components=1 \
   && rm -rf "$GNUPGHOME" apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc apache-maven-${MAVEN_VERSION}-bin.tar.gz \
