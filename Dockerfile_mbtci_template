@@ -147,8 +147,9 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && rm -rf "$GNUPGHOME" go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz.asc \
     && apt-get remove --purge --autoremove -y ca-certificates curl gnupg dirmngr \
     # Notice test, after chmod $GOPATH, is the /usr/local/go chmod 777?
+    && mkdir ${GOPATH} \
     && ln -s /usr/local/go ${GOPATH} \
-    && chmod -R 777 "$GOPATH" \
+    && chmod -R 777 ${GOPATH} \
     # smoke test
     && echo "go ${GO_VERSION} install smoke test!" \
     && go version
