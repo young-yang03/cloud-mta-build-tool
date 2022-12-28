@@ -153,13 +153,14 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && curl -fsSLO --compressed https://storage.googleapis.com/golang/go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz.asc \
     && gpg --batch --verify go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz.asc go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz \
     && GO_HOME=/usr/local/go \
+    && mkdir -p ${GO_HOME} \
     && tar -xvf go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz -C ${GO_HOME} --strip-components=1 \
-    && rm -rf "$GNUPGHOME" go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz.asc \
-    && apt-get remove --purge --autoremove -y ca-certificates curl gnupg dirmngr \
     # Notice test, after chmod $GOPATH, is the /usr/local/go chmod 777?
     && mkdir -p ${GOPATH} \
     && ln -s ${GO_HOME} ${GOPATH} \
     && chmod -R 777 ${GOPATH} \
+    && rm -rf "$GNUPGHOME" go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz.asc \
+    && apt-get remove --purge --autoremove -y ca-certificates curl gnupg dirmngr \
     # smoke test
     && echo "go ${GO_VERSION} install smoke test!" \
     && go version
