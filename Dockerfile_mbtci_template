@@ -89,7 +89,7 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && grep " node-v${NODE_VERSION}-linux-${ARCH}.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
     && mkdir -p ${NODE_HOME} \
     && tar -xJf "node-v${NODE_VERSION}-linux-${ARCH}.tar.xz" -C ${NODE_HOME} --strip-components=1 \
-    && chown -R ${MTA_USER} ${NODE_HOME}/lib/node_modules
+    && chown -R ${MTA_USER} ${NODE_HOME}/lib/node_modules \
     # && chmod --recursive a+w "${NODE_HOME}" \
     && ln -s "${NODE_HOME}/bin/node" "${NODE_HOME}/bin/nodejs" \
     && rm -rf "$GNUPGHOME" "node-v${NODE_VERSION}-linux-${ARCH}.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
