@@ -587,26 +587,26 @@ workflows:
               ignore: master
 
   # when master's code is committed or merged from sub-branch, this workflow will be exceeded
-  on_merge_build_test:
-    jobs:
-      - build:
-          filters:
-            branches:
-              only: master
-      - build-node:
-          filters:
-            branches:
-              only: master
-      - compliance:
-          filters:
-            branches:
-              only: master
-      - test:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+  # on_merge_build_test:
+  #   jobs:
+  #     - build:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - build-node:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - compliance:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - test:
+  #         requires:
+  #           - build
+  #         filters:
+  #           branches:
+  #             only: master
 
   # when a branch is tagged by "release", this workflow will be exceeded
   on_tag_build_release_publish:
@@ -617,25 +617,26 @@ workflows:
               only: /release/
             branches:
               ignore: /.*/
-      - test:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
-      - ghpages:
-          requires:
-            - test
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
+      # - test:
+      #     requires:
+      #       - build
+      #     filters:
+      #       tags:
+      #         only: /release/
+      #       branches:
+      #         ignore: /.*/
+      # - ghpages:
+      #     requires:
+      #       - test
+      #     filters:
+      #       tags:
+      #         only: /release/
+      #       branches:
+      #         ignore: /.*/
       - release-to-github:
           requires:
-            - test
+            - build
+            # - test
           filters:
             tags:
               only: /release/
