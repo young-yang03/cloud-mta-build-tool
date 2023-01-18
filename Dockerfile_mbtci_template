@@ -149,7 +149,7 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && curl -fsSLO --compressed https://storage.googleapis.com/golang/go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz \
     && curl -fsSLO --compressed https://storage.googleapis.com/golang/go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz.asc \
     && gpg --batch --verify go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz.asc go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz \
-    && GO_HOME /usr/local/go \
+    && GO_HOME=/usr/local/go \
     && mkdir -p ${GO_HOME} \
     && tar -xvf go${GO_VERSION}.${GOOS}-${ARCH}.tar.gz -C ${GO_HOME} --strip-components=1 \
     && mkdir -p ${GOPATH} \
