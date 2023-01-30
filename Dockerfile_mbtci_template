@@ -243,6 +243,12 @@ RUN set -ex \
   && python2.7 --version \
   && python3 --version
 
+# Allow global npm packages install without sudo
+RUN set -ex \
+  && mkdir ${MTA_USER_HOME}/.npm-global \
+  && chown -R ${MTA_USER}:${MTA_USER} ${MTA_USER_HOME}
+ENV NPM_CONFIG_PREFIX ${MTA_USER_HOME}/.npm-global
+
 ENV PATH=$PATH:./node_modules/.bin HOME=${MTA_USER_HOME}
 WORKDIR /project
 USER ${MTA_USER}
