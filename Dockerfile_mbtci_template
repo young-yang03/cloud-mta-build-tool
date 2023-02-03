@@ -250,6 +250,5 @@ RUN set -ex \
 ENV NPM_CONFIG_PREFIX ${MTA_USER_HOME}/.npm-global
 
 ENV PATH=$PATH:./node_modules/.bin
-#ENV PATH=$PATH:./node_modules/.bin HOME=${MTA_USER_HOME}
 WORKDIR /project
 USER ${MTA_USER}
