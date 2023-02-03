@@ -245,7 +245,8 @@ RUN set -ex \
 
 # Allow global npm packages install without sudo
 RUN set -ex \
-  && mkdir -p ${MTA_USER_HOME}/.npm-global/lib \
+  && mkdir ${MTA_USER_HOME}/.npm-global \
+  && mkdir ${MTA_USER_HOME}/.npm-global/lib \
   && chown -R ${MTA_USER}:${MTA_USER} ${MTA_USER_HOME}
 ENV NPM_CONFIG_PREFIX ${MTA_USER_HOME}/.npm-global
 
