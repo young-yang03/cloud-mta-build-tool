@@ -67,4 +67,3 @@ command:
   cd ~ && npm link @sap/cds --local:
     exit-status: 0
     timeout: 50000
-  cd ~ && npm link
