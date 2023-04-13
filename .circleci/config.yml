@@ -25,6 +25,7 @@ jobs:
           command: |
             go mod vendor
       - run: sudo chown circleci:circleci $GOPATH/bin
+      - run: sudo chown circleci:circleci /usr/local/bin
       - run: make
       - run: go test -v ./...
       - run: make tools
