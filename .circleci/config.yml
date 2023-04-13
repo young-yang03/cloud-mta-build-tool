@@ -13,6 +13,7 @@ jobs:
   build:
     docker:
       - image: cimg/go:1.17
+    docker:
       - image: cimg/node:lts
     environment:
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
@@ -20,6 +21,7 @@ jobs:
       - checkout
       - run: go version
       - run: go env
+      - run: npm --version
       - run:
           name: install dependencies
           command: |
