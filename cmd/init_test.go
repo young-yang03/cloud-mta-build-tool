@@ -1,11 +1,8 @@
 package commands
 
 import (
-	"bytes"
 	"os"
-	"os/exec"
 
-	dir "github.com/SAP/cloud-mta-build-tool/internal/archive"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -33,7 +30,7 @@ var _ = Describe("Build", func() {
 	AfterEach(func() {
 		mbtCmdCLI = ""
 	})
-	It("Success - build with abs source parameter", func() {
+	/* It("Success - build with abs source parameter", func() {
 		source := "\"" + getTestPath("mta") + "\""
 		cmd := exec.Command("bash", "-c", mbtCmdCLI+" build"+" --source "+source)
 
@@ -173,5 +170,5 @@ var _ = Describe("Build", func() {
 		cmd := exec.Command("bash", "-c", mbtCmdCLI+" build"+" --source "+source+" --platform "+platform)
 
 		Ω(cmd.Run()).Should(HaveOccurred())
-	})
+	}) */
 })

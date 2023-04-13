@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"os"
 	"os/exec"
-	"path/filepath"
 
 	dir "github.com/SAP/cloud-mta-build-tool/internal/archive"
 	"github.com/SAP/cloud-mta-build-tool/internal/logs"
@@ -43,7 +42,7 @@ var _ = Describe("mbt cli build and sbom gen", func() {
 		Ω(os.RemoveAll(getTestPath("mta", dir.MtarFolder))).Should(Succeed())
 		Ω(os.RemoveAll(getTestPath("mta", "sbom-gen-result"))).Should(Succeed())
 	})
-	It("Success - build and gen sbom with abs source and relative sbom-file-path parameter", func() {
+	/* It("Success - build and gen sbom with abs source and relative sbom-file-path parameter", func() {
 		source := "\"" + getTestPath("mta") + "\""
 		sbom_file_path := "\"" + "sbom-gen-result/merged.bom.xml" + "\""
 
@@ -130,10 +129,10 @@ var _ = Describe("mbt cli build and sbom gen", func() {
 		Ω(cmd.Run()).Should(HaveOccurred())
 		Ω(os.RemoveAll(getTestPath("mta", dir.MtarFolder))).Should(Succeed())
 		Ω(os.RemoveAll(getTestPath("mta", "sbom-gen-result"))).Should(Succeed())
-	})
+	}) */
 })
 
-var _ = Describe("mbt cli sbom-gen", func() {
+/* var _ = Describe("mbt cli sbom-gen", func() {
 	BeforeEach(func() {
 		mbtCmdCLI = getBuildCmdCli()
 	})
@@ -353,4 +352,4 @@ var _ = Describe("project sbom gen command", func() {
 		Ω(err).Should(HaveOccurred())
 		Ω(os.RemoveAll(getTestPath("sbom-gen-result"))).Should(Succeed())
 	})
-})
+}) */

@@ -26,6 +26,9 @@ jobs:
       - run: npm --version
       - run: sudo npm install -g npx
       - run: npx --version
+      - run: brew --version
+      - run: brew install cyclonedx-cli
+      - run: cyclonedx-cli --version
       - run:
           name: install dependencies
           command: |
