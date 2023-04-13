@@ -24,6 +24,7 @@ jobs:
           name: install dependencies
           command: |
             go mod vendor
+      - run: make
       - run: go test -v ./...
       - run: sudo chown circleci:circleci $GOPATH/bin
       - run: make tools
