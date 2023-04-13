@@ -13,6 +13,7 @@ jobs:
   build:
     docker:
       - image: cimg/go:1.17
+      - image: cimg/node:lts
     environment:
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
@@ -564,27 +565,29 @@ jobs:
 
 workflows:
   version: 2
-  # when sub-branch's code is committed, this workflow will be exceeded
+  # when master's code is committed, this workflow will be exceeded
+  # Notice, cloud-mta-build-tool_young-yang03 is docker imate testing branch of cloud-mta-build-tool, it has no feature branch;
+  # so, on_pr_build workflow is only for master branch, it is different with cloud-mta-build-tool's on_pr_build workflow
   on_pr_build:
     jobs:
       - build:
           filters:
             branches:
-              ignore: master
+              only: master
       - build-node:
           filters:
             branches:
-              ignore: master
+              only: master
       - compliance:
           filters:
             branches:
-              ignore: master
+              only: master
       - test:
           requires:
             - build
           filters:
             branches:
-              ignore: master
+              only: master
 
   # when master's code is committed or merged from sub-branch, this workflow will be exceeded
   # on_merge_build_test:
