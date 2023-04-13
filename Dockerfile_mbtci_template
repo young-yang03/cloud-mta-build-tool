@@ -10,8 +10,6 @@ ARG NODE_VERSION=NODE_VERSION_TEMPLATE
 ARG MAVEN_VERSION=3.8.7
 ARG MAVEN_BASE_URL=https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries
 ARG SAPMACHINE_VERSION=JAVA_VERSION_TEMPLATE
-ARG CYCLONEDX_CLI_VERSION=0.2.4
-ARG CYCLONEDX_CLI_BASE_URL=https://github.com/CycloneDX/cyclonedx-cli/releases/download/
 
 # Environment variables
 ENV PYTHON /usr/bin/python3

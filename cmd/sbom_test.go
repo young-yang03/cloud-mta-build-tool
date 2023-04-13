@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	dir "github.com/SAP/cloud-mta-build-tool/internal/archive"
+	"github.com/SAP/cloud-mta-build-tool/internal/logs"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -26,9 +27,19 @@ var _ = Describe("mbt cli build and sbom gen", func() {
 	It("Success - build and gen sbom with relatvie source and relative sbom-file-path parameter", func() {
 		source := "\"" + "testdata/mta" + "\""
 		sbom_file_path := "\"" + "sbom-gen-result/merged.bom.xml" + "\""
+
+		var stdout bytes.Buffer
 		cmd := exec.Command("bash", "-c", mbtCmdCLI+" build"+" --source "+source+" --sbom-file-path "+sbom_file_path)
+		cmd.Stdout = &stdout
 
 		Ω(cmd.Run()).Should(Succeed())
+
+		logs.Logger.Info("*******************************")
+
+		logs.Logger.Info(stdout.String())
+
+		logs.Logger.Info("*******************************")
+
 		Ω(os.RemoveAll(getTestPath("mta", dir.MtarFolder))).Should(Succeed())
 		Ω(os.RemoveAll(getTestPath("mta", "sbom-gen-result"))).Should(Succeed())
 	})

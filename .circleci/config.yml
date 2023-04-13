@@ -21,8 +21,11 @@ jobs:
       - run: go env
       - run: sudo apt-get update
       - run: sudo apt-get install nodejs
+      - run: node --version
       - run: sudo apt-get install npm
+      - run: npm --version
       - run: sudo npm install -g npx
+      - run: npx --version
       - run:
           name: install dependencies
           command: |
