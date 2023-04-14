@@ -28,7 +28,8 @@ var _ = Describe("mbt cli build and sbom gen", func() {
 		sbom_file_path := "\"" + "sbom-gen-result/merged.bom.xml" + "\""
 
 		var stdout bytes.Buffer
-		cmd := exec.Command("bash", "-c", mbtCmdCLI+" build"+" --source "+source+" --sbom-file-path "+sbom_file_path)
+		cmd := exec.Command("bash", "-c", " mbt build"+" --source "+source+" --sbom-file-path "+sbom_file_path)
+		// cmd := exec.Command("bash", "-c", mbtCmdCLI+" build"+" --source "+source+" --sbom-file-path "+sbom_file_path)
 		cmd.Stdout = &stdout
 
 		Ω(cmd.Run()).Should(Succeed())
