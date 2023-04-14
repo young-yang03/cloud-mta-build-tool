@@ -26,7 +26,9 @@ jobs:
       - run: npm --version
       - run: sudo npm install -g npx
       - run: npx --version
+      - run: ls cyclonedx-cli
       - run: sudo ln -s cyclonedx-cli/cyclonedx-cli /usr/local/bin/cyclonedx-cli
+      - run: ls /usr/local/bin
       # - run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       # - run: ls /home/linuxbrew/.linuxbrew/bin
       # - run: dpkg --print-architecture
