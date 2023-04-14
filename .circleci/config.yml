@@ -26,20 +26,21 @@ jobs:
       - run: npm --version
       - run: sudo npm install -g npx
       - run: npx --version
-      - run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      - run: ls /home/linuxbrew/.linuxbrew/bin
-      - run: dpkg --print-architecture
-      - run: cat ~/.bashrc
-      - run: echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> $HOME/.bashrc
-      - run: echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >> ~/.bashrc
-      - run: source ~/.bashrc
-      - run: cat ~/.bashrc
+      - run: sudo ln -s cyclonedx-cli/cyclonedx-cli /usr/local/bin/cyclonedx-cli
+      # - run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      # - run: ls /home/linuxbrew/.linuxbrew/bin
+      # - run: dpkg --print-architecture
+      # - run: cat ~/.bashrc
+      # - run: echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> $HOME/.bashrc
+      # - run: echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >> ~/.bashrc
+      # - run: source ~/.bashrc
+      # - run: cat ~/.bashrc
       # - run: echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> $HOME/.bash_profile
       # - run: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
       # - run: source $HOME/.bash_profile
       #- run: sudo ln -s /home/linuxbrew/.linuxbrew/bin/brew /usr/local/bin/brew
-      - run: brew --version
-      - run: brew install cyclonedx-cli
+      # - run: brew --version
+      # - run: brew install cyclonedx-cli
       - run: cyclonedx-cli --version
       - run:
           name: install dependencies
