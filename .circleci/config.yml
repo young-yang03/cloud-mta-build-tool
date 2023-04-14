@@ -26,11 +26,10 @@ jobs:
       - run: npm --version
       - run: sudo npm install -g npx
       - run: npx --version
-      - run: sudo apt-get install cyclonedx-cli
+      - run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      - run: brew --version
+      - run: brew install cyclonedx-cli
       - run: cyclonedx-cli --version
-      # - run: brew --version
-      # - run: brew install cyclonedx-cli
-      # - run: cyclonedx-cli --version
       - run:
           name: install dependencies
           command: |
