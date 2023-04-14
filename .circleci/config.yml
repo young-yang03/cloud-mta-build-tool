@@ -26,11 +26,7 @@ jobs:
       # - run: npm --version
       # - run: sudo npm install -g npx
       # - run: npx --version
-      - run: ls release -la
-      - run: release/mbt_linux --version
-      - run: ls cyclonedx-cli -la
-      - run: sudo ln -s cyclonedx-cli/cyclonedx-cli /usr/local/bin/cyclonedx-cli
-      - run: ls -la /usr/local/bin
+      
       # - run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       # - run: ls /home/linuxbrew/.linuxbrew/bin
       # - run: dpkg --print-architecture
@@ -45,7 +41,6 @@ jobs:
       #- run: sudo ln -s /home/linuxbrew/.linuxbrew/bin/brew /usr/local/bin/brew
       # - run: brew --version
       # - run: brew install cyclonedx-cli
-      - run: cyclonedx-cli/cyclonedx-cli --version
       - run:
           name: install dependencies
           command: |
@@ -53,6 +48,17 @@ jobs:
       - run: sudo chown circleci:circleci $GOPATH/bin
       - run: sudo chown circleci:circleci /usr/local/bin
       - run: make
+      - run: ls -la /usr/local/bin
+      - run: mbt --version
+      - run: which mbt
+      # - run: ls release -la
+      # - run: release/mbt_linux --version
+      - run: ls cyclonedx-cli -la
+      - run: cp cyclonedx-cli/cyclonedx-cli /usr/local/bin/cyclonedx-cli
+      # - run: sudo ln -s cyclonedx-cli/cyclonedx-cli /usr/local/bin/cyclonedx-cli
+      - run: ls -la /usr/local/bin
+      - run: cyclonedx-cli --version
+      # - run: cyclonedx-cli/cyclonedx-cli --version
       - run: go test -v ./...
       - run: make tools
       - run: make lint
