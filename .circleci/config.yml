@@ -12,43 +12,38 @@ jobs:
 
   build:
     docker:
-    - image: cimg/go:1.17
+      - image: cimg/go:1.17
     environment:
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - checkout
       - run: go version
       - run: go env
-      - run: sudo apt-get update
-      - run: sudo apt-get install nodejs
-      - run: node --version
-      - run: sudo apt-get install npm
-      - run: npm --version
-      - run: sudo npm install -g npx
-      - run: npx --version
       - run:
           name: install dependencies
           command: |
             go mod vendor
-      - run: sudo chown circleci:circleci $GOPATH/bin
-      - run: sudo chown circleci:circleci /usr/local/bin
-      - run: make
-      - run: ls -la /usr/local/bin
-      - run: ls -la $GOPATH/bin
-      - run: mbt --version
-      - run: which mbt
-      # - run: ls release -la
-      # - run: release/mbt_linux --version
-      - run: ls cyclonedx-cli -la
-      - run: cp cyclonedx-cli/cyclonedx-cli $GOPATH/bin/cyclonedx-cli
-      - run: chmod ug+rwx $GOPATH/bin/cyclonedx-cli
-      # - run: sudo ln -s cyclonedx-cli/cyclonedx-cli /usr/local/bin/cyclonedx-cli
-      - run: ls -la /usr/local/bin
-      - run: ls -la $GOPATH/bin
-      - run: cyclonedx-cli --version
-      - run: which cyclonedx-cli
-      # - run: cyclonedx-cli/cyclonedx-cli --version
+            apt-get update
+            apt-get install nodejs
+            node --version
+            apt-get install npm
+            npm --version
+            npm install -g npx
+            npx --version
+            chmod ug+rwx cyclonedx-cli/cyclonedx-cli
+            cp cyclonedx/cyclonedx-cli $GOPATH/bin/cyclonedx-cli
+            cyclonedx-cli --version
+      - run:
+          name: build mbt binary
+          command: |
+            BINARY_NAME=mbt
+            BUILD_DIR=release
+            CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ${BUILD_DIR}/${BINARY_NAME} -v
+            chmod ug+rwx ${BUILD_DIR}/${BINARY_NAME}
+            cp ${BUILD_DIR}/${BINARY_NAME} ${GOPATH}/bin/${BINARY_NAME}
+            ${BINARY_NAME} --version
       - run: go test -v ./...
+      - run: sudo chown circleci:circleci $GOPATH/bin
       - run: make tools
       - run: make lint
       - run:
@@ -64,7 +59,44 @@ jobs:
       - run: go test -v ./... -coverprofile=mta.coverprofile
       - run: gover
       - run: goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken $COVERALLS_TOKEN
-
+      # - run:
+      #     name: install dependencies
+      #     command: |
+      #       go mod vendor
+      # - run: sudo chown circleci:circleci $GOPATH/bin
+      # - run: sudo chown circleci:circleci /usr/local/bin
+      # - run: make
+      # - run: ls -la /usr/local/bin
+      # - run: ls -la $GOPATH/bin
+      # - run: mbt --version
+      # - run: which mbt
+      # - run: ls release -la
+      # - run: release/mbt_linux --version
+      # - run: ls cyclonedx-cli -la
+      # - run: cp cyclonedx-cli/cyclonedx-cli $GOPATH/bin/cyclonedx-cli
+      # - run: chmod ug+rwx $GOPATH/bin/cyclonedx-cli
+      # - run: sudo ln -s cyclonedx-cli/cyclonedx-cli /usr/local/bin/cyclonedx-cli
+      # - run: ls -la /usr/local/bin
+      # - run: ls -la $GOPATH/bin
+      # - run: cyclonedx-cli --version
+      # - run: which cyclonedx-cli
+      # - run: cyclonedx-cli/cyclonedx-cli --version
+      # - run: go test -v ./...
+      # - run: make tools
+      # - run: make lint
+      # - run:
+      #     name: cov install coverge deps
+      #     command: |
+      #       go get golang.org/x/tools/cmd/cover
+      #       go get golang.org/x/net/html/charset
+      #       go get github.com/mattn/goveralls
+      #       go get github.com/modocache/gover
+      #       go install github.com/mattn/goveralls
+      #       go install github.com/modocache/gover
+      #       go get golang.org/x/crypto/ssh/terminal
+      # - run: go test -v ./... -coverprofile=mta.coverprofile
+      # - run: gover
+      # - run: goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken $COVERALLS_TOKEN
   test:
     docker:
       - image: shimit/mbt_multi:0.3.0
