@@ -27,9 +27,12 @@ jobs:
       - run: sudo npm install -g npx
       - run: npx --version
       - run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      - run: echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> $HOME/.bash_profile
-      - run: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-      - run: source $HOME/.bash_profile
+      - run: ls /home/linuxbrew/.linuxbrew/bin
+      - run: echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >> $HOME/.bashrc
+      - run: source $HOME/.bashrc
+      # - run: echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> $HOME/.bash_profile
+      # - run: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+      # - run: source $HOME/.bash_profile
       - run: brew --version
       - run: brew install cyclonedx-cli
       - run: cyclonedx-cli --version
