@@ -23,12 +23,12 @@ jobs:
           name: install dependencies
           command: |
             go mod vendor
-            apt-get update
-            apt-get install nodejs
+            sudo apt-get update
+            sudo apt-get install nodejs
             node --version
-            apt-get install npm
+            sudo apt-get install npm
             npm --version
-            npm install -g npx
+            sudo npm install -g npx
             npx --version
             chmod ug+rwx cyclonedx-cli/cyclonedx-cli
             cp cyclonedx/cyclonedx-cli $GOPATH/bin/cyclonedx-cli
