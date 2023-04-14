@@ -49,15 +49,17 @@ jobs:
       - run: sudo chown circleci:circleci /usr/local/bin
       - run: make
       - run: ls -la /usr/local/bin
+      - run: ls -la $GOPATH/bin
       - run: mbt --version
       - run: which mbt
       # - run: ls release -la
       # - run: release/mbt_linux --version
       - run: ls cyclonedx-cli -la
-      - run: cp cyclonedx-cli/cyclonedx-cli /usr/local/bin/cyclonedx-cli
+      - run: cp cyclonedx-cli/cyclonedx-cli $GOPATH/bin/cyclonedx-cli
       # - run: sudo ln -s cyclonedx-cli/cyclonedx-cli /usr/local/bin/cyclonedx-cli
       - run: ls -la /usr/local/bin
       - run: cyclonedx-cli --version
+      - run: which cyclonedx-cli
       # - run: cyclonedx-cli/cyclonedx-cli --version
       - run: go test -v ./...
       - run: make tools

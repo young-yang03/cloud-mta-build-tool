@@ -72,5 +72,5 @@ ifeq ($(OS),Windows_NT)
 	cp $(CURDIR)/release/$(BINARY_NAME)_windows $(GOPATH)/bin/$(BINARY_NAME).exe
 else
 	cp $(CURDIR)/release/$(BINARY_NAME)_linux $(GOPATH)/bin/$(BINARY_NAME)
-	cp $(CURDIR)/release/$(BINARY_NAME)_linux $~/usr/local/bin/
+	cp $(CURDIR)/release/$(BINARY_NAME)_linux $~/usr/local/bin/$(BINARY_NAME)
 endif
