@@ -56,6 +56,7 @@ jobs:
       # - run: release/mbt_linux --version
       - run: ls cyclonedx-cli -la
       - run: cp cyclonedx-cli/cyclonedx-cli $GOPATH/bin/cyclonedx-cli
+      - run: chmod ug+rwx $GOPATH/bin/cyclonedx-cli
       # - run: sudo ln -s cyclonedx-cli/cyclonedx-cli /usr/local/bin/cyclonedx-cli
       - run: ls -la /usr/local/bin
       - run: ls -la $GOPATH/bin
