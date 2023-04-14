@@ -28,6 +28,7 @@ jobs:
       - run: npx --version
       - run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       - run: ls /home/linuxbrew/.linuxbrew/bin
+      - run: dpkg --print-architecture
       - run: cat ~/.bashrc
       - run: echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> $HOME/.bashrc
       - run: echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >> ~/.bashrc
