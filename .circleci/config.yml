@@ -58,6 +58,7 @@ jobs:
       - run: cp cyclonedx-cli/cyclonedx-cli $GOPATH/bin/cyclonedx-cli
       # - run: sudo ln -s cyclonedx-cli/cyclonedx-cli /usr/local/bin/cyclonedx-cli
       - run: ls -la /usr/local/bin
+      - run: ls -la $GOPATH/bin
       - run: cyclonedx-cli --version
       - run: which cyclonedx-cli
       # - run: cyclonedx-cli/cyclonedx-cli --version
