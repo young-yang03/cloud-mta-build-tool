@@ -19,13 +19,13 @@ jobs:
       - checkout
       - run: go version
       - run: go env
-      - run: sudo apt-get update
-      - run: sudo apt-get install nodejs
-      - run: node --version
-      - run: sudo apt-get install npm
-      - run: npm --version
-      - run: sudo npm install -g npx
-      - run: npx --version
+      # - run: sudo apt-get update
+      # - run: sudo apt-get install nodejs
+      # - run: node --version
+      # - run: sudo apt-get install npm
+      # - run: npm --version
+      # - run: sudo npm install -g npx
+      # - run: npx --version
       - run: ls cyclonedx-cli
       - run: sudo ln -s cyclonedx-cli/cyclonedx-cli /usr/local/bin/cyclonedx-cli
       - run: ls -la /usr/local/bin
@@ -43,7 +43,7 @@ jobs:
       #- run: sudo ln -s /home/linuxbrew/.linuxbrew/bin/brew /usr/local/bin/brew
       # - run: brew --version
       # - run: brew install cyclonedx-cli
-      - run: cyclonedx-cli --version
+      - run: sh cyclonedx-cli --version
       - run:
           name: install dependencies
           command: |
