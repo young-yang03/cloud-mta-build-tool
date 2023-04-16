@@ -23,7 +23,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN echo "check if cyclonedx-cli is installed!" \
 && ls -la cyclonedx \
-&& cyclonedx/cyclonedx --version
+&& cyclonedx --version
 
 # Create user account and using openssl to create password
 RUN set -ex \
