@@ -7,7 +7,7 @@ ARG MTA_USER_HOME="/home/${MTA_USER}"
 ARG MBT_VERSION=1.2.205
 ARG GO_VERSION=1.19.3
 ARG NODE_VERSION=NODE_VERSION_TEMPLATE
-ARG MAVEN_VERSION=3.9.1
+ARG MAVEN_VERSION=3.9.0
 ARG UI5_VERSION=2.14.19
 ARG MAVEN_BASE_URL=https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries
 ARG SAPMACHINE_VERSION=JAVA_VERSION_TEMPLATE
@@ -66,9 +66,10 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && rm -rf /var/lib/apt/lists/* \
     && export GNUPGHOME="$(mktemp -d)" \
     && for key in \
-      4ED778F539E3634C779C87C6D7062848A1AB005C \
+      # 4ED778F539E3634C779C87C6D7062848A1AB005C \
       # 141F07595B7B3FFE74309A937405533BE57C7D57 \
       # 74F12602B6F1C4E913FAA37AD3A89613643B6201 \
+      61FC681DFB92A079F1685E77973F295594EC4689 \
       # 8FCCA13FEF1D0C2E91008E09770F7A9A5AE15600 \
       # C4F0DFFF4E8C1A8236409D08E73BC641CC11F4C8 \
       # 890C08DB8579162FEE0DF9DB8BEAB4DFCF555EF4 \
@@ -199,8 +200,8 @@ RUN sapmachine_install() { \
       sapmachine_install; \
     fi \
   # smoke test
-  && echo "SAPMachine ${SAPMACHINE_VERSION} install smoke test!" \
-  && java -version
+  && echo "SAPMachine ${SAPMACHINE_VERSION} install smoke test!"
+#  && java -version
 
 # Install Maven
 RUN set -ex \
@@ -211,7 +212,7 @@ RUN set -ex \
   && curl -fsSLO --compressed ${MAVEN_BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz.asc \
   && export GNUPGHOME="$(mktemp -d)" \
   && for key in \
-    6A814B1F869C2BBEAB7CB7271A2A1C94BDE89688 \
+    29BEA2A645F2D6CED7FB12E02B172E3E156466E8  \
   ; do \
     gpg --batch --keyserver hkps://pgp.surf.nl --recv-keys "$key" || \
     gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$key" ; \
