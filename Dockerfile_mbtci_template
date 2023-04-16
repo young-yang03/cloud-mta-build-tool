@@ -21,9 +21,10 @@ ENV CGO_ENABLED=0
 ENV GOOS=linux
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN echo "check cyclonedx-cli is installed!" \
+RUN echo "check if cyclonedx-cli is installed!" \
 && ls -la cyclonedx \
-&& cyclonedx/cyclonedx-cli --version
+&& ls -la cyclonedx/cyclonedx \
+&& cyclonedx/cyclonedx --version
 
 # Create user account and using openssl to create password
 RUN set -ex \
