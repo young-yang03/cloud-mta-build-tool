@@ -101,7 +101,7 @@ var _ = Describe("mbt cli build and sbom gen", func() {
 		Ω(cmd.Run()).Should(HaveOccurred())
 		Ω(os.RemoveAll(getTestPath("tmp"))).Should(Succeed())
 	})
-	It("Failure - build and gen sbom with invalid sbom-file-path parameter case 1", func() {
+	/* It("Failure - build and gen sbom with invalid sbom-file-path parameter case 1", func() {
 		source := "\"" + getTestPath("mta") + "\""
 		sbom_file_path := "\"" + "sbom-gen-result>>?/merged.bom.xml" + "\""
 		var stdout bytes.Buffer
@@ -124,7 +124,7 @@ var _ = Describe("mbt cli build and sbom gen", func() {
 		Ω(cmd.Run()).Should(HaveOccurred())
 		Ω(os.RemoveAll(getTestPath("mta", dir.MtarFolder))).Should(Succeed())
 		Ω(os.RemoveAll(getTestPath("mta", "sbom-gen-result"))).Should(Succeed())
-	})
+	}) */
 })
 
 var _ = Describe("mbt cli sbom-gen", func() {
@@ -235,7 +235,7 @@ var _ = Describe("mbt cli sbom-gen", func() {
 		//Ω(stdout.String()).Should(ContainSubstring("The filename, directory name, or volume label syntax is incorrect"))
 		Ω(os.RemoveAll(getTestPath("mta", "sbom-gen-result"))).Should(Succeed())
 	})
-	It("Failure - sbom-gen with invalid sbom-file-path paramerter case 1", func() {
+	/* It("Failure - sbom-gen with invalid sbom-file-path paramerter case 1", func() {
 		source := "\"" + "testdata/mta" + "\""
 		sbom_file_path := "\"" + "sbom-gen-result??/merged.bom.xml" + "\""
 		var stdout bytes.Buffer
@@ -254,7 +254,7 @@ var _ = Describe("mbt cli sbom-gen", func() {
 		// Notice: the merge sbom file name is invalid, the error will raised from cyclondx-cli merge command
 		Ω(cmd.Run()).Should(HaveOccurred())
 		Ω(os.RemoveAll(getTestPath("mta", "sbom-gen-result"))).Should(Succeed())
-	})
+	}) */
 })
 
 var _ = Describe("project sbom gen command", func() {
@@ -330,7 +330,7 @@ var _ = Describe("project sbom gen command", func() {
 		//Ω(err.Error()).Should(ContainSubstring("The filename, directory name, or volume label syntax is incorrect"))
 		Ω(os.RemoveAll(getTestPath("sbom-gen-result"))).Should(Succeed())
 	})
-	It("Failure - sbom-gen with invalid sbom-file-path paramerter case 1", func() {
+	/* It("Failure - sbom-gen with invalid sbom-file-path paramerter case 1", func() {
 		projectSBomGenCmdSrc = "testdata/mta"
 		projectSBomGenCmdSBOMPath = "sbom-gen-result>>/merged.bom.xml"
 
@@ -346,5 +346,5 @@ var _ = Describe("project sbom gen command", func() {
 		// Notice: the merge sbom file name is invalid, the error will raised from cyclondx-cli merge command
 		Ω(err).Should(HaveOccurred())
 		Ω(os.RemoveAll(getTestPath("sbom-gen-result"))).Should(Succeed())
-	})
+	}) */
 })

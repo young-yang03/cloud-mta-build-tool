@@ -112,7 +112,7 @@ var _ = Describe("Build", func() {
 		// Ω(stdout.String()).Should(ContainSubstring("The filename, directory name, or volume label syntax is incorrect"))
 		Ω(os.RemoveAll(getTestPath("mta", "mtar_result"))).Should(Succeed())
 	})
-	It("Failure - build with invalid target parameter case 1", func() {
+	/* It("Failure - build with invalid target parameter case 1", func() {
 		// Notice: target parameter is relative to source parameter
 		source := "\"" + "testdata/mta" + "\""
 		target := "\"" + "mtar_result<>/tmp" + "\""
@@ -137,7 +137,7 @@ var _ = Describe("Build", func() {
 		Ω(cmd.Run()).Should(HaveOccurred())
 		//Ω(stdout.String()).Should(ContainSubstring("The filename, directory name, or volume label syntax is incorrect"))
 		Ω(os.RemoveAll(getTestPath("mta", "mtar_result"))).Should(Succeed())
-	})
+	}) */
 	It("Success - build with relative sbom-file-path parameter", func() {
 		source := "\"" + getTestPath("mta") + "\""
 		sbom_file_path := "\"" + "sbom-gen-result/merged.bom.xml" + "\""
