@@ -31,7 +31,7 @@ jobs:
             sudo npm install -g npx
             npx --version
             CYCLONEDX_CLI_VERSION=0.24.2
-            YCLONEDX_BINARY_NAME=cyclonedx
+            CYCLONEDX_BINARY_NAME=cyclonedx
             CYCLONEDX_ARCH=x64
             CYCLONEDX_OS=linux
             curl -fsSLO --compressed "https://github.com/CycloneDX/cyclonedx-cli/releases/download/v${CYCLONEDX_CLI_VERSION}/${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH}"
