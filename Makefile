@@ -4,8 +4,8 @@
 # Execute go build
 # Copy files to machine go/bin folder (temp target to avoid manual steps when developing locally)
 
-all:install-cyclonedx-cli format clean dir gen build-linux build-linux-arm build-darwin build-darwin-arm build-windows copy 
-#all:format clean dir gen build-linux build-linux-arm build-darwin build-darwin-arm build-windows copy tests
+all: format clean dir gen build-linux build-linux-arm build-darwin build-darwin-arm build-windows copy install-cyclonedx-cli 
+#all:format clean dir gen build-linux build-linux-arm build-darwin build-darwin-arm build-windows copy install-cyclonedx-cli tests 
 .PHONY: build-darwin-arm build-darwin build-linux build-linux-arm build-windows tests
 
 
