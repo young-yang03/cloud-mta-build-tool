@@ -35,7 +35,8 @@ jobs:
             CYCLONEDX_ARCH=x64
             CYCLONEDX_OS=linux
             curl -fsSLO --compressed "https://github.com/CycloneDX/cyclonedx-cli/releases/download/v${CYCLONEDX_CLI_VERSION}/${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH}"
-	          cp ${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH} $(GOPATH)/bin/${CYCLONEDX_BINARY_NAME} 
+            cp ${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH} $(GOPATH)/bin/${CYCLONEDX_BINARY_NAME}
+            cyclonedx-cli --version
             #chmod ug+rwx cyclonedx/cyclonedx-cli
             #cp cyclonedx/cyclonedx-cli $GOPATH/bin/cyclonedx-cli
             #cyclonedx-cli --version
