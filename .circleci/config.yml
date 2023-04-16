@@ -36,7 +36,7 @@ jobs:
             CYCLONEDX_OS=linux
             curl -fsSLO --compressed "https://github.com/CycloneDX/cyclonedx-cli/releases/download/v${CYCLONEDX_CLI_VERSION}/${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH}"
             chmod ug+rwx ${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH}
-            cp ${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH} $(GOPATH)/bin/${CYCLONEDX_BINARY_NAME}
+            cp ${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH} ${GOPATH}/bin/${CYCLONEDX_BINARY_NAME}
             cyclonedx-cli --version
       - run:
           name: build mbt binary
@@ -48,7 +48,7 @@ jobs:
             cp ${BUILD_DIR}/${BINARY_NAME} ${GOPATH}/bin/${BINARY_NAME}
             ${BINARY_NAME} --version
       #- run: go test -v ./...
-      - run: sudo chown circleci:circleci $GOPATH/bin
+      - run: sudo chown circleci:circleci ${GOPATH}/bin
       - run: make tools
       - run: make lint
       - run:
