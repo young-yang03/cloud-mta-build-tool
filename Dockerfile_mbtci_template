@@ -193,6 +193,7 @@ RUN sapmachine_install() { \
     curl -fsSLO --compressed -b 'eula_3_1_agreed=tools.hana.ondemand.com/developer-license-3_1.txt' https://tools.hana.ondemand.com/additional/sapjvm-${SAPMACHINE_VERSION}-linux-${ARCH}.zip; \
     echo "0f0d71f95ea016d8e81bed94bf5d53ad8e1d7198  sapjvm-${SAPMACHINE_VERSION}-linux-${ARCH}.zip" | sha1sum -c -; \
     bsdtar -xvf sapjvm-${SAPMACHINE_VERSION}-linux-${ARCH}.zip -C /usr/local --strip-components=1 --no-same-owner; \
+    chmod -r ug+rwx /usr/local \
     rm -f sapjvm-${SAPMACHINE_VERSION}-linux-${ARCH}.zip; \
     apt-get remove --purge --auto-remove -y ca-certificates curl libarchive-tools; \
     ln -s /usr/local ${JAVA_HOME}; \
@@ -204,8 +205,8 @@ RUN sapmachine_install() { \
       sapmachine_install; \
     fi \
   # smoke test
-  && echo "SAPMachine ${SAPMACHINE_VERSION} install smoke test!"
-#  && java -version
+  && echo "SAPMachine ${SAPMACHINE_VERSION} install smoke test!" \
+  && java -version
 
 # Install Maven
 RUN set -ex \
@@ -264,7 +265,7 @@ RUN set -ex \
   && rm -rf /var/lib/apt/lists/* \
   && curl -fsSLO --compressed "https://github.com/CycloneDX/cyclonedx-cli/releases/download/v${CYCLONEDX_CLI_VERSION}/${CYCLONEDX_BINARY_NAME}-linux-x64" \
   && chmod ug+rwx ${CYCLONEDX_BINARY_NAME}-linux-x64 \
-  && mv ${CYCLONEDX_BINARY_NAME}-linux-x64 ${GOPATH}/bin/${CYCLONEDX_BINARY_NAME} \
+  && mv ${CYCLONEDX_BINARY_NAME}-linux-x64 /usr/local/bin/${CYCLONEDX_BINARY_NAME} \
   && apt-get remove --purge --autoremove -y ca-certificates curl gnupg dirmngr \
   && echo "cyclonedx-cli smoke tests!" \
   && ${CYCLONEDX_BINARY_NAME} --version
