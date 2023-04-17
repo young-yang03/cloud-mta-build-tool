@@ -1,5 +1,5 @@
 FROM debian:bullseye-slim
-FROM cyclonedx/cyclonedx-cli
+# FROM cyclonedx/cyclonedx-cli
 
 # Build time arguments
 ARG MTA_USER="mta"
@@ -26,9 +26,9 @@ ENV CGO_ENABLED=0
 ENV GOOS=linux
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN echo "check if cyclonedx-cli is installed!" \
-&& ls -la cyclonedx \
-&& cyclonedx --version
+# RUN echo "check if cyclonedx-cli is installed!" \
+# && ls -la cyclonedx \
+# && cyclonedx --version
 
 # Create user account and using openssl to create password
 RUN set -ex \
