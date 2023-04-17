@@ -244,6 +244,11 @@ RUN set -ex \
   && chown -R ${MTA_USER}:${MTA_USER} ${MTA_USER_HOME}
 ENV NPM_CONFIG_PREFIX ${MTA_USER_HOME}/.npm-global
 
+# Instll libicu-dev
+RUN set -ex \
+&& apt-get update \
+&& apt-get install -y libicu-dev
+
 
 ENV PATH=$PATH:./node_modules/.bin:${MTA_USER_HOME}/.npm-global/bin
 WORKDIR /project
