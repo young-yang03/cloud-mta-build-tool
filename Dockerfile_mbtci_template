@@ -264,7 +264,7 @@ RUN set -ex \
   && apt-get install -y ca-certificates curl gnupg dirmngr libicu-dev --no-install-recommends \
   && rm -rf /var/lib/apt/lists/* \
   && curl -fsSLO --compressed "https://github.com/CycloneDX/cyclonedx-cli/releases/download/v${CYCLONEDX_CLI_VERSION}/${CYCLONEDX_BINARY_NAME}-linux-x64" \
-  && chmod ug+rwx ${CYCLONEDX_BINARY_NAME}-linux-x64 \
+  && chmod a+rx ${CYCLONEDX_BINARY_NAME}-linux-x64 \
   && mv ${CYCLONEDX_BINARY_NAME}-linux-x64 /usr/local/bin/${CYCLONEDX_BINARY_NAME} \
   && apt-get remove --purge --autoremove -y ca-certificates curl gnupg dirmngr \
   && echo "cyclonedx-cli smoke tests!" \
