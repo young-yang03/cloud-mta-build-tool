@@ -45,12 +45,12 @@ jobs:
             curl -fsSLO --compressed "https://github.com/CycloneDX/cyclonedx-cli/releases/download/v${CYCLONEDX_CLI_VERSION}/${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH}"
             chmod ug+rwx ${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH}
             cp ${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH} ${GOPATH}/bin/${CYCLONEDX_BINARY_NAME}
-            echo "cyclonedx-cli version:"
+            echo "cyclonedx-cli --version:"
             ${CYCLONEDX_BINARY_NAME} --version
       - run:
           name: install cyclonedx-gomod
           command: |
-            echo "somke test of cyclonedx-gomod"
+            echo "cyclonedx-gomod version"
             go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest
             cyclonedx-gomod version
       - run:

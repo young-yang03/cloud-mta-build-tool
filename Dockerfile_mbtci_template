@@ -261,13 +261,17 @@ RUN set -ex \
   && curl -fsSLO --compressed "https://github.com/CycloneDX/cyclonedx-cli/releases/download/v${CYCLONEDX_CLI_VERSION}/${CYCLONEDX_BINARY_NAME}-linux-x64" \
   && chmod a+rx ${CYCLONEDX_BINARY_NAME}-linux-x64 \
   && mv ${CYCLONEDX_BINARY_NAME}-linux-x64 /usr/local/bin/${CYCLONEDX_BINARY_NAME} \
-  && apt-get remove --purge --autoremove -y ca-certificates curl gnupg dirmngr \
+  && apt-get remove --purge --autoremove -y ca-certificates curl gnupg dirmngr libicu-dev \
   && echo "cyclonedx-cli smoke tests!" \
   && ${CYCLONEDX_BINARY_NAME} --version
 
 # Instll cyclone-gomod
 RUN set -ex \
+  && apt-get update \
+  && apt-get install -y ca-certificates curl gnupg --no-install-recommends \
+  && rm -rf /var/lib/apt/lists/* \
   && go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest \
+  && apt-get remove --purge --autoremove -y ca-certificates curl gnupg \
   && echo "cyclonedx-gomod smoke tests!" \
   && cyclonedx-gomod version
 
