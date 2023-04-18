@@ -610,26 +610,26 @@ workflows:
   # when master's code is committed, this workflow will be exceeded
   # Notice, cloud-mta-build-tool_young-yang03 is docker imate testing branch of cloud-mta-build-tool, it has no feature branch;
   # so, on_pr_build workflow is only for master branch, it is different with cloud-mta-build-tool's on_pr_build workflow
-  on_pr_build:
-    jobs:
-      - build:
-          filters:
-            branches:
-              only: master
-      - build-node:
-          filters:
-            branches:
-              only: master
-      - compliance:
-          filters:
-            branches:
-              only: master
-      - test:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+  # on_pr_build:
+  #   jobs:
+  #     - build:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - build-node:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - compliance:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - test:
+  #         requires:
+  #           - build
+  #         filters:
+  #           branches:
+  #             only: master
 
   # when master's code is committed or merged from sub-branch, this workflow will be exceeded
   # on_merge_build_test:
@@ -662,25 +662,26 @@ workflows:
               only: /release/
             branches:
               ignore: /.*/
-      - test:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
-      - ghpages:
-          requires:
-            - test
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
+      # - test:
+      #     requires:
+      #       - build
+      #     filters:
+      #       tags:
+      #         only: /release/
+      #       branches:
+      #         ignore: /.*/
+      # - ghpages:
+      #     requires:
+      #       - test
+      #     filters:
+      #       tags:
+      #         only: /release/
+      #       branches:
+      #         ignore: /.*/
       - release-to-github:
           requires:
-            - test
+            - build
+            # - test
           filters:
             tags:
               only: /release/

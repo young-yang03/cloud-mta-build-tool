@@ -268,10 +268,10 @@ RUN set -ex \
 # Instll cyclone-gomod
 RUN set -ex \
   && apt-get update \
-  && apt-get install -y ca-certificates curl gnupg --no-install-recommends \
+  && apt-get install -y ca-certificates curl gnupg dirmngr libicu-dev --no-install-recommends \
   && rm -rf /var/lib/apt/lists/* \
   && go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest \
-  && apt-get remove --purge --autoremove -y ca-certificates curl gnupg \
+  && apt-get remove --purge --autoremove -y ca-certificates curl gnupg dirmngr libicu-dev\
   && echo "cyclonedx-gomod smoke tests!" \
   && cyclonedx-gomod version
 

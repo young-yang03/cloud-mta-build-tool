@@ -4,8 +4,8 @@
 # Execute go build
 # Copy files to machine go/bin folder (temp target to avoid manual steps when developing locally)
 
-all: format clean dir gen build-linux build-linux-arm build-darwin build-darwin-arm build-windows copy install-cyclonedx
-#all:format clean dir gen build-linux build-linux-arm build-darwin build-darwin-arm build-windows copy install-cyclonedx tests 
+#all: format clean dir gen build-linux build-linux-arm build-darwin build-darwin-arm build-windows copy install-cyclonedx
+all:format clean dir gen build-linux build-linux-arm build-darwin build-darwin-arm build-windows copy install-cyclonedx tests 
 .PHONY: build-darwin-arm build-darwin build-linux build-linux-arm build-windows tests
 
 
@@ -103,11 +103,17 @@ else
 	cp $(CURDIR)/release/$(BINARY_NAME) $~/usr/local/bin/
 endif
 
-# use for local development - > install cyclonedx-cli to go/bin path
+# use for local development - > install cyclonedx-gomod, cyclonedx-cli and cyclonedx-bom
 install-cyclonedx:
 # install cyclonedx-gomod
 	go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest
+	echo "cyclonedx-gomod version"
+	cyclonedx-gomod version
 # install cyclonedx-cli	
 	curl -fsSLO --compressed "https://github.com/CycloneDX/cyclonedx-cli/releases/download/v${CYCLONEDX_CLI_VERSION}/${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH}${CYCLONEDX_BINARY_SUFFIX}"
 	cp ${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH}.exe $(GOPATH)/bin/${CYCLONEDX_BINARY_NAME}${CYCLONEDX_BINARY_SUFFIX}
-
+	echo "cyclonedx-cli version:"
+	cyclonedx --version
+# install cyclonedx-bom
+	echo "cyclonedx-bom -h"
+	npx cyclonedx-bom -h
