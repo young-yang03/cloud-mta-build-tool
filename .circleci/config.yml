@@ -12,7 +12,7 @@ jobs:
 
   build:
     docker:
-      - image: cimg/go:1.17
+      - image: cimg/go:1.19
     environment:
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
