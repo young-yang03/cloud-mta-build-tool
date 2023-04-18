@@ -38,7 +38,7 @@ jobs:
             npx --version
       - run:
           name: install cyclonedx-cli
-          command:
+          command: |
             CYCLONEDX_CLI_VERSION=0.24.2
             CYCLONEDX_BINARY_NAME=cyclonedx
             CYCLONEDX_ARCH=x64
@@ -50,13 +50,13 @@ jobs:
             ${CYCLONEDX_BINARY_NAME} --version
       - run:
           name: install cyclonedx-gomod
-          command:
+          command: |
             echo "somke test of cyclonedx-gomod"
             go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest
             cyclonedx-gomod version
       - run:
           name: install cyclonedx-bom
-          command:
+          command: |
             echo "somke test of cyclonedx-bom"
             # npm install @cyclonedx/bom@^3.10.6 --no-save
             npx cyclonedx-bom -h
