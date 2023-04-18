@@ -24,18 +24,16 @@ jobs:
           command: |
             go mod vendor
       - run:
-          name: install nodejs npm and npx
+          name: install node16 npm and npx
           command: |
             sudo apt-get update
             curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
             sudo apt-get install -y nodejs
-            echo "smoke test of node"
+            echo "node version:"
             node --version
-            #sudo apt-get install npm=8.19.2
-            echo "smoke test of npm"
+            echo "npm version:"
             npm --version
-            #sudo npm install -g npx@8.19.2
-            echo "smoke test of npx"
+            echo "npx version:"
             npx --version
       - run:
           name: install cyclonedx-cli
@@ -47,7 +45,7 @@ jobs:
             curl -fsSLO --compressed "https://github.com/CycloneDX/cyclonedx-cli/releases/download/v${CYCLONEDX_CLI_VERSION}/${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH}"
             chmod ug+rwx ${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH}
             cp ${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH} ${GOPATH}/bin/${CYCLONEDX_BINARY_NAME}
-            echo "somke test of cyclonedx-cli"
+            echo "cyclonedx-cli version:"
             ${CYCLONEDX_BINARY_NAME} --version
       - run:
           name: install cyclonedx-gomod
@@ -58,8 +56,7 @@ jobs:
       - run:
           name: install cyclonedx-bom
           command: |
-            echo "somke test of cyclonedx-bom"
-            # npm install @cyclonedx/bom@^3.10.6 --no-save
+            echo "cyclonedx-bom -h"
             npx cyclonedx-bom -h
       - run:
           name: build mbt binary
@@ -665,26 +662,25 @@ workflows:
               only: /release/
             branches:
               ignore: /.*/
-      # - test:
-      #     requires:
-      #       - build
-      #     filters:
-      #       tags:
-      #         only: /release/
-      #       branches:
-      #         ignore: /.*/
-      # - ghpages:
-      #     requires:
-      #       - test
-      #     filters:
-      #       tags:
-      #         only: /release/
-      #       branches:
-      #         ignore: /.*/
-      - release-to-github:
+      - test:
           requires:
             - build
-            # - test
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
+      - ghpages:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
+      - release-to-github:
+          requires:
+            - test
           filters:
             tags:
               only: /release/
