@@ -38,7 +38,7 @@ jobs:
             chmod ug+rwx ${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH}
             cp ${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH} ${GOPATH}/bin/${CYCLONEDX_BINARY_NAME}
             ${CYCLONEDX_BINARY_NAME} --version
-            # echo "somke test of cyclonedx-gomod"
+            echo "somke test of cyclonedx-gomod"
             go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest
             cyclonedx-gomod version
             # echo "somke test of cyclonedx-bom"
