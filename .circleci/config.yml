@@ -27,13 +27,13 @@ jobs:
           name: install npm and npx
           command: |
             sudo apt-get update
-            sudo apt-get install nodejs
+            sudo apt-get install nodejs=16.18.1
             echo "smoke test of node"
             node --version
-            sudo apt-get install npm
+            sudo apt-get install npm=8.19.2
             echo "smoke test of npm"
             npm --version
-            sudo npm install -g npx
+            sudo npm install -g npx@8.19.2
             echo "smoke test of npx"
             npx --version
       - run:
