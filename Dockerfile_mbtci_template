@@ -1,5 +1,4 @@
 FROM debian:bullseye-slim
-# FROM cyclonedx/cyclonedx-cli
 
 # Build time arguments
 ARG MTA_USER="mta"
@@ -25,10 +24,6 @@ ENV PATH /usr/local/go/bin:$PATH
 ENV CGO_ENABLED=0
 ENV GOOS=linux
 ENV DEBIAN_FRONTEND=noninteractive
-
-# RUN echo "check if cyclonedx-cli is installed!" \
-# && ls -la cyclonedx \
-# && cyclonedx --version
 
 # Create user account and using openssl to create password
 RUN set -ex \
@@ -269,6 +264,12 @@ RUN set -ex \
   && apt-get remove --purge --autoremove -y ca-certificates curl gnupg dirmngr \
   && echo "cyclonedx-cli smoke tests!" \
   && ${CYCLONEDX_BINARY_NAME} --version
+
+# Instll cyclone-gomod
+RUN set -ex \
+  && go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest \
+  && echo "cyclonedx-gomod smoke tests!" \
+  && cyclonedx-gomod version
 
 # Instll curl and ca-certificates
 RUN set -ex \

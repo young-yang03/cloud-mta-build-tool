@@ -38,6 +38,8 @@ jobs:
             chmod ug+rwx ${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH}
             cp ${CYCLONEDX_BINARY_NAME}-${CYCLONEDX_OS}-${CYCLONEDX_ARCH} ${GOPATH}/bin/${CYCLONEDX_BINARY_NAME}
             ${CYCLONEDX_BINARY_NAME} --version
+            go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest
+            cyclonedx-gomod --version
       - run:
           name: build mbt binary
           command: |
@@ -60,7 +62,7 @@ jobs:
             go install github.com/mattn/goveralls
             go install github.com/modocache/gover
             go get golang.org/x/crypto/ssh/terminal
-      # - run: go test -v ./... -coverprofile=mta.coverprofile
+      - run: go test -v ./... -coverprofile=mta.coverprofile
       - run: gover
       - run: goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken $COVERALLS_TOKEN
 
