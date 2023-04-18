@@ -40,7 +40,7 @@ jobs:
             ${CYCLONEDX_BINARY_NAME} --version
             go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest
             cyclonedx-gomod version
-            
+    
       - run:
           name: build mbt binary
           command: |
