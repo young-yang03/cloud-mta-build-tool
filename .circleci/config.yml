@@ -12,7 +12,7 @@ jobs:
 
   build:
     docker:
-      - image: cimg/go:1.19
+      - image: cimg/go:1.17
     environment:
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
@@ -41,7 +41,7 @@ jobs:
             go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest
             cyclonedx-gomod version
             echo "somke test of cyclonedx-bom"
-            npm install @cyclonedx/bom@^3.10.6 --no-save
+            # npm install @cyclonedx/bom@^3.10.6 --no-save
             npx cyclonedx-bom -h
       - run:
           name: build mbt binary
@@ -108,7 +108,7 @@ jobs:
 
   release-to-github:
     docker:
-      - image: cimg/go:1.19
+      - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - add_ssh_keys:
@@ -169,7 +169,7 @@ jobs:
 
   publish-to-dockerhub-java8-node14:
     docker:
-      - image: cimg/go:1.19
+      - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - checkout
@@ -201,7 +201,7 @@ jobs:
 
   publish-to-dockerhub-java8-node16:
     docker:
-      - image: cimg/go:1.19
+      - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/SAP/cloud-mta-build-tool
     steps:
       - checkout
@@ -233,7 +233,7 @@ jobs:
 
   publish-to-dockerhub-java8-node18:
     docker:
-      - image: cimg/go:1.19
+      - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/SAP/cloud-mta-build-tool
     steps:
       - checkout
@@ -265,7 +265,7 @@ jobs:
 
   publish-to-dockerhub-java11-node14:
     docker:
-      - image: cimg/go:1.19
+      - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - checkout
@@ -297,7 +297,7 @@ jobs:
   
   publish-to-dockerhub-java11-node16:
     docker:
-      - image: cimg/go:1.19
+      - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - checkout
@@ -329,7 +329,7 @@ jobs:
   
   publish-to-dockerhub-java11-node18:
     docker:
-      - image: cimg/go:1.19
+      - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - checkout
@@ -361,7 +361,7 @@ jobs:
   
   publish-to-dockerhub-java17-node14:
     docker:
-      - image: cimg/go:1.19
+      - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - checkout
@@ -393,7 +393,7 @@ jobs:
   
   publish-to-dockerhub-java17-node16:
     docker:
-      - image: cimg/go:1.19
+      - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - checkout
@@ -425,7 +425,7 @@ jobs:
   
   publish-to-dockerhub-java17-node18:
     docker:
-      - image: cimg/go:1.19
+      - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - checkout
@@ -457,7 +457,7 @@ jobs:
   
   publish-to-dockerhub-java19-node14:
     docker:
-      - image: cimg/go:1.19
+      - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - checkout
@@ -489,7 +489,7 @@ jobs:
   
   publish-to-dockerhub-java19-node16:
     docker:
-      - image: cimg/go:1.19
+      - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - checkout
@@ -521,7 +521,7 @@ jobs:
   
   publish-to-dockerhub-java19-node18:
     docker:
-      - image: cimg/go:1.19
+      - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - checkout
@@ -553,7 +553,7 @@ jobs:
 
   remove-github-release-tag:
     docker:
-      - image: cimg/go:1.19
+      - image: cimg/go:1.17
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - checkout
