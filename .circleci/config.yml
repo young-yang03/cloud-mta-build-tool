@@ -40,8 +40,8 @@ jobs:
             ${CYCLONEDX_BINARY_NAME} --version
             go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest
             cyclonedx-gomod version
-            # @cyclonedx/bom
             echo "somke test of cyclonedx-bom"
+            npm install @cyclonedx/bom@^3.10.6 --no-save
             npx cyclonedx-bom -h
       - run:
           name: build mbt binary
