@@ -40,6 +40,7 @@ jobs:
             ${CYCLONEDX_BINARY_NAME} --version
             go get -u golang.org/x/tools/go/vcs
             go get -u golang.org/x/debug
+            go clean -modcache
             go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest
             echo "cyclonedx-gomod somke test"
             cyclonedx-gomod --version
