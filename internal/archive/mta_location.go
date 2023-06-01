@@ -23,6 +23,8 @@ const (
 	MtarFolder = "mta_archives"
 	// SBomTempFolderSuffix - sbom temporary folder suffix
 	SBomTempFolderSuffix = "_mta_sbom_tmp"
+	// TempNotIgnoreFile = temporary file for not ignored file
+	TempNotIgnoreFile = ".not_ignore_file_tmp"
 )
 
 // IMtaParser - MTA Parser interface
@@ -251,6 +253,7 @@ func (ep *Loc) GetExtensionFilePaths() []string {
 
 // Location - provides Location parameters of MTA
 func Location(source, target, descriptor string, extensions []string, wdGetter func() (string, error)) (*Loc, error) {
+
 	err := ValidateDeploymentDescriptor(descriptor)
 	if err != nil {
 		return nil, err
