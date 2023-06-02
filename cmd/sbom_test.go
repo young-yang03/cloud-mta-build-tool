@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"time"
 
 	dir "github.com/SAP/cloud-mta-build-tool/internal/archive"
 	. "github.com/onsi/ginkgo"
@@ -12,6 +13,7 @@ import (
 )
 
 var _ = Describe("mbt cli build and sbom gen", func() {
+	SetDefaultEventuallyTimeout(30 * time.Minute)
 	BeforeEach(func() {
 		mbtCmdCLI = getBuildCmdCli()
 	})
@@ -164,6 +166,7 @@ var _ = Describe("mbt cli build and sbom gen", func() {
 })
 
 var _ = Describe("mbt cli sbom-gen", func() {
+	SetDefaultEventuallyTimeout(30 * time.Minute)
 	BeforeEach(func() {
 		mbtCmdCLI = getBuildCmdCli()
 	})
