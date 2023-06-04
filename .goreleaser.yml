@@ -33,7 +33,6 @@ archives:
       - README*
       - changelog*
       - CHANGELOG*
-      - micromatch/micromatch-wrapper-*
 dist: dist
 checksum:
   name_template: 'checksums.txt'
