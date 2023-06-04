@@ -36,7 +36,7 @@ archives:
       - changelog*
       - CHANGELOG*
       - src: micromatch/micromatch-wrapper-linux
-        dst: ./
+        dst: micromatch-wrapper-linux
 dist: dist
 checksum:
   name_template: 'checksums.txt'
