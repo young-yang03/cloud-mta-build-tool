@@ -19,7 +19,7 @@ builds:
       - goos: windows
         goarch: arm64
     hooks:
-      post: ./micromatch/goreleaser-post-build.sh
+      post: sh ./micromatch/goreleaser-post-build.sh
 archives:
   - replacements:
       darwin: Darwin
