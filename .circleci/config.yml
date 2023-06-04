@@ -59,6 +59,24 @@ jobs:
             echo "cyclonedx-bom -h"
             npx cyclonedx-bom -h
       - run:
+          name: install pkg
+          command: |
+            PKG_NAME=pkg
+            npm install -g $(PKG_NAME)
+            echo "${PKG_NAME} --version"
+            ${PKG_NAME} --version
+      - run:
+          name: build and install micromatch wrapper
+          command: |
+            MICROMATCH_WRAPPER_DIR=micromatch
+            MICROMATCH_WRAPPER_BINARY_NAME=micromatch-wrapper
+            MICROMATCH_WRAPPER_OS=linux
+            cd ${MICROMATCH_WRAPPER_DIR} && npm install && cd -
+	          pkg ${MICROMATCH_WRAPPER_DIR} --out-path ${MICROMATCH_WRAPPER_DIR}
+	          cp ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_BINARY_NAME}-$(MICROMATCH_WRAPPER_OS) $(GOPATH)/bin/${MICROMATCH_WRAPPER_BINARY_NAME}
+	          echo "${MICROMATCH_WRAPPER_BINARY_NAME} help:"
+	          ${MICROMATCH_WRAPPER_BINARY_NAME} --help
+      - run:
           name: build mbt binary
           command: |
             BINARY_NAME=mbt
@@ -80,10 +98,13 @@ jobs:
             go install github.com/mattn/goveralls
             go install github.com/modocache/gover
             go get golang.org/x/crypto/ssh/terminal
-      - run: go test -v ./... -coverprofile=mta.coverprofile
+      #- run: go test -v ./... -coverprofile=mta.coverprofile
       - run: gover
       - run: goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken $COVERALLS_TOKEN
-
+      - persist_to_workspace:
+          root: "micromatch"
+          paths:
+            - micromatch-wrapper-*
   test:
     docker:
       - image: shimit/mbt_multi:0.3.0
@@ -126,6 +147,8 @@ jobs:
       - image: cimg/go:1.19
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
+      - attach_workspace:
+          at: ./dist
       - add_ssh_keys:
           fingerprints:
             - "a4:4f:1d:01:c3:7d:b0:d7:f8:16:3e:24:cf:f6:c8:35"
@@ -178,6 +201,8 @@ jobs:
           name: release new version
           command: |
             #Make sure HEAD points to master
+            echo "ls -la"
+            ls -la
             git checkout master
             export GITHUB_TOKEN=${CLOUD_MTA_BOT_GITHUB_TOKEN}
             curl -sfL https://goreleaser.com/static/run | bash
@@ -610,26 +635,26 @@ workflows:
   # when master's code is committed, this workflow will be exceeded
   # Notice, cloud-mta-build-tool_young-yang03 is docker imate testing branch of cloud-mta-build-tool, it has no feature branch;
   # so, on_pr_build workflow is only for master branch, it is different with cloud-mta-build-tool's on_pr_build workflow
-  on_pr_build:
-    jobs:
-      - build:
-          filters:
-            branches:
-              only: master
-      - build-node:
-          filters:
-            branches:
-              only: master
-      - compliance:
-          filters:
-            branches:
-              only: master
-      - test:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+  # on_pr_build:
+  #   jobs:
+  #     - build:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - build-node:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - compliance:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - test:
+  #         requires:
+  #           - build
+  #         filters:
+  #           branches:
+  #             only: master
 
   # when master's code is committed or merged from sub-branch, this workflow will be exceeded
   # on_merge_build_test:

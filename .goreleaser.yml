@@ -33,7 +33,6 @@ archives:
       - README*
       - changelog*
       - CHANGELOG*
-      - cyclonedx.exe
 dist: dist
 checksum:
   name_template: 'checksums.txt'
