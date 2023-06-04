@@ -72,10 +72,10 @@ jobs:
             MICROMATCH_WRAPPER_BINARY_NAME=micromatch-wrapper
             MICROMATCH_WRAPPER_OS=linux
             cd ${MICROMATCH_WRAPPER_DIR} && npm install && cd -
-	          pkg ${MICROMATCH_WRAPPER_DIR} --out-path ${MICROMATCH_WRAPPER_DIR}
-	          cp ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_BINARY_NAME}-$(MICROMATCH_WRAPPER_OS) $(GOPATH)/bin/${MICROMATCH_WRAPPER_BINARY_NAME}
-	          echo "${MICROMATCH_WRAPPER_BINARY_NAME} help:"
-	          ${MICROMATCH_WRAPPER_BINARY_NAME} --help
+            pkg ${MICROMATCH_WRAPPER_DIR} --out-path ${MICROMATCH_WRAPPER_DIR}
+            cp ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_BINARY_NAME}-$(MICROMATCH_WRAPPER_OS) $(GOPATH)/bin/${MICROMATCH_WRAPPER_BINARY_NAME}
+            echo "${MICROMATCH_WRAPPER_BINARY_NAME} help:"
+            ${MICROMATCH_WRAPPER_BINARY_NAME} --help
       - run:
           name: build mbt binary
           command: |
