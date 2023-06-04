@@ -18,8 +18,6 @@ builds:
     ignore:
       - goos: windows
         goarch: arm64
-    hooks:
-      post: sh ./micromatch/goreleaser-post-build.sh
 archives:
   - replacements:
       darwin: Darwin
@@ -35,8 +33,8 @@ archives:
       - README*
       - changelog*
       - CHANGELOG*
-      - src: micromatch/micromatch-wrapper-linux
-        dst: micromatch-wrapper-linux
+      - src: micromatch-wrapper-{{ .Os }}
+        dst: ./
 dist: dist
 checksum:
   name_template: 'checksums.txt'
