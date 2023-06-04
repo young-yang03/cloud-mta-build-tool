@@ -44,10 +44,15 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
-includes:
-  - from_file:
-      path: ./micromatch/micromatch-wrapper-linux
-  - from_file:
-      path: ./micromatch/micromatch-wrapper-macos
-  - from_file: 
-      path: ./micromatch/micromatch-wrapper-win.exe
+release:
+  github:
+    files:
+      - path: ./micromatch/micromatch-wrapper-linux
+        name: micromatch-wrapper-linux
+        overwrite: true
+      - path: ./micromatch/micromatch-wrapper-macos
+        name: micromatch-wrapper-macos
+        overwrite: true
+      - path: ./micromatch/micromatch-wrapper-win.exe
+        name: micromatch-wrapper-win.exe
+        overwrite: true
