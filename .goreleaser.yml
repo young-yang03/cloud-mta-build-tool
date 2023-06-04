@@ -1,5 +1,7 @@
 project_name: cloud-mta-build-tool
 before:
+  hooks:
+    - cp micromatch/micromatch-wrapper-* ./
 builds:
   - goos:
       - linux
