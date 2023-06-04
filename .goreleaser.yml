@@ -44,15 +44,10 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
+build:
+  hooks:
+    post: ./micromatch/goreleaser-post-build.sh
 release:
   github:
-    files:
-      - path: ./micromatch/micromatch-wrapper-linux
-        name: micromatch-wrapper-linux
-        overwrite: true
-      - path: ./micromatch/micromatch-wrapper-macos
-        name: micromatch-wrapper-macos
-        overwrite: true
-      - path: ./micromatch/micromatch-wrapper-win.exe
-        name: micromatch-wrapper-win.exe
-        overwrite: true
+    owner: SAP
+    name: young-yang03
