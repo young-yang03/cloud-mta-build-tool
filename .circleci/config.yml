@@ -62,6 +62,7 @@ jobs:
           name: install pkg
           command: |
             PKG_NAME=pkg
+            sudo chown circleci:circleci /usr/lib/node_modules/
             npm install -g ${PKG_NAME}
             echo "${PKG_NAME} --version"
             ${PKG_NAME} --version
