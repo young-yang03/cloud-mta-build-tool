@@ -1,7 +1,5 @@
 project_name: cloud-mta-build-tool
 before:
-  hooks:
-    - cp micromatch/micromatch-wrapper-* ./dist
 builds:
   - goos:
       - linux
@@ -46,3 +44,10 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
+includes:
+  - from_file:
+      path: ./micromatch/micromatch-wrapper-linux
+  - from_file:
+      path: ./micromatch/micromatch-wrapper-macos
+  - from_file: 
+      path: ./micromatch/micromatch-wrapper-win.exe
