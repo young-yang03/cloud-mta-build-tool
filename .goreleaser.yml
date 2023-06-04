@@ -34,7 +34,7 @@ archives:
       - changelog*
       - CHANGELOG*
       - src: micromatch-wrapper-{{ .Os }}
-        dst: ./
+        dst: ./micromatch
 dist: dist
 checksum:
   name_template: 'checksums.txt'
