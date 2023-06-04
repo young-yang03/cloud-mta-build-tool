@@ -62,7 +62,7 @@ jobs:
           name: install pkg
           command: |
             PKG_NAME=pkg
-            npm install -g $(PKG_NAME)
+            npm install -g ${PKG_NAME}
             echo "${PKG_NAME} --version"
             ${PKG_NAME} --version
       - run:
