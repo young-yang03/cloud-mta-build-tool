@@ -18,6 +18,8 @@ builds:
     ignore:
       - goos: windows
         goarch: arm64
+    hooks:
+      post: ./goreleaser-post-build.sh
 archives:
   - replacements:
       darwin: Darwin
@@ -44,10 +46,3 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
-build:
-  hooks:
-    post: ./micromatch/goreleaser-post-build.sh
-release:
-  github:
-    owner: SAP
-    name: young-yang03
