@@ -33,7 +33,9 @@ archives:
       - README*
       - changelog*
       - CHANGELOG*
-      - micromatch-wrapper-{{ .Os }}
+      - 
+      src: micromatch-wrapper-{{ .Os }}
+      dst: micromatch-wrapper
 dist: dist
 checksum:
   name_template: 'checksums.txt'
