@@ -58,26 +58,25 @@ jobs:
       #     command: |
       #       echo "cyclonedx-bom -h"
       #       npx cyclonedx-bom -h
-      # - run:
-      #     name: install pkg
-      #     command: |
-      #       PKG_NAME=pkg
-      #       sudo chown -R circleci:circleci /usr/lib
-      #       sudo chown -R circleci:circleci /usr/bin
-      #       npm install -g ${PKG_NAME}
-      #       echo "${PKG_NAME} --version"
-      #       ${PKG_NAME} --version
-      # - run:
-      #     name: build and install micromatch wrapper
-      #     command: |
-      #       MICROMATCH_WRAPPER_DIR=micromatch
-      #       MICROMATCH_WRAPPER_BINARY_NAME=micromatch-wrapper
-      #       MICROMATCH_WRAPPER_OS=linux
-      #       cd ${MICROMATCH_WRAPPER_DIR} && npm install && cd -
-      #       pkg ${MICROMATCH_WRAPPER_DIR} --out-path ${MICROMATCH_WRAPPER_DIR}
-      #       cp ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_BINARY_NAME}-${MICROMATCH_WRAPPER_OS} ${GOPATH}/bin/${MICROMATCH_WRAPPER_BINARY_NAME}
-      #       echo "${MICROMATCH_WRAPPER_BINARY_NAME} help:"
-      #       ${MICROMATCH_WRAPPER_BINARY_NAME} --help
+      - run:
+          name: install pkg
+          command: |
+            PKG_NAME=pkg
+            MICROMATCH_WRAPPER_DIR=micromatch
+            cd ${MICROMATCH_WRAPPER_DIR} && npm install ${PKG_NAME} && echo "${PKG_NAME} --version" && ${PKG_NAME} --version && cd - 
+      - run:
+          name: build and install micromatch wrapper
+          command: |
+            MICROMATCH_WRAPPER_DIR=micromatch
+            MICROMATCH_WRAPPER_BINARY_NAME=micromatch-wrapper
+            MICROMATCH_WRAPPER_OS=linux
+            cd ${MICROMATCH_WRAPPER_DIR} && npm install && npx pkg ./ && cd -
+            cp ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_BINARY_NAME}-linux ${GOPATH}/bin/${MICROMATCH_WRAPPER_BINARY_NAME}
+            mv ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_BINARY_NAME}-linux ./${MICROMATCH_WRAPPER_BINARY_NAME}-Linux
+            mv ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_BINARY_NAME}-macos ./${MICROMATCH_WRAPPER_BINARY_NAME}-Darwin
+            mv ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_BINARY_NAME}-win.exe ./${MICROMATCH_WRAPPER_BINARY_NAME}-Windows
+            echo "${MICROMATCH_WRAPPER_BINARY_NAME} help:"
+            ${MICROMATCH_WRAPPER_BINARY_NAME} --help
       - run:
           name: build mbt binary
           command: |
@@ -103,10 +102,10 @@ jobs:
       #- run: go test -v ./... -coverprofile=mta.coverprofile
       - run: gover
       - run: goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken $COVERALLS_TOKEN
-      # - persist_to_workspace:
-      #     root: "micromatch"
-      #     paths:
-      #       - micromatch-wrapper-*
+      - persist_to_workspace:
+          root: "."
+          paths:
+            - micromatch-wrapper-*
   test:
     docker:
       - image: shimit/mbt_multi:0.3.0
@@ -149,8 +148,8 @@ jobs:
       - image: cimg/go:1.19
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
-      # - attach_workspace:
-      #     at: ./dist
+      - attach_workspace:
+          at: ./
       - add_ssh_keys:
           fingerprints:
             - "a4:4f:1d:01:c3:7d:b0:d7:f8:16:3e:24:cf:f6:c8:35"

@@ -4,9 +4,12 @@
 rm -rf ./micromatch-wrapper-linux ./micromatch-wrapper-macos ./micromatch-wrapper-win.exe
 rm -rf node_modules
 
+# install pkg
+npm install pkg
+
 # build micromatch wrapper
 npm install
-pkg ./
+npx pkg ./
 
 # install and test micromatch wrapper
 cp ./micromatch-wrapper-win.exe $GOPATH/bin/micromatch-wrapper.exe
