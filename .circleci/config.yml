@@ -63,14 +63,15 @@ jobs:
           command: |
             PKG_NAME=pkg
             MICROMATCH_WRAPPER_DIR=micromatch
-            cd ${MICROMATCH_WRAPPER_DIR} && npm install ${PKG_NAME} && echo "${PKG_NAME} --version" && ${PKG_NAME} --version && cd - 
+            cd ${MICROMATCH_WRAPPER_DIR} && npm install ${PKG_NAME} && echo "${PKG_NAME} --version" && npx ${PKG_NAME} --version && cd - 
       - run:
           name: build and install micromatch wrapper
           command: |
+            PKG_NAME=pkg
             MICROMATCH_WRAPPER_DIR=micromatch
             MICROMATCH_WRAPPER_BINARY_NAME=micromatch-wrapper
             MICROMATCH_WRAPPER_OS=linux
-            cd ${MICROMATCH_WRAPPER_DIR} && npm install && npx pkg ./ && cd -
+            cd ${MICROMATCH_WRAPPER_DIR} && npm install && npx ${PKG_NAME} ./ && cd -
             cp ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_BINARY_NAME}-linux ${GOPATH}/bin/${MICROMATCH_WRAPPER_BINARY_NAME}
             mv ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_BINARY_NAME}-linux ./${MICROMATCH_WRAPPER_BINARY_NAME}-Linux
             mv ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_BINARY_NAME}-macos ./${MICROMATCH_WRAPPER_BINARY_NAME}-Darwin
