@@ -149,12 +149,33 @@ jobs:
       - image: cimg/go:1.19
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
-      - attach_workspace:
-          at: ./
       - add_ssh_keys:
           fingerprints:
             - "a4:4f:1d:01:c3:7d:b0:d7:f8:16:3e:24:cf:f6:c8:35"
+      - run:
+        name: dir current path
+        command: |
+          echo "current path:"
+          pwd
+          echo "current path contents:"
+          ls -la
       - checkout
+      - run:
+        name: dir current path
+        command: |
+          echo "current path:"
+          pwd
+          echo "current path contents:"
+          ls -la
+      - attach_workspace:
+          at: ./
+      - run:
+        name: dir current path
+        command: |
+          echo "current path:"
+          pwd
+          echo "current path contents:"
+          ls -la
       - run:
           name: install dependencies
           command: |

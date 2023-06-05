@@ -6,6 +6,7 @@ rm -rf node_modules
 
 # install pkg
 npm install pkg
+npx pkg --version
 
 # build micromatch wrapper
 npm install
