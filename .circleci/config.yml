@@ -224,11 +224,9 @@ jobs:
           name: release new version
           command: |
             #Make sure HEAD points to master
-            echo "ls -la"
-            ls -la
             git checkout master
             export GITHUB_TOKEN=${CLOUD_MTA_BOT_GITHUB_TOKEN}
-            curl -sfL https://goreleaser.com/static/run | bash
+            curl -sfL https://goreleaser.com/static/run | GORELEASER_SKIP_VALIDATE=true bash
 
   publish-to-dockerhub-java8-node14:
     docker:
