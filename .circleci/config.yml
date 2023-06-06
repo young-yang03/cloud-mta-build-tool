@@ -59,6 +59,15 @@ jobs:
             echo "cyclonedx-bom -h"
             npx cyclonedx-bom -h
       - run:
+          name: install micromatch wrapper
+          command: |
+            MICROMATCH_WRAPPER_DIR=micromatch
+            MICROMATCH_WRAPPER_BINARY_NAME=micromatch-wrapper
+            MICROMATCH_WRAPPER_OS=Linux
+            cp ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_OS}/${MICROMATCH_WRAPPER_BINARY_NAME} ${GOPATH}/bin/${MICROMATCH_WRAPPER_BINARY_NAME}
+            echo "${MICROMATCH_WRAPPER_BINARY_NAME} help:"
+            ${MICROMATCH_WRAPPER_BINARY_NAME} --help
+      - run:
           name: build mbt binary
           command: |
             BINARY_NAME=mbt
