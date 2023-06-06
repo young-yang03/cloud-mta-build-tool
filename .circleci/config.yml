@@ -694,14 +694,14 @@ workflows:
               only: /release/
             branches:
               ignore: /.*/
-      - publish-to-dockerhub-java8-node14:
-          requires:
-            - publish-to-npm
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
+      # - publish-to-dockerhub-java8-node14:
+      #     requires:
+      #       - publish-to-npm
+      #     filters:
+      #       tags:
+      #         only: /release/
+      #       branches:
+      #         ignore: /.*/
       # - publish-to-dockerhub-java8-node16:
       #     requires:
       #       - publish-to-npm
