@@ -20,4 +20,4 @@ micromatch-wrapper.exe -h
 rm -rf ./Linux/* ./Darwin/* ./Windows/*
 mv ./micromatch-wrapper-linux ./Linux/micromatch-wrapper
 mv ./micromatch-wrapper-macos ./Darwin/micromatch-wrapper
-mv ./micromatch-wrapper-win.exe ./Windows/micromatch-wrapper
+mv ./micromatch-wrapper-win.exe ./Windows/micromatch-wrapper.exe
