@@ -33,10 +33,7 @@ archives:
       - README*
       - changelog*
       - CHANGELOG*
-      - src: 'micromatch/{{ .Os }}/micromatch-wrapper'
-        dst: ./
-        strip_parent: true
-      - src: 'micromatch/{{ .Os }}/micromatch-wrapper.exe'
+      - src: 'micromatch/{{ .Os }}/*'
         dst: ./
         strip_parent: true
 dist: dist
