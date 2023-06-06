@@ -36,6 +36,9 @@ archives:
       - src: 'micromatch/{{ .Os }}/micromatch-wrapper'
         dst: ./
         strip_parent: true
+      - src: 'micromatch/{{ .Os }}/micromatch-wrapper.exe'
+        dst: ./
+        strip_parent: true
 dist: dist
 checksum:
   name_template: 'checksums.txt'
