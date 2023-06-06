@@ -189,7 +189,7 @@ jobs:
             #Make sure HEAD points to master
             git checkout master
             export GITHUB_TOKEN=${CLOUD_MTA_BOT_GITHUB_TOKEN}
-            curl -sfL https://goreleaser.com/static/run | SKIP_VALIDATE=1 bash
+            curl -sfL https://goreleaser.com/static/run | bash
 
   publish-to-dockerhub-java8-node14:
     docker:
