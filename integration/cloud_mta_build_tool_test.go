@@ -88,8 +88,8 @@ var _ = Describe("Integration - CloudMtaBuildTool", func() {
 			return
 		}
 
-		cmd := exec.Command("micromatch-wrapper", "-h")
-		err := cmd.Run()
+		cmd = exec.Command("micromatch-wrapper", "-h")
+		err = cmd.Run()
 		if err != nil {
 			fmt.Println("exec micromatch-wrapper -h error: ", err)
 		}
