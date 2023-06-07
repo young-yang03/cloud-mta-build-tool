@@ -75,12 +75,14 @@ var _ = Describe("Integration - CloudMtaBuildTool", func() {
 		if err != nil {
 			fmt.Println("Failed to open source file: ", err)
 		}
+		defer source.Close()
 
 		destination, err := os.Create(micromatchWrapperTargetPath)
 		if err != nil {
 			fmt.Println("Failed to create destination file:", err)
 			return
 		}
+		defer destination.Close()
 
 		_, err = io.Copy(destination, source)
 		if err != nil {
@@ -89,17 +91,23 @@ var _ = Describe("Integration - CloudMtaBuildTool", func() {
 		}
 		fmt.Println("micromatch wrapper copied successfully.")
 
+		var stdout bytes.Buffer
 		cmd = exec.Command("mbt", "-h")
 		err = cmd.Run()
+		cmd.Stdout = &stdout
 		if err != nil {
 			fmt.Println("exec mbt -h error: ", err)
+			return
 		}
+		fmt.Println("exec mbt -h success: ", stdout.String())
 
 		cmd = exec.Command("micromatch-wrapper", "-h")
 		err = cmd.Run()
 		if err != nil {
 			fmt.Println("exec micromatch-wrapper -h error: ", err)
+			return
 		}
+		fmt.Println("exec micromatch-wrapper -h success: ", stdout.String())
 	})
 
 	AfterSuite(func() {
