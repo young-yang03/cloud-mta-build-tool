@@ -64,7 +64,7 @@ var _ = Describe("Integration - CloudMtaBuildTool", func() {
 			micromatchWrapperSourcePath = filepath.Join(wd, filepath.FromSlash("../micromatch/Linux"), micromatchWrapperName)
 		} else if runtime.GOOS == "darwin" {
 			micromatchWrapperName = "micromatch-wrapper"
-			micromatchWrapperSourcePath = filepath.Join(wd, filepath.FromSlash("../micromatch/Linux/"), micromatchWrapperName)
+			micromatchWrapperSourcePath = filepath.Join(wd, filepath.FromSlash("../micromatch/Darwin/"), micromatchWrapperName)
 		} else {
 			micromatchWrapperName = "micromatch-wrapper.exe"
 			micromatchWrapperSourcePath = filepath.Join(wd, filepath.FromSlash("../micromatch/Windows"), micromatchWrapperName)
@@ -86,6 +86,12 @@ var _ = Describe("Integration - CloudMtaBuildTool", func() {
 		if err != nil {
 			fmt.Println("Failed to copy file:", err)
 			return
+		}
+
+		cmd := exec.Command("micromatch-wrapper", "-h")
+		err := cmd.Run()
+		if err != nil {
+			fmt.Println("exec micromatch-wrapper -h error: ", err)
 		}
 
 		fmt.Println("micromatch wrapper copied successfully.")
