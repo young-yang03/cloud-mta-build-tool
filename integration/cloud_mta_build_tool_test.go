@@ -87,14 +87,19 @@ var _ = Describe("Integration - CloudMtaBuildTool", func() {
 			fmt.Println("Failed to copy file:", err)
 			return
 		}
+		fmt.Println("micromatch wrapper copied successfully.")
+
+		cmd = exec.Command("mbt", "-h")
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("exec mbt -h error: ", err)
+		}
 
 		cmd = exec.Command("micromatch-wrapper", "-h")
 		err = cmd.Run()
 		if err != nil {
 			fmt.Println("exec micromatch-wrapper -h error: ", err)
 		}
-
-		fmt.Println("micromatch wrapper copied successfully.")
 	})
 
 	AfterSuite(func() {
