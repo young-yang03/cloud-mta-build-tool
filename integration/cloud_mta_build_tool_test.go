@@ -8,6 +8,7 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
+	"io"
 	"io/ioutil"
 	// "log"
 
@@ -36,6 +37,9 @@ const (
 var _ = Describe("Integration - CloudMtaBuildTool", func() {
 
 	var mbtName = ""
+	var micromatchWrapperName = ""
+	var micromatchWrapperSourcePath = ""
+	var micromatchWrapperTargetPath = ""
 
 	BeforeSuite(func() {
 		By("Building MBT")
@@ -51,6 +55,37 @@ var _ = Describe("Integration - CloudMtaBuildTool", func() {
 		err := cmd.Run()
 		if err != nil {
 			fmt.Println("binary creation failed: ", err)
+		}
+
+		wd, _ := os.Getwd()
+		By("Installing micromatch-wrapper")
+		if runtime.GOOS == "linux" {
+			micromatchWrapperName = "micromatch-wrapper"
+			micromatchWrapperSourcePath = filepath.Join(wd, filepath.FromSlash("../micromatch/Linux"), micromatchWrapperName)
+		} else if runtime.GOOS == "darwin" {
+			micromatchWrapperName = "micromatch-wrapper"
+			micromatchWrapperSourcePath = filepath.Join(wd, filepath.FromSlash("../micromatch/Linux/"), micromatchWrapperName)
+		} else {
+			micromatchWrapperName = "micromatch-wrapper.exe"
+			micromatchWrapperSourcePath = filepath.Join(wd, filepath.FromSlash("../micromatch/Windows"), micromatchWrapperName)
+		}
+
+		micromatchWrapperTargetPath = filepath.Join(os.Getenv("GOPATH"), "/bin/", micromatchWrapperName)
+		source, err := os.Open(micromatchWrapperSourcePath)
+		if err != nil {
+			fmt.Println("Failed to open source file: ", err)
+		}
+
+		destination, err := os.Create(micromatchWrapperTargetPath)
+		if err != nil {
+			fmt.Println("Failed to create destination file:", err)
+			return
+		}
+
+		_, err = io.Copy(destination, source)
+		if err != nil {
+			fmt.Println("Failed to copy file:", err)
+			return
 		}
 	})
 

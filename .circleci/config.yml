@@ -95,7 +95,7 @@ jobs:
       - run: goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken $COVERALLS_TOKEN
   test:
     docker:
-      - image: shimit/mbt_multi:0.5.0
+      - image: shimit/mbt_multi:0.3.0
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - checkout
