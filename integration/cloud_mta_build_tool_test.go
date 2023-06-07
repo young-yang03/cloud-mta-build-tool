@@ -87,6 +87,8 @@ var _ = Describe("Integration - CloudMtaBuildTool", func() {
 			fmt.Println("Failed to copy file:", err)
 			return
 		}
+
+		fmt.Println("micromatch wrapper copied successfully.")
 	})
 
 	AfterSuite(func() {
