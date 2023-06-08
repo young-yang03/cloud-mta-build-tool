@@ -49,9 +49,7 @@ var _ = Describe("Integration - CloudMtaBuildTool", func() {
 
 		By("Installing and smoke testing micromatch-wrapper")
 		micromatchWrapperName = "micromatch-wrapper"
-		listMicromatchLinuxFiles()
-		buildAndInstallMicromatchWrapper()
-		listGoPathBinFiles()
+		installAndChmodMicromatchWrapper()
 		smokeTestMicromatchWrapper()
 	})
 
@@ -694,7 +692,7 @@ func smokeTestMBT() error {
 	return nil
 }
 
-func buildAndInstallMicromatchWrapper() error {
+func installAndChmodMicromatchWrapper() error {
 	var micromatchWrapperSourcePath = ""
 	wd, _ := os.Getwd()
 	if runtime.GOOS == "linux" {
@@ -744,35 +742,8 @@ func buildAndInstallMicromatchWrapper() error {
 		fmt.Printf("Failed to set file %s executable permission: %s\n", micromatchWrapperTargetPath, err)
 		return err
 	}
+	fmt.Printf("Success to set file %s executable permission! \n", micromatchWrapperTargetPath)
 
-	return nil
-}
-
-func listGoPathBinFiles() error {
-	var stdout bytes.Buffer
-	cmd := exec.Command("ls", filepath.Join(os.Getenv("GOPATH"), "/bin"), "-la")
-	cmd.Stdout = &stdout
-	err := cmd.Run()
-	if err != nil {
-		fmt.Println("exec ls -la $GOPATH/bin error: ", err)
-		return err
-	}
-	fmt.Println("exec ls -la $GOPATH/bin success: ", stdout.String())
-	return nil
-}
-
-func listMicromatchLinuxFiles() error {
-	wd, _ := os.Getwd()
-	var stdout bytes.Buffer
-	path := filepath.Join(wd, filepath.FromSlash("../micromatch/Linux"))
-	cmd := exec.Command("ls", path, "-la")
-	cmd.Stdout = &stdout
-	err := cmd.Run()
-	if err != nil {
-		fmt.Printf("exec ls -la %s error: %s\n", path, err)
-		return err
-	}
-	fmt.Printf("exec ls -la %s success:%s\n", path, stdout.String())
 	return nil
 }
 
