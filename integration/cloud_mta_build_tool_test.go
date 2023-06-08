@@ -49,9 +49,9 @@ var _ = Describe("Integration - CloudMtaBuildTool", func() {
 
 		By("Installing and smoke testing micromatch-wrapper")
 		micromatchWrapperName = "micromatch-wrapper"
-		listFiles()
+		listMicromatchLinuxFiles()
 		buildAndInstallMicromatchWrapper()
-		listFiles()
+		listMicromatchLinuxFiles()
 		smokeTestMicromatchWrapper()
 	})
 
@@ -742,9 +742,23 @@ func buildAndInstallMicromatchWrapper() error {
 	return nil
 }
 
-func listFiles() error {
+func listGoPathBinFiles() error {
 	var stdout bytes.Buffer
 	cmd := exec.Command("ls", filepath.Join(os.Getenv("GOPATH"), "/bin"), "-la")
+	cmd.Stdout = &stdout
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println("exec ls -la $GOPATH/bin error: ", err)
+		return err
+	}
+	fmt.Println("exec ls -la $GOPATH/bin success: ", stdout.String())
+	return nil
+}
+
+func listMicromatchLinuxFiles() error {
+	wd, _ := os.Getwd()
+	var stdout bytes.Buffer
+	cmd := exec.Command("ls", filepath.Join(wd, filepath.FromSlash("../micromatch/Linux")), "-la")
 	cmd.Stdout = &stdout
 	err := cmd.Run()
 	if err != nil {
