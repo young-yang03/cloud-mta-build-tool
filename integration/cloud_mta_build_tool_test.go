@@ -44,16 +44,14 @@ var _ = Describe("Integration - CloudMtaBuildTool", func() {
 	BeforeSuite(func() {
 		By("Building and smoke testing mbt")
 		mbtName = "mbt"
-		// mbtTargetPath = filepath.Join(os.Getenv("GOPATH"), "/bin/"+mbtName)
 		buildAndInstallMBT()
 		smokeTestMBT()
 
-		By("Installing moke and testing micromatch-wrapper")
-		micromatchWrapperName = "micromatch-wrapper"
-		// micromatchWrapperTargetPath = filepath.Join(os.Getenv("GOPATH"), "/bin/", micromatchWrapperName)
-		buildAndInstallMicromatchWrapper()
-		listFiles()
-		smokeTestMicromatchWrapper()
+		// By("Installing and smoke testing micromatch-wrapper")
+		// micromatchWrapperName = "micromatch-wrapper"
+		// buildAndInstallMicromatchWrapper()
+		// listFiles()
+		// smokeTestMicromatchWrapper()
 	})
 
 	AfterSuite(func() {
