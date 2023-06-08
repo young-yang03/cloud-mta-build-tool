@@ -34,80 +34,25 @@ const (
 	binPath = "mbt"
 )
 
+var mbtName = ""
+var mbtTargetPath = ""
+var micromatchWrapperName = ""
+var micromatchWrapperTargetPath = ""
+
 var _ = Describe("Integration - CloudMtaBuildTool", func() {
 
-	var mbtName = ""
-	var micromatchWrapperName = ""
-	var micromatchWrapperSourcePath = ""
-	var micromatchWrapperTargetPath = ""
-
 	BeforeSuite(func() {
-		By("Building MBT")
-		if runtime.GOOS == "linux" || runtime.GOOS == "darwin" {
-			mbtName = "mbt"
-		} else {
-			mbtName = "mbt.exe"
-		}
-		// This runs locally for testing purpose only
-		/* #nosec */
-		cmd := exec.Command("go", "build", "-o", filepath.Join(os.Getenv("GOPATH"), "/bin/"+mbtName), ".")
-		cmd.Dir = filepath.FromSlash("../")
-		err := cmd.Run()
-		if err != nil {
-			fmt.Println("binary creation failed: ", err)
-		}
+		By("Building and smoke testing mbt")
+		mbtName = "mbt"
+		mbtTargetPath = filepath.Join(os.Getenv("GOPATH"), "/bin/"+mbtName)
+		buildAndInstallMBT()
+		smokeTestMBT()
 
-		wd, _ := os.Getwd()
-		By("Installing micromatch-wrapper")
-		if runtime.GOOS == "linux" {
-			micromatchWrapperName = "micromatch-wrapper"
-			micromatchWrapperSourcePath = filepath.Join(wd, filepath.FromSlash("../micromatch/Linux"), micromatchWrapperName)
-		} else if runtime.GOOS == "darwin" {
-			micromatchWrapperName = "micromatch-wrapper"
-			micromatchWrapperSourcePath = filepath.Join(wd, filepath.FromSlash("../micromatch/Darwin/"), micromatchWrapperName)
-		} else {
-			micromatchWrapperName = "micromatch-wrapper.exe"
-			micromatchWrapperSourcePath = filepath.Join(wd, filepath.FromSlash("../micromatch/Windows"), micromatchWrapperName)
-		}
-
+		By("Installing moke and testing micromatch-wrapper")
+		micromatchWrapperName = "micromatch-wrapper"
 		micromatchWrapperTargetPath = filepath.Join(os.Getenv("GOPATH"), "/bin/", micromatchWrapperName)
-		source, err := os.Open(micromatchWrapperSourcePath)
-		if err != nil {
-			fmt.Println("Failed to open source file: ", err)
-		}
-		defer source.Close()
-
-		destination, err := os.Create(micromatchWrapperTargetPath)
-		if err != nil {
-			fmt.Println("Failed to create destination file:", err)
-			return
-		}
-		defer destination.Close()
-
-		_, err = io.Copy(destination, source)
-		if err != nil {
-			fmt.Println("Failed to copy file:", err)
-			return
-		}
-		fmt.Println("micromatch wrapper copied successfully.")
-
-		var stdout bytes.Buffer
-		cmd = exec.Command("mbt", "-h")
-		err = cmd.Run()
-		cmd.Stdout = &stdout
-		if err != nil {
-			fmt.Println("exec mbt -h error: ", err)
-			return
-		}
-		fmt.Println("exec mbt -h success: ", stdout.String())
-
-		cmd = exec.Command("micromatch-wrapper", "-h")
-		err = cmd.Run()
-		if err != nil {
-			fmt.Println("exec micromatch-wrapper -h error: ", err)
-			return
-		}
-		fmt.Println("exec micromatch-wrapper -h success: ", stdout.String())
+		buildAndInstallMicromatchWrapper()
+		smokeTestMicromatchWrapper()
 	})
 
 	AfterSuite(func() {
@@ -716,6 +661,96 @@ resources:
 		})
 	})
 })
+
+func buildAndInstallMBT() error {
+	if runtime.GOOS == "linux" || runtime.GOOS == "darwin" {
+		mbtName = mbtName
+	} else {
+		mbtName = mbtName + ".exe"
+	}
+
+	cmd := exec.Command("go", "build", "-o", mbtTargetPath, ".")
+	cmd.Dir = filepath.FromSlash("../")
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println("mbt build and install failed: ", err)
+		return err
+	}
+
+	return nil
+}
+
+func smokeTestMBT() error {
+	var stdout bytes.Buffer
+	cmd := exec.Command(mbtName, "-h")
+	cmd.Stdout = &stdout
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println("exec mbt -h error: ", err)
+		return err
+	}
+	fmt.Println("exec mbt -h success: ", stdout.String())
+	return nil
+}
+
+func buildAndInstallMicromatchWrapper() error {
+	var micromatchWrapperSourcePath = ""
+	wd, _ := os.Getwd()
+	if runtime.GOOS == "linux" {
+		micromatchWrapperSourcePath = filepath.Join(wd, filepath.FromSlash("../micromatch/Linux"), micromatchWrapperName)
+	} else if runtime.GOOS == "darwin" {
+		micromatchWrapperSourcePath = filepath.Join(wd, filepath.FromSlash("../micromatch/Darwin/"), micromatchWrapperName)
+	} else {
+		micromatchWrapperName = micromatchWrapperName + ".exe"
+		micromatchWrapperSourcePath = filepath.Join(wd, filepath.FromSlash("../micromatch/Windows"), micromatchWrapperName)
+	}
+
+	// Destination file exists, remove it
+	_, err := os.Stat(micromatchWrapperTargetPath)
+	if err == nil {
+		err = os.Remove(micromatchWrapperTargetPath)
+		if err != nil {
+			return err
+		}
+	}
+
+	source, err := os.Open(micromatchWrapperSourcePath)
+	if err != nil {
+		fmt.Println("Failed to open source file: ", err)
+		return err
+	}
+
+	target, err := os.Create(micromatchWrapperTargetPath)
+	if err != nil {
+		fmt.Println("Failed to create target file:", err)
+		return err
+	}
+
+	_, err = io.Copy(target, source)
+	if err != nil {
+		fmt.Println("Failed to copy file:", err)
+		return err
+	}
+	fmt.Println("micromatch-wrapper copied successfully.")
+
+	source.Close()
+	target.Close()
+
+	return nil
+}
+
+func smokeTestMicromatchWrapper() error {
+	var stdout bytes.Buffer
+	cmd := exec.Command(micromatchWrapperName, "-h")
+	cmd.Stdout = &stdout
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println("exec micromatch-wrapper -h error: ", err)
+		return err
+	}
+	fmt.Println("exec micromatch-wrapper -h success: ", stdout.String())
+	return nil
+}
 
 func getFileContentFromZip(path string, filename string) ([]byte, error) {
 	zipFile, err := zip.OpenReader(path)
