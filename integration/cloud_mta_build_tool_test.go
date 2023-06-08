@@ -44,13 +44,13 @@ var _ = Describe("Integration - CloudMtaBuildTool", func() {
 	BeforeSuite(func() {
 		By("Building and smoke testing mbt")
 		mbtName = "mbt"
-		mbtTargetPath = filepath.Join(os.Getenv("GOPATH"), "/bin/"+mbtName)
+		// mbtTargetPath = filepath.Join(os.Getenv("GOPATH"), "/bin/"+mbtName)
 		buildAndInstallMBT()
 		smokeTestMBT()
 
 		By("Installing moke and testing micromatch-wrapper")
 		micromatchWrapperName = "micromatch-wrapper"
-		micromatchWrapperTargetPath = filepath.Join(os.Getenv("GOPATH"), "/bin/", micromatchWrapperName)
+		// micromatchWrapperTargetPath = filepath.Join(os.Getenv("GOPATH"), "/bin/", micromatchWrapperName)
 		buildAndInstallMicromatchWrapper()
 		listFiles()
 		smokeTestMicromatchWrapper()
@@ -669,6 +669,7 @@ func buildAndInstallMBT() error {
 	} else {
 		mbtName = mbtName + ".exe"
 	}
+	mbtTargetPath = filepath.Join(os.Getenv("GOPATH"), "/bin/"+mbtName)
 
 	cmd := exec.Command("go", "build", "-o", mbtTargetPath, ".")
 	cmd.Dir = filepath.FromSlash("../")
@@ -705,6 +706,7 @@ func buildAndInstallMicromatchWrapper() error {
 		micromatchWrapperName = micromatchWrapperName + ".exe"
 		micromatchWrapperSourcePath = filepath.Join(wd, filepath.FromSlash("../micromatch/Windows"), micromatchWrapperName)
 	}
+	micromatchWrapperTargetPath = filepath.Join(os.Getenv("GOPATH"), "/bin/", micromatchWrapperName)
 
 	// Destination file exists, remove it
 	_, err := os.Stat(micromatchWrapperTargetPath)
@@ -742,7 +744,7 @@ func buildAndInstallMicromatchWrapper() error {
 
 func listFiles() error {
 	var stdout bytes.Buffer
-	cmd := exec.Command("ls -la", filepath.Join(os.Getenv("GOPATH"), "/bin"))
+	cmd := exec.Command("ls", filepath.Join(os.Getenv("GOPATH"), "/bin"), "-la")
 	cmd.Stdout = &stdout
 	err := cmd.Run()
 	if err != nil {
