@@ -733,7 +733,7 @@ func buildAndInstallMicromatchWrapper() error {
 		fmt.Println("Failed to copy file:", err)
 		return err
 	}
-	fmt.Println("micromatch-wrapper copied successfully.")
+	fmt.Printf("copy micromatch-wrapper from %s to %s success!\n", micromatchWrapperSourcePath, micromatchWrapperTargetPath)
 
 	source.Close()
 	target.Close()
