@@ -109,8 +109,14 @@ jobs:
             MICROMATCH_WRAPPER_DIR=micromatch
             MICROMATCH_WRAPPER_BINARY_NAME=micromatch-wrapper
             MICROMATCH_WRAPPER_OS=Linux
+            echo "ls -la ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_OS}"
+            ls -la ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_OS}
             chmod ug+rwx ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_OS}/${MICROMATCH_WRAPPER_BINARY_NAME}
+            echo "ls -la ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_OS}"
+            ls -la ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_OS}
             cp ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_OS}/${MICROMATCH_WRAPPER_BINARY_NAME} ${GOPATH}/bin/${MICROMATCH_WRAPPER_BINARY_NAME}
+            echo "ls -la ${GOPATH}/bin"
+            ls -la ${GOPATH}/bin
             echo "${MICROMATCH_WRAPPER_BINARY_NAME} help:"
             ${MICROMATCH_WRAPPER_BINARY_NAME} --help
       - run: ls -la ${GOPATH}/bin/

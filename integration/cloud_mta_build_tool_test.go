@@ -49,6 +49,7 @@ var _ = Describe("Integration - CloudMtaBuildTool", func() {
 
 		By("Installing and smoke testing micromatch-wrapper")
 		micromatchWrapperName = "micromatch-wrapper"
+		listFiles()
 		buildAndInstallMicromatchWrapper()
 		listFiles()
 		smokeTestMicromatchWrapper()
