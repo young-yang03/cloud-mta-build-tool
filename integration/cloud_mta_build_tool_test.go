@@ -47,11 +47,11 @@ var _ = Describe("Integration - CloudMtaBuildTool", func() {
 		buildAndInstallMBT()
 		smokeTestMBT()
 
-		// By("Installing and smoke testing micromatch-wrapper")
-		// micromatchWrapperName = "micromatch-wrapper"
-		// buildAndInstallMicromatchWrapper()
-		// listFiles()
-		// smokeTestMicromatchWrapper()
+		By("Installing and smoke testing micromatch-wrapper")
+		micromatchWrapperName = "micromatch-wrapper"
+		buildAndInstallMicromatchWrapper()
+		listFiles()
+		smokeTestMicromatchWrapper()
 	})
 
 	AfterSuite(func() {
@@ -713,6 +713,7 @@ func buildAndInstallMicromatchWrapper() error {
 		if err != nil {
 			return err
 		}
+		fmt.Printf("Remove %s success \n", micromatchWrapperTargetPath)
 	}
 
 	source, err := os.Open(micromatchWrapperSourcePath)

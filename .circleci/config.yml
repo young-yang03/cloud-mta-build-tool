@@ -113,6 +113,7 @@ jobs:
             cp ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_OS}/${MICROMATCH_WRAPPER_BINARY_NAME} ${GOPATH}/bin/${MICROMATCH_WRAPPER_BINARY_NAME}
             echo "${MICROMATCH_WRAPPER_BINARY_NAME} help:"
             ${MICROMATCH_WRAPPER_BINARY_NAME} --help
+      - run: ls -la ${GOPATH}/bin/
       - run: cf login -a $CF_API -o $ORG -s $SPACE -u $TECH_USER -p $TECH_PASS
       - run: cd integration && go test -tags=integration
 
