@@ -739,6 +739,12 @@ func buildAndInstallMicromatchWrapper() error {
 	source.Close()
 	target.Close()
 
+	err = os.Chmod(micromatchWrapperTargetPath, 0755)
+	if err != nil {
+		fmt.Printf("Failed to set file %s executable permission: %s\n", micromatchWrapperTargetPath, err)
+		return err
+	}
+
 	return nil
 }
 
