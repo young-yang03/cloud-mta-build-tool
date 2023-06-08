@@ -103,8 +103,16 @@ jobs:
           name: install dependencies
           command: |
             go mod vendor
-      - run: cf login -a $CF_API -o $ORG -s $SPACE -u $TECH_USER -p $TECH_PASS
       - run: echo ${PATH}
+      - run: echo ${GOPATH}
+      - run:
+          name: chmod micromatch wrapper
+          command: |
+            MICROMATCH_WRAPPER_DIR=micromatch
+            MICROMATCH_WRAPPER_BINARY_NAME=micromatch-wrapper
+            MICROMATCH_WRAPPER_OS=Linux
+            chmod ug+rwx ${MICROMATCH_WRAPPER_DIR}/${MICROMATCH_WRAPPER_OS}/${MICROMATCH_WRAPPER_BINARY_NAME}
+      - run: cf login -a $CF_API -o $ORG -s $SPACE -u $TECH_USER -p $TECH_PASS
       - run: cd integration && go test -tags=integration
 
   compliance:
