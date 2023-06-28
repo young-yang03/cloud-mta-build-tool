@@ -192,7 +192,7 @@ RUN sapmachine_install() { \
     curl -fsSLO --compressed -b 'eula_3_1_agreed=tools.hana.ondemand.com/developer-license-3_1.txt' https://tools.hana.ondemand.com/additional/sapjvm-${SAPMACHINE_VERSION}-linux-${ARCH}.zip; \
     echo "7d63f20b17becb5f658d413c113ea9efdfbba6a0  sapjvm-${SAPMACHINE_VERSION}-linux-${ARCH}.zip" | sha1sum -c -; \
     bsdtar -xvf sapjvm-${SAPMACHINE_VERSION}-linux-${ARCH}.zip -C /usr/local --strip-components=1 --no-same-owner; \
-    chmod -r ug+rwx /usr/local \
+    # chmod -r ug+rwx /usr/local \
     rm -f sapjvm-${SAPMACHINE_VERSION}-linux-${ARCH}.zip; \
     apt-get remove --purge --auto-remove -y ca-certificates curl libarchive-tools; \
     ln -s /usr/local ${JAVA_HOME}; \

@@ -114,12 +114,6 @@ build-windows:
 
 # use for local development - > copy the new bin to go/bin path to use new compiled version
 
-# build and install micromatch wrapper
-install-pkg:
-	npm install -g $(PKG_NAME)
-	echo "$(PKG_NAME) version:"
-	$(PKG_NAME) --version
-
 install-micromatch-wrapper:
 	@cd $(MICROMATCH_WRAPPER_DIR) && npm install && cd -
 	pkg $(MICROMATCH_WRAPPER_DIR) --out-path $(MICROMATCH_WRAPPER_DIR)
