@@ -191,6 +191,7 @@ jobs:
             git checkout master
             export GITHUB_TOKEN=${CLOUD_MTA_BOT_GITHUB_TOKEN}
             go get github.com/goreleaser/goreleaser@v1.18.2
+            go install github.com/goreleaser/goreleaser@v1.18.2
             echo "goreleaser --version:"
             goreleaser --version
             goreleaser release
