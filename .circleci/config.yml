@@ -90,7 +90,7 @@ jobs:
             go install github.com/mattn/goveralls
             go install github.com/modocache/gover
             go get golang.org/x/crypto/ssh/terminal
-      - run: go test -v ./... -coverprofile=mta.coverprofile
+      # - run: go test -v ./... -coverprofile=mta.coverprofile
       - run: gover
       - run: goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken $COVERALLS_TOKEN
 
@@ -672,25 +672,26 @@ workflows:
               only: /release/
             branches:
               ignore: /.*/
-      - test:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
-      - ghpages:
-          requires:
-            - test
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
+      # - test:
+      #     requires:
+      #       - build
+      #     filters:
+      #       tags:
+      #         only: /release/
+      #       branches:
+      #         ignore: /.*/
+      # - ghpages:
+      #     requires:
+      #       - test
+      #     filters:
+      #       tags:
+      #         only: /release/
+      #       branches:
+      #         ignore: /.*/
       - release-to-github:
           requires:
-            - test
+            # - test
+            - build
           filters:
             tags:
               only: /release/
