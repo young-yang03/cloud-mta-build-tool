@@ -133,7 +133,7 @@ jobs:
 
   release-to-github:
     docker:
-      - image: cimg/go:1.20
+      - image: cimg/go:1.19
     working_directory: ~/go/src/github.com/young-yang03/cloud-mta-build-tool
     steps:
       - add_ssh_keys:
@@ -190,7 +190,11 @@ jobs:
             #Make sure HEAD points to master
             git checkout master
             export GITHUB_TOKEN=${CLOUD_MTA_BOT_GITHUB_TOKEN}
-            curl -sfL https://goreleaser.com/static/run | bash
+            go get github.com/goreleaser/goreleaser@v1.18.2
+            echo "goreleaser --version:"
+            goreleaser --version
+            goreleaser release
+            #curl -sfL https://goreleaser.com/static/run | bash
 
   publish-to-dockerhub-java8-node14:
     docker:
