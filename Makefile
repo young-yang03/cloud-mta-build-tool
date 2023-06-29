@@ -27,6 +27,9 @@ CYCLONEDX_GOMOD_VERSION = latest
 # cyclonedx-bom
 CYCLONEDX_BOM_BINARY = cyclonedx-bom
 
+# pkg
+PKG_NAME=pkg
+
 # micromatch wrapper
 MICROMATCH_WRAPPER_DIR=$(CURDIR)/micromatch
 MICROMATCH_WRAPPER_BINARY_NAME=micromatch-wrapper
