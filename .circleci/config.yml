@@ -139,17 +139,17 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "a4:4f:1d:01:c3:7d:b0:d7:f8:16:3e:24:cf:f6:c8:35"
+      - checkout
+      - run:
+          name: install dependencies
+          command: |
+            go mod vendor
       - run:
           name: install goreleaser
           command: |
             go install github.com/goreleaser/goreleaser@v1.18.2
             echo "goreleaser --version:"
             goreleaser --version
-      - checkout
-      - run:
-          name: install dependencies
-          command: |
-            go mod vendor
       - run:
           name: bump version
           command: |
