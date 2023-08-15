@@ -7,6 +7,6 @@ modules:
     type: nodejs
     path: node-js
     provides:
-      - name: node-js_api
-        properties:
+    - name: node-js_api
+      properties:
           url: ${default-url}
