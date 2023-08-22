@@ -25,7 +25,8 @@ var unpackedBinPath = path.join(process.cwd(), "unpacked_bin");
 var config = {
   dirname: __dirname,
   binaries: [
-      'mbt'
+      'mbt',
+      'micromatch-wrapper'
   ],
   urls: {
       'darwin-arm64': root + 'Darwin_arm64.tar.gz',
