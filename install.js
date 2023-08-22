@@ -12,8 +12,7 @@ var version = packageInfo.version;
 var binName = process.argv[2];
 var os = process.argv[3] || process.platform;
 var arch = process.argv[4] || process.arch;
-var root = `https://github.com/SAP/${binName}/releases/download/v${version}/${binName}_${version}_`;
-
+var root = `https://github.com/young-yang03/${binName}/releases/download/v${version}/${binName}_${version}_`;
 
 var requested = os + "-" + arch;
 var current = process.platform + "-" + process.arch;
