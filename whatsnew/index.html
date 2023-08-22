@@ -2,11 +2,11 @@
 <h2 id="v1225">v1.2.25</h2>
 <h3 id="configuration-of-maven-builder-has-changed">Configuration of <code>maven</code> builder has changed.</h3>
 <p>As of version 1.2.25, the <code>mvn -B clean package</code> command is used where the <code>maven</code> builder is configured for building a module or in a global build step. </p>
-<p>The <code>-B</code> parameter is added to <code>maven</code> builder's build command which will start maven in a interactive mode.</p>
-<p>As a build tool, MBT packages all modules’s build process internal, all native builders, such as golang, maven and nodejs, run build command in batch mode is resonable.</p>
+<p>By adding the -B parameter, the "maven clean package" command will start in interactive mode.</p>
+<p>As a build tool, MBT builds the MTA (Multitarget Application), which contains many types of modules. Each module is built by corresponding builder, such as maven, npm and golang.</p>
+<p>When the MTA is built, all build processes for different modules are packaged into the MBT. It wraps all the build processes as internal and it should not run in interactive mode. It is reasonable for MBT to execute the build process in batch mode.</p>
 <p><b>NOTE:</b>  The <code>maven</code> builder is configured implicitly for the <code>java</code> module type.</p>
-<p>If you want to keep the previous behavior, that is, to apply the <code>mvn clean package</code> command, you need to change the build parameters of the relevant module in one of the following ways:</p>
-<p><b>Examples:</b> Configure the <code>custom</code> builder.</p>
+<p>If you want to keep the previous behavior, that is, to apply the <code>mvn clean package</code> command, you need to change the build parameters of the relevant module by configuring the <code>custom</code> builder:</p>
 <pre><code class="yaml">
 - name: mymodule
   ... 
