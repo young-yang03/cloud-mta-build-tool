@@ -695,17 +695,17 @@ workflows:
               only: /release/
             branches:
               ignore: /.*/
-      # - release-to-github:
-      #     requires:
-      #       - test
-      #     filters:
-      #       tags:
-      #         only: /release/
-      #       branches:
-      #         ignore: /.*/
-      - publish-to-npm:
+      - release-to-github:
           requires:
             - test
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
+      - publish-to-npm:
+          requires:
+            - release-to-github
           filters:
             tags:
               only: /release/
