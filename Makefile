@@ -25,7 +25,9 @@ CYCLONEDX_GOMOD_BINARY = cyclonedx-gomod
 CYCLONEDX_GOMOD_VERSION = latest
 
 # cyclonedx-bom
+CYCLONEDX_BOM_PACKAGE = @cyclonedx/bom
 CYCLONEDX_BOM_BINARY = cyclonedx-bom
+CYCLONEDX_BOM_VERSION = 3.10.6
 
 # pkg
 PKG_NAME=pkg
@@ -147,5 +149,6 @@ install-cyclonedx:
 	echo "${CYCLONEDX_CLI_BINARY} version:"
 	${CYCLONEDX_CLI_BINARY} --version
 # install cyclonedx-bom
+	npm install -g ${CYCLONEDX_BOM_PACKAGE}@${CYCLONEDX_BOM_VERSION}
 	echo "${CYCLONEDX_BOM_BINARY} -h"
 	npx ${CYCLONEDX_BOM_BINARY} -h
