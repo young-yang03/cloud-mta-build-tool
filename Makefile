@@ -149,6 +149,5 @@ install-cyclonedx:
 	echo "${CYCLONEDX_CLI_BINARY} version:"
 	${CYCLONEDX_CLI_BINARY} --version
 # install cyclonedx-bom
-	npm install -g ${CYCLONEDX_BOM_PACKAGE}@${CYCLONEDX_BOM_VERSION}
 	echo "${CYCLONEDX_BOM_BINARY} -h"
 	npx ${CYCLONEDX_BOM_BINARY} -h

@@ -339,7 +339,7 @@ func GetModuleSBomGenCommands(loc *dir.Loc, module *mta.Module,
 
 	switch builder {
 	case "npm", "npm-ci", "grunt", "evo":
-		cmd = "npm install @cyclonedx/bom@3.10.6"
+		cmd = "npm install"
 		cmds = append(cmds, cmd)
 		cmd = "npx cyclonedx-bom -o " + sbomFileName + sbomFileSuffix
 		cmds = append(cmds, cmd)
