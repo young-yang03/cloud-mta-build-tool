@@ -299,7 +299,7 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
 
 # Instll cyclone-bom
 RUN set -ex \
-  && npm install -g ${CYCLONEDX_BOM_PACKAGE}@${CYCLONEDX_BOM_VERSION} \
+  && npm install --prefix /usr/local/ -g ${CYCLONEDX_BOM_PACKAGE}@${CYCLONEDX_BOM_VERSION} \
   && echo "cyclonedx-bom smoke tests!" \
   && npx ${CYCLONEDX_BOM_BINARY} -h
 
