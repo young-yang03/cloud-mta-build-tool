@@ -16,7 +16,7 @@ var root = `https://github.com/young-yang03/${binName}/releases/download/v${vers
 
 var requested = os + "-" + arch;
 var current = process.platform + "-" + process.arch;
-if (requested !== current ) {
+if (requested !== current) {
   console.error("WARNING: Installing binaries for the requested platform (" + requested + ") instead of for the actual platform (" + current + ").")
 }
 
@@ -24,14 +24,15 @@ var unpackedBinPath = path.join(process.cwd(), "unpacked_bin");
 var config = {
   dirname: __dirname,
   binaries: [
-      'mbt',
-      'micromatch-wrapper'
+    'mbt',
+    'micromatch-wrapper'
   ],
   urls: {
-      'darwin-arm64': root + 'Darwin_arm64.tar.gz',
-      'darwin-x64': root + 'Darwin_amd64.tar.gz',
-      'linux-x64': root + 'Linux_amd64.tar.gz',
-      'win32-x64': root + 'Windows_amd64.tar.gz'
+    'darwin-arm64': root + 'Darwin_arm64.tar.gz',
+    'darwin-x64': root + 'Darwin_amd64.tar.gz',
+    'linux-x64': root + 'Linux_amd64.tar.gz',
+    'linux-arm64': root + 'Linux_arm64.tar.gz',
+    'win32-x64': root + 'Windows_amd64.tar.gz'
   }
 };
 if (!fs.existsSync("bin")) {
@@ -177,13 +178,13 @@ function verifyContents(files) {
   );
 }
 
-binstall(url, unpackedBinPath).then(function() {
-  config.binaries.forEach(function(bin) {
+binstall(url, unpackedBinPath).then(function () {
+  config.binaries.forEach(function (bin) {
     fs.chmodSync(path.join(unpackedBinPath, bin + binExt), "755");
   });
-}).then(function(result) {
+}).then(function (result) {
   process.exit(0);
-}, function(result) {
+}, function (result) {
   console.error("ERR", result);
   process.exit(1);
 });
