@@ -278,7 +278,7 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && echo "cyclonedx-cli smoke tests!" \
   && ${CYCLONEDX_CLI_BINARY} --version
 
-# install cyclone-gomod
+# Install cyclone-gomod
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
   amd64) ARCH='amd64';; \
@@ -303,7 +303,7 @@ RUN set -ex \
   && echo "cyclonedx-bom smoke tests!" \
   && npx ${CYCLONEDX_BOM_BINARY} -h
 
-# install curl and ca-certificates
+# Install curl and ca-certificates
 RUN set -ex \
   && apt-get update \
   && apt-get install -y curl ca-certificates --no-install-recommends
