@@ -527,7 +527,7 @@ jobs:
           name: build Java 11.0.17 & Node 20.9.0 image
           command: |
             MBT_VERSION=$(cat ./VERSION)
-            sh $PWD/scripts/build_image 11.0.17 120.9.0 ${MBT_VERSION}
+            sh $PWD/scripts/build_image 11.0.17 20.9.0 ${MBT_VERSION}
       - run:
           name: publish Java 11.0.17 & Node 20.9.0 image
           command: |
