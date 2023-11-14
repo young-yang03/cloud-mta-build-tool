@@ -1022,6 +1022,11 @@ workflows:
           type: approval
           requires:
             - release-to-github
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
       - publish-to-npm:
           requires:
             - hold-for-approval
