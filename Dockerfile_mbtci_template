@@ -297,11 +297,11 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && echo "cyclonedx-gomod smoke tests!" \
   && cyclonedx-gomod version
 
-# Install cyclone-npm
-RUN set -ex \
-  && npm install --global @cyclonedx/cyclonedx-npm@1.11.0 \
-  && echo "cyclonedx-npm smoke tests!" \
-  && npx ${CYCLONEDX_NPM_BINARY} -h
+# # Install cyclone-npm
+# RUN set -ex \
+#   && npm install --global @cyclonedx/cyclonedx-npm@1.11.0 \
+#   && echo "cyclonedx-npm smoke tests!" \
+#   && npx ${CYCLONEDX_NPM_BINARY} -h
 
 # Install curl and ca-certificates
 RUN set -ex \
