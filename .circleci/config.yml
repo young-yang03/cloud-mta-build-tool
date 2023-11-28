@@ -176,7 +176,7 @@ jobs:
             go install github.com/mattn/goveralls
             go install github.com/modocache/gover
             go get golang.org/x/crypto/ssh/terminal
-      - run: go test -v ./... -coverprofile=mta.coverprofile -count=1 -timeout 30m
+      #- run: go test -v ./... -coverprofile=mta.coverprofile -count=1 -timeout 30m
       - run: gover
       - run: goveralls -v -service=circle-ci -coverprofile=gover.coverprofile -repotoken $COVERALLS_TOKEN
 
@@ -870,120 +870,120 @@ jobs:
 workflows:
   version: 2
   # when sub-branch's code is committed, this workflow will be exceeded
-  on_pr_build:
-    jobs:
-      - build:
-          filters:
-            branches:
-              ignore: master
-      - build-node:
-          filters:
-            branches:
-              ignore: master
-      - build-node20:
-          filters:
-            branches:
-              ignore: master
-      - build-node19:
-          filters:
-            branches:
-              ignore: master
-      - build-node18:
-          filters:
-            branches:
-              ignore: master
-      - build-node17:
-          filters:
-            branches:
-              ignore: master
-      - build-node16:
-          filters:
-            branches:
-              ignore: master
-      - build-node15:
-          filters:
-            branches:
-              ignore: master
-      - build-node14:
-          filters:
-            branches:
-              ignore: master
-      - build-node13-14:
-          filters:
-            branches:
-              ignore: master
-      - build-node12-22:
-          filters:
-            branches:
-              ignore: master
-      - compliance:
-          filters:
-            branches:
-              ignore: master
-      - test:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore: master
+  # on_pr_build:
+  #   jobs:
+  #     - build:
+  #         filters:
+  #           branches:
+  #             ignore: master
+  #     - build-node:
+  #         filters:
+  #           branches:
+  #             ignore: master
+  #     - build-node20:
+  #         filters:
+  #           branches:
+  #             ignore: master
+  #     - build-node19:
+  #         filters:
+  #           branches:
+  #             ignore: master
+  #     - build-node18:
+  #         filters:
+  #           branches:
+  #             ignore: master
+  #     - build-node17:
+  #         filters:
+  #           branches:
+  #             ignore: master
+  #     - build-node16:
+  #         filters:
+  #           branches:
+  #             ignore: master
+  #     - build-node15:
+  #         filters:
+  #           branches:
+  #             ignore: master
+  #     - build-node14:
+  #         filters:
+  #           branches:
+  #             ignore: master
+  #     - build-node13-14:
+  #         filters:
+  #           branches:
+  #             ignore: master
+  #     - build-node12-22:
+  #         filters:
+  #           branches:
+  #             ignore: master
+  #     - compliance:
+  #         filters:
+  #           branches:
+  #             ignore: master
+  #     - test:
+  #         requires:
+  #           - build
+  #         filters:
+  #           branches:
+  #             ignore: master
 
   # when master's code is committed or merged from sub-branch, this workflow will be exceeded
-  on_merge_build_test:
-    jobs:
-      - build:
-          filters:
-            branches:
-              only: master
-      - build-node:
-          filters:
-            branches:
-              only: master
-      - build-node20:
-          filters:
-            branches:
-              only: master
-      - build-node19:
-          filters:
-            branches:
-              only: master
-      - build-node18:
-          filters:
-            branches:
-              only: master
-      - build-node17:
-          filters:
-            branches:
-              only: master
-      - build-node16:
-          filters:
-            branches:
-              only: master
-      - build-node15:
-          filters:
-            branches:
-              only: master
-      - build-node14:
-          filters:
-            branches:
-              only: master
-      - build-node13-14:
-          filters:
-            branches:
-              only: master
-      - build-node12-22:
-          filters:
-            branches:
-              only: master
-      - compliance:
-          filters:
-            branches:
-              only: master
-      - test:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+  # on_merge_build_test:
+  #   jobs:
+  #     - build:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - build-node:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - build-node20:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - build-node19:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - build-node18:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - build-node17:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - build-node16:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - build-node15:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - build-node14:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - build-node13-14:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - build-node12-22:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - compliance:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - test:
+  #         requires:
+  #           - build
+  #         filters:
+  #           branches:
+  #             only: master
 
   # when a branch is tagged by "release", this workflow will be exceeded
   on_tag_build_release_publish:

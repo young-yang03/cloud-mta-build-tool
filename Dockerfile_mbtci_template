@@ -299,7 +299,7 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
 
 # Install cyclone-npm
 RUN set -ex \
-  && npm install --unsafe-perm --prefix /usr/local/ -g ${CYCLONEDX_NPM_PACKAGE}@${CYCLONEDX_NPM_VERSION} \
+  && npm install --unsafe-perm --prefix /usr/local/ -g @cyclonedx/cyclonedx-npm@1.11.0 \
   && echo "cyclonedx-npm smoke tests!" \
   && npx ${CYCLONEDX_NPM_BINARY} -h
 
