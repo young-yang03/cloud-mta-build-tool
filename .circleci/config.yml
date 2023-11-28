@@ -1018,18 +1018,19 @@ workflows:
               only: /release/
             branches:
               ignore: /.*/
-      - hold-for-approval:
-          type: approval
-          requires:
-            - release-to-github
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
+      # - hold-for-approval:
+      #     type: approval
+      #     requires:
+      #       - release-to-github
+      #     filters:
+      #       tags:
+      #         only: /release/
+      #       branches:
+      #         ignore: /.*/
       - publish-to-npm:
           requires:
-            - hold-for-approval
+            - release-to-github
+            # - hold-for-approval
           filters:
             tags:
               only: /release/
