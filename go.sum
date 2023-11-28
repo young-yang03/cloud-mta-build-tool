@@ -15,8 +15,6 @@ github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
-github.com/SAP/cloud-mta v1.0.4 h1:gRpJc/nHAOToIxHlC683fGMch78nCPF0viktTKFVUi8=
-github.com/SAP/cloud-mta v1.0.4/go.mod h1:DE8wEHC+0E7UuS217D1Kmg7vtfaHpVUySG5B1yVLnmo=
 github.com/SAP/cloud-mta v1.0.6 h1:LKCeqiAevPwAnMkuHyK/2JhL3RM7FpRs3mF1hmQwHGY=
 github.com/SAP/cloud-mta v1.0.6/go.mod h1:raToVpkWBCajEnid35ewX0BNsrGpZgZ62m70MGhai1M=
 github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=
