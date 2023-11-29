@@ -994,18 +994,17 @@ workflows:
               only: /release/
             branches:
               ignore: /.*/
-      # - test:
-      #     requires:
-      #       - build
-      #     filters:
-      #       tags:
-      #         only: /release/
-      #       branches:
-      #         ignore: /.*/
-      - ghpages:
+      - test:
           requires:
             - build
-            # - test
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
+      - ghpages:
+          requires:
+            - test
           filters:
             tags:
               only: /release/
@@ -1019,19 +1018,18 @@ workflows:
               only: /release/
             branches:
               ignore: /.*/
-      # - hold-for-approval:
-      #     type: approval
-      #     requires:
-      #       - release-to-github
-      #     filters:
-      #       tags:
-      #         only: /release/
-      #       branches:
-      #         ignore: /.*/
-      - publish-to-npm:
+      - hold-for-approval:
+          type: approval
           requires:
             - release-to-github
-            # - hold-for-approval
+          filters:
+            tags:
+              only: /release/
+            branches:
+              ignore: /.*/
+      - publish-to-npm:
+          requires:
+            - hold-for-approval
           filters:
             tags:
               only: /release/
