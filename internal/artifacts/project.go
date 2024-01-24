@@ -9,7 +9,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/SAP/cloud-mta-build-tool/internal/archive"
+	dir "github.com/SAP/cloud-mta-build-tool/internal/archive"
 	"github.com/SAP/cloud-mta-build-tool/internal/commands"
 	"github.com/SAP/cloud-mta-build-tool/internal/exec"
 	"github.com/SAP/cloud-mta-build-tool/internal/logs"
@@ -34,7 +34,7 @@ func ExecBuild(makefileTmp, source, target string, extensions []string, mode, mt
 	}
 
 	// (1) generate build script
-	err = tpl.ExecuteMake(source, "", extensions, makefileTmp, mode, wdGetter, useDefaultMbt)
+	err = tpl.ExecuteMake(source, "", extensions, makefileTmp, mode, wdGetter, useDefaultMbt, strict)
 	if err != nil {
 		return err
 	}

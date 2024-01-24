@@ -7,6 +7,7 @@ import (
 
 	"github.com/pkg/errors"
 
+	"github.com/SAP/cloud-mta-build-tool/internal/logs"
 	"github.com/SAP/cloud-mta/mta"
 )
 
@@ -27,9 +28,12 @@ const (
 	TempNotIgnoreFile = ".not_ignore_file_tmp"
 )
 
+var strict bool = true
+
 // IMtaParser - MTA Parser interface
 type IMtaParser interface {
 	ParseFile() (*mta.MTA, error)
+	SetStrictParmeter(bStrict bool) bool
 }
 
 // IDescriptor - descriptor interface
@@ -236,10 +240,23 @@ func (ep *Loc) IsDeploymentDescriptor() bool {
 	return ep.Descriptor == Dep
 }
 
+func (ep *Loc) SetStrictParmeter(bStrict bool) bool {
+	strict = bStrict
+	return strict
+}
+
 // ParseFile returns a reference to the MTA object resulting from the given mta.yaml file merged with the extension descriptors.
 func (ep *Loc) ParseFile() (*mta.MTA, error) {
-	mtaFile, _, err := mta.GetMtaFromFile(ep.GetMtaYamlPath(), ep.GetExtensionFilePaths(), true)
-	return mtaFile, err
+	if strict == true {
+		mtaFile, _, err := mta.GetMtaFromFile(ep.GetMtaYamlPath(), ep.GetExtensionFilePaths(), true)
+		return mtaFile, err
+	} else {
+		mtaFile, msg, err := mta.GetMtaFromFileWithStrict(ep.GetMtaYamlPath(), ep.GetExtensionFilePaths(), true, strict)
+		if msg != nil {
+			logs.Logger.Warning(msg)
+		}
+		return mtaFile, err
+	}
 }
 
 // GetExtensionFilePaths returns the MTA extension descriptor full paths
@@ -253,7 +270,6 @@ func (ep *Loc) GetExtensionFilePaths() []string {
 
 // Location - provides Location parameters of MTA
 func Location(source, target, descriptor string, extensions []string, wdGetter func() (string, error)) (*Loc, error) {
-
 	err := ValidateDeploymentDescriptor(descriptor)
 	if err != nil {
 		return nil, err
