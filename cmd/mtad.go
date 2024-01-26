@@ -39,5 +39,7 @@ func init() {
 		"The MTA extension descriptors")
 	mtadGenCmd.Flags().StringVarP(&mtadGenCmdPlatform, "platform", "p", "cf",
 		`The deployment platform; supported platforms: "cf", "xsa", "neo"`)
+	mtadGenCmd.Flags().BoolVarP(&buildCmdStrict, "strict", "", true,
+		`If set to true, duplicated fields and fields not defined in the "mta.yaml" schema are reported as errors; if set to false, they are reported as warnings`)
 	mtadGenCmd.Flags().BoolP("help", "h", false, `Displays detailed information about the 'mtad gen' command`)
 }
