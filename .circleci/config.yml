@@ -928,62 +928,62 @@ workflows:
   #             ignore: master
 
   # when master's code is committed or merged from sub-branch, this workflow will be exceeded
-  # on_merge_build_test:
-  #   jobs:
-  #     - build:
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - build-node:
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - build-node20:
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - build-node19:
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - build-node18:
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - build-node17:
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - build-node16:
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - build-node15:
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - build-node14:
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - build-node13-14:
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - build-node12-22:
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - compliance:
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - test:
-  #         requires:
-  #           - build
-  #         filters:
-  #           branches:
-  #             only: master
+  on_merge_build_test:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master
+      - build-node:
+          filters:
+            branches:
+              only: master
+      - build-node20:
+          filters:
+            branches:
+              only: master
+      - build-node19:
+          filters:
+            branches:
+              only: master
+      - build-node18:
+          filters:
+            branches:
+              only: master
+      - build-node17:
+          filters:
+            branches:
+              only: master
+      - build-node16:
+          filters:
+            branches:
+              only: master
+      - build-node15:
+          filters:
+            branches:
+              only: master
+      - build-node14:
+          filters:
+            branches:
+              only: master
+      - build-node13-14:
+          filters:
+            branches:
+              only: master
+      - build-node12-22:
+          filters:
+            branches:
+              only: master
+      - compliance:
+          filters:
+            branches:
+              only: master
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
 
   # when a branch is tagged by "release", this workflow will be exceeded
   on_tag_build_release_publish:
