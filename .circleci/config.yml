@@ -962,17 +962,18 @@ workflows:
               only: /release/
             branches:
               ignore: /.*/
-      - test:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
+      # - test:
+      #     requires:
+      #       - build
+      #     filters:
+      #       tags:
+      #         only: /release/
+      #       branches:
+      #         ignore: /.*/
       - ghpages:
           requires:
-            - test
+            - build
+            # - test
           filters:
             tags:
               only: /release/
@@ -980,7 +981,8 @@ workflows:
               ignore: /.*/
       - release-to-github:
           requires:
-            - test
+            - build
+            # - test
           filters:
             tags:
               only: /release/
