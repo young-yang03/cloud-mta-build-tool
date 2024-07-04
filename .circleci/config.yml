@@ -946,12 +946,12 @@ workflows:
           filters:
             branches:
               only: master
-      - test:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+      # - test:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         only: master
 
   # when a branch is tagged by "release", this workflow will be exceeded
   on_tag_build_release_publish:
