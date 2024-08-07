@@ -1188,6 +1188,7 @@ workflows:
             - publish-to-dockerhub-java21-node20
             - publish-to-dockerhub-java22-node18
             - publish-to-dockerhub-java22-node20
+            - publish-to-dockerhub-java22-node22
           filters:
             tags:
               only: /release/
