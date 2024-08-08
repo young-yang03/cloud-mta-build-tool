@@ -855,7 +855,7 @@ jobs:
             sh $PWD/scripts/publish_image 22.0.2 22.5.1 ${MBT_VERSION} "devxci"
             #Push to GitHub Container Registry
             echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
-            sh $PWD/scripts/publish_image 22.0.2 22.5.1 ${MBT_VERSION} "ghcr.io/sap"
+            sh $PWD/scripts/publish_image 22.0.2 22.5.1 ${MBT_VERSION} "ghcr.io/young-yang03"
   remove-github-release-tag:
     docker:
       - image: cimg/go:1.19
