@@ -133,7 +133,7 @@ jobs:
           name: install cyclonedx-gomod
           command: |
             echo "cyclonedx-gomod version"
-            go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest
+            go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@1.4.0
             cyclonedx-gomod version
       - run:
           name: install cyclonedx-npm
@@ -347,7 +347,7 @@ jobs:
             #Push to GitHub Container Registry
             echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
             sh $PWD/scripts/publish_image 22.0.2 20.15.1 ${MBT_VERSION} "ghcr.io/young-yang03"
-  
+
   publish-to-dockerhub-java11-node14:
     docker:
       - image: cimg/go:1.19
@@ -379,7 +379,7 @@ jobs:
             #Push to GitHub Container Registry
             echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
             sh $PWD/scripts/publish_image 11.0.17 14.21.1 ${MBT_VERSION} "ghcr.io/young-yang03"
-  
+
   publish-to-dockerhub-java11-node16:
     docker:
       - image: cimg/go:1.19
@@ -411,7 +411,7 @@ jobs:
             #Push to GitHub Container Registry
             echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
             sh $PWD/scripts/publish_image 11.0.17 16.18.1 ${MBT_VERSION} "ghcr.io/young-yang03"
-  
+
   publish-to-dockerhub-java11-node18:
     docker:
       - image: cimg/go:1.19
@@ -506,7 +506,7 @@ jobs:
             #Push to GitHub Container Registry
             echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
             sh $PWD/scripts/publish_image 17.0.12 14.21.1 ${MBT_VERSION} "ghcr.io/young-yang03"
-  
+
   publish-to-dockerhub-java17-node16:
     docker:
       - image: cimg/go:1.19
@@ -538,7 +538,7 @@ jobs:
             #Push to GitHub Container Registry
             echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
             sh $PWD/scripts/publish_image 17.0.12 16.18.1 ${MBT_VERSION} "ghcr.io/young-yang03"
-  
+
   publish-to-dockerhub-java17-node18:
     docker:
       - image: cimg/go:1.19
@@ -634,7 +634,7 @@ jobs:
             #Push to GitHub Container Registry
             echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
             sh $PWD/scripts/publish_image 19.0.1 14.21.1 ${MBT_VERSION} "ghcr.io/young-yang03"
-  
+
   publish-to-dockerhub-java19-node16:
     docker:
       - image: cimg/go:1.19
@@ -666,7 +666,7 @@ jobs:
             #Push to GitHub Container Registry
             echo "$CLOUD_MTA_BOT_GITHUB_TOKEN" | docker login "ghcr.io" --username $CLOUD_MTA_BOT_USER --password-stdin
             sh $PWD/scripts/publish_image 19.0.1 16.18.1 ${MBT_VERSION} "ghcr.io/young-yang03"
-  
+
   publish-to-dockerhub-java19-node18:
     docker:
       - image: cimg/go:1.19
