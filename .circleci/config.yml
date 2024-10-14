@@ -1016,12 +1016,12 @@ workflows:
   # when a branch is tagged by "release", this workflow will be exceeded
   on_tag_build_release_publish:
     jobs:
-      - build:
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
+      # - build:
+      #     filters:
+      #       tags:
+      #         only: /release/
+      #       branches:
+      #         ignore: /.*/
       # - test:
       #     requires:
       #       - build
@@ -1030,44 +1030,45 @@ workflows:
       #         only: /release/
       #       branches:
       #         ignore: /.*/
-      - ghpages:
-          requires:
-            - build
-            # - test
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
-      - release-to-github:
-          requires:
-            - build
-            # - test
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
+      # - ghpages:
+      #     requires:
+      #       - build
+      #       # - test
+      #     filters:
+      #       tags:
+      #         only: /release/
+      #       branches:
+      #         ignore: /.*/
+      # - release-to-github:
+      #     requires:
+      #       - build
+      #       # - test
+      #     filters:
+      #       tags:
+      #         only: /release/
+      #       branches:
+      #         ignore: /.*/
       - hold-for-approval:
           type: approval
-          requires:
-            - release-to-github
+          # requires:
+          #   - release-to-github
           filters:
             tags:
               only: /release/
             branches:
               ignore: /.*/
-      - publish-to-npm:
-          requires:
-            - hold-for-approval
-          filters:
-            tags:
-              only: /release/
-            branches:
-              ignore: /.*/
+      # - publish-to-npm:
+      #     requires:
+      #       - hold-for-approval
+      #     filters:
+      #       tags:
+      #         only: /release/
+      #       branches:
+      #         ignore: /.*/
       - publish-to-dockerhub-java11-node14:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
@@ -1075,7 +1076,8 @@ workflows:
               ignore: /.*/
       - publish-to-dockerhub-java11-node16:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
@@ -1083,7 +1085,8 @@ workflows:
               ignore: /.*/
       - publish-to-dockerhub-java11-node18:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
@@ -1091,7 +1094,8 @@ workflows:
               ignore: /.*/
       - publish-to-dockerhub-java11-node20:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
@@ -1099,7 +1103,8 @@ workflows:
               ignore: /.*/
       - publish-to-dockerhub-java17-node14:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
@@ -1107,7 +1112,8 @@ workflows:
               ignore: /.*/
       - publish-to-dockerhub-java17-node16:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
@@ -1115,7 +1121,8 @@ workflows:
               ignore: /.*/
       - publish-to-dockerhub-java17-node18:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
@@ -1123,7 +1130,8 @@ workflows:
               ignore: /.*/
       - publish-to-dockerhub-java17-node20:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
@@ -1131,7 +1139,8 @@ workflows:
               ignore: /.*/
       - publish-to-dockerhub-java19-node14:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
@@ -1139,7 +1148,8 @@ workflows:
               ignore: /.*/
       - publish-to-dockerhub-java19-node16:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
@@ -1147,7 +1157,8 @@ workflows:
               ignore: /.*/
       - publish-to-dockerhub-java19-node18:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
@@ -1155,7 +1166,8 @@ workflows:
               ignore: /.*/
       - publish-to-dockerhub-java21-node16:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
@@ -1163,7 +1175,8 @@ workflows:
               ignore: /.*/
       - publish-to-dockerhub-java21-node18:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
@@ -1171,7 +1184,8 @@ workflows:
               ignore: /.*/
       - publish-to-dockerhub-java21-node20:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
@@ -1179,7 +1193,8 @@ workflows:
               ignore: /.*/
       - publish-to-dockerhub-java21-node22:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
@@ -1187,7 +1202,8 @@ workflows:
               ignore: /.*/
       - publish-to-dockerhub-java22-node18:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
@@ -1195,7 +1211,8 @@ workflows:
               ignore: /.*/
       - publish-to-dockerhub-java22-node20:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
@@ -1203,7 +1220,8 @@ workflows:
               ignore: /.*/
       - publish-to-dockerhub-java22-node22:
           requires:
-            - publish-to-npm
+            #- publish-to-npm
+            - hold-for-approval
           filters:
             tags:
               only: /release/
