@@ -291,7 +291,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -323,7 +323,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -355,7 +355,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -387,7 +387,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -419,7 +419,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -450,7 +450,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -482,7 +482,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -514,7 +514,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -546,7 +546,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -578,7 +578,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -610,7 +610,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -642,7 +642,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -674,7 +674,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -706,7 +706,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -738,7 +738,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -770,7 +770,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -801,7 +801,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -832,7 +832,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           name: build image pre-setup
           command: |
@@ -863,7 +863,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.6
+          version: 20.10.24
       - run:
           # This won't run if previous commands have failed so the tag should be removed **manually**
           name: remove dummy release tag
