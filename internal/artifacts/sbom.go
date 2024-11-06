@@ -2,7 +2,7 @@ package artifacts
 
 import (
 	"encoding/xml"
-	"io/ioutil"
+	"io"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -195,7 +195,7 @@ func getModuleBomRefs(sbomTmpDir string, sbomFileNames []string) ([]string, erro
 		}
 		defer xmlFile.Close()
 
-		byteValue, err := ioutil.ReadAll(xmlFile)
+		byteValue, err := io.ReadAll(xmlFile)
 		if err != nil {
 			return nil, err
 		}
@@ -350,7 +350,7 @@ func moveSBomToTarget(sbomPath string, sbomName string, sbomTmpDir string, sbomT
 // if sbom tmp dir is empty, return empty array
 func listSBomFilesInTmpDir(sbomTmpDir, sbomSuffix string) ([]string, error) {
 	var sbomFileNames []string
-	fileInfos, err := ioutil.ReadDir(sbomTmpDir)
+	fileInfos, err := os.ReadDir(sbomTmpDir)
 	if err != nil {
 		return sbomFileNames, err
 	}
