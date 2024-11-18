@@ -7,7 +7,7 @@ import (
 
 	"strconv"
 
-	"github.com/SAP/cloud-mta-build-tool/internal/archive"
+	dir "github.com/SAP/cloud-mta-build-tool/internal/archive"
 	"github.com/SAP/cloud-mta-build-tool/internal/logs"
 	"github.com/SAP/cloud-mta/mta"
 )
@@ -17,9 +17,9 @@ const (
 )
 
 // ExecuteGenMtar - generates MTAR
-func ExecuteGenMtar(source, target, targetProvided, desc string, extensions []string, mtarName string, wdGetter func() (string, error)) error {
+func ExecuteGenMtar(source, mtaYamlFilename, target, targetProvided, desc string, extensions []string, mtarName string, wdGetter func() (string, error)) error {
 	logs.Logger.Info("generating the MTA archive...")
-	loc, err := dir.Location(source, target, desc, extensions, wdGetter)
+	loc, err := dir.Location(source, mtaYamlFilename, target, desc, extensions, wdGetter)
 	if err != nil {
 		return errors.Wrap(err, "generation of the MTA archive failed when initializing the location")
 	}

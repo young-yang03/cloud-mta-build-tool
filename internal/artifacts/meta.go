@@ -17,16 +17,16 @@ import (
 )
 
 // ExecuteGenMeta - generates metadata
-func ExecuteGenMeta(source, target, desc string, extensions []string, platform string, wdGetter func() (string, error)) error {
+func ExecuteGenMeta(source, mtaYamlFilename, target, desc string, extensions []string, platform string, wdGetter func() (string, error)) error {
 	logs.Logger.Info("generating the metadata...")
-	loc, err := dir.Location(source, target, desc, extensions, wdGetter)
+	loc, err := dir.Location(source, mtaYamlFilename, target, desc, extensions, wdGetter)
 	if err != nil {
 		return errors.Wrap(err, "failed to generate metadata when initializing the location")
 	}
-	return executeGenMetaByLocation(loc, loc, platform, true, true, true)
+	return executeGenMetaByLocation(loc, loc, platform, true, true)
 }
 
-func executeGenMetaByLocation(loc *dir.Loc, targetArtifacts dir.ITargetArtifacts, platform string, createMetaInf bool, validatePaths bool, strict bool) error {
+func executeGenMetaByLocation(loc *dir.Loc, targetArtifacts dir.ITargetArtifacts, platform string, createMetaInf bool, validatePaths bool) error {
 	// validate platform
 	platform, err := validatePlatform(platform)
 	if err != nil {
@@ -38,15 +38,15 @@ func executeGenMetaByLocation(loc *dir.Loc, targetArtifacts dir.ITargetArtifacts
 		return err
 	}
 
-	err = generateMeta(loc, targetArtifacts, loc.IsDeploymentDescriptor(), platform, createMetaInf, validatePaths, strict)
+	err = generateMeta(loc, targetArtifacts, loc.IsDeploymentDescriptor(), platform, createMetaInf, validatePaths)
 	return err
 }
 
 // generateMeta - generate metadata artifacts
-func generateMeta(loc *dir.Loc, targetArtifacts dir.ITargetArtifacts, deploymentDescriptor bool, platform string, createMetaInf bool, validatePaths bool, strict bool) error {
+func generateMeta(loc *dir.Loc, targetArtifacts dir.ITargetArtifacts, deploymentDescriptor bool, platform string, createMetaInf bool, validatePaths bool) error {
 
 	// parse MTA file
-	loc.SetStrictParmeter(strict)
+	//loc.SetStrictParmeter(strict)
 	m, err := loc.ParseFile()
 	if err != nil {
 		return errors.Wrapf(err, genMetaMsg)
@@ -89,13 +89,13 @@ func ConvertTypes(mtaStr mta.MTA, platformName string) error {
 }
 
 // ExecuteMerge merges mta.yaml and MTA extension descriptors and writes the result to a file with the given name
-func ExecuteMerge(source, target string, extensions []string, name string, wdGetter func() (string, error)) error {
+func ExecuteMerge(source, mtaYamlFilename, target string, extensions []string, name string, wdGetter func() (string, error)) error {
 	logs.Logger.Info(mergeInfoMsg)
 
 	if name == "" {
 		return fmt.Errorf(mergeNameRequiredMsg)
 	}
-	loc, err := dir.Location(source, target, dir.Dev, extensions, wdGetter)
+	loc, err := dir.Location(source, mtaYamlFilename, target, dir.Dev, extensions, wdGetter)
 	if err != nil {
 		return err
 	}

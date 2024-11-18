@@ -27,7 +27,7 @@ var _ = Describe("Mtad", func() {
 
 	var _ = Describe("ExecuteMtadGen", func() {
 		It("Sanity", func() {
-			Ω(ExecuteMtadGen(getTestPath("mta"), getTestPath("result"), nil, "cf", os.Getwd, true)).Should(Succeed())
+			Ω(ExecuteMtadGen(getTestPath("mta"), "", getTestPath("result"), nil, "cf", os.Getwd)).Should(Succeed())
 			Ω(getTestPath("result", "mtad.yaml")).Should(BeAnExistingFile())
 		})
 		It("Fails on creating META-INF folder", func() {
@@ -35,28 +35,28 @@ var _ = Describe("Mtad", func() {
 			file, err := os.Create(getFullPathInTmpFolder("mta", "META-INF"))
 			Ω(err).Should(Succeed())
 			Ω(file.Close()).Should(Succeed())
-			Ω(ExecuteMtadGen(getTestPath("mta", "META-INF"), getTestPath("result"), nil, "cf", os.Getwd, true)).Should(HaveOccurred())
+			Ω(ExecuteMtadGen(getTestPath("mta", "META-INF"), "", getTestPath("result"), nil, "cf", os.Getwd)).Should(HaveOccurred())
 		})
 		It("Fails on location initialization", func() {
-			Ω(ExecuteMtadGen("", getTestPath("result"), nil, "cf", func() (string, error) {
+			Ω(ExecuteMtadGen("", "", getTestPath("result"), nil, "cf", func() (string, error) {
 				return "", errors.New("err")
-			}, true)).Should(HaveOccurred())
+			})).Should(HaveOccurred())
 		})
 		It("Fails on platform validation", func() {
-			Ω(ExecuteMtadGen(getTestPath("mta"), getTestPath("result"), nil, "ab", func() (string, error) {
+			Ω(ExecuteMtadGen(getTestPath("mta"), "", getTestPath("result"), nil, "ab", func() (string, error) {
 				return "", errors.New("err")
-			}, true)).Should(HaveOccurred())
+			})).Should(HaveOccurred())
 		})
 		It("Fails on broken extension file - parse ext fails", func() {
-			Ω(ExecuteMtadGen(getTestPath("mtaWithBrokenExt"), getTestPath("result"), []string{"cf-mtaext.yaml"}, "cf", os.Getwd, true)).Should(HaveOccurred())
+			Ω(ExecuteMtadGen(getTestPath("mtaWithBrokenExt"), "", getTestPath("result"), []string{"cf-mtaext.yaml"}, "cf", os.Getwd)).Should(HaveOccurred())
 		})
 		It("Fails on wrong source path - parse fails", func() {
-			Ω(ExecuteMtadGen(getTestPath("mtax"), getTestPath("result"), nil, "cf", os.Getwd, true)).Should(HaveOccurred())
+			Ω(ExecuteMtadGen(getTestPath("mtax"), "", getTestPath("result"), nil, "cf", os.Getwd)).Should(HaveOccurred())
 		})
 		It("Fails on broken platforms configuration", func() {
 			cfg := platform.PlatformConfig
 			platform.PlatformConfig = []byte("abc abc")
-			Ω(ExecuteMtadGen(getTestPath("mta"), getTestPath("result"), nil, "cf", os.Getwd, true)).Should(HaveOccurred())
+			Ω(ExecuteMtadGen(getTestPath("mta"), "", getTestPath("result"), nil, "cf", os.Getwd)).Should(HaveOccurred())
 			platform.PlatformConfig = cfg
 		})
 	})
