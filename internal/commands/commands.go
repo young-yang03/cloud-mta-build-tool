@@ -21,7 +21,7 @@ const (
 	optionsSuffix                = "-opts"
 	goModuleType                 = "go"
 	cyclonedx_npm                = "@cyclonedx/cyclonedx-npm"
-	cyclonedx_npm_version        = "1.11.0"
+	cyclonedx_npm_version        = "1.19.3"
 	cyclonedx_npm_schema_version = "1.4"
 )
 
